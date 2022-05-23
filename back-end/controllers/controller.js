@@ -14,7 +14,7 @@ getAllStudents = async(req, res) =>{
 
 getStudentById = async(req, res) =>{
     var studentId = req.params.id;
-    var sql = "SELECT * FROM student WHERE student_id LIEK ?";
+    var sql = "SELECT * FROM student WHERE student_id = ?";
     dbObject.getConnection((err, connection) =>{
         connection.query(sql, studentId, (err, rows)=>{
             connection.release();
