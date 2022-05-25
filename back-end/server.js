@@ -11,6 +11,6 @@ backend.get('/', function(req, res){
 
 backend.use('/isms', router);
 
-backend.listen(3001, ()=>{
+backend.listen(3000, ()=>{
     console.log('Server is running');
 });
