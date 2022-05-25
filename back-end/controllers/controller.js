@@ -86,6 +86,34 @@ createStudent = async (req, res) => {
   });
 };
 
+
+/////////////         CREATE USER         /////////////
+createUser = async (req, res) => {
+    var sql =
+      "INSERT INTO user (user_id,first_name,last_name ,email ,tel ,user_name, password) VALUES ?";
+    var values = [
+      [
+        req.body.user_id,
+        req.body.first_name,
+        req.body.last_name,
+        req.body.email,
+        req.body.tel,
+        req.body.user_name,
+        req.body.password
+      ],
+    ];
+    dbObject.getConnection((err, connection) => {
+      connection.query(sql, [values], (err, rows) => {
+        connection.release();
+        if (err) {
+          return res.status(400).json({ success: false, error: err });
+        }
+        return res.status(200).json({ message: "User Created" });
+      });
+    });
+  }; 
+  
+/////////////         UPDATE STUDENT         /////////////
 updateStudent = async (req, res) => {
   var studentId = req.params.id;
   var sql =
@@ -120,6 +148,33 @@ updateStudent = async (req, res) => {
   });
 };
 
+////////////         UPDATE USER         /////////////
+updateUser = async (req, res) => {
+    var userId = req.params.id;
+    var sql =
+      "UPDATE student SET first_name = ?, last_name = ?, email = ?, tel = ?, user_name = ?, password = ?" +
+      userId;
+    var values = [
+      req.body.user_id,
+      req.body.first_name,
+      req.body.last_name,
+      req.body.email,
+      req.body.tel,
+      req.body.user_name,
+      req.body.password,
+    ];
+    dbObject.getConnection((err, connection) => {
+      connection.query(sql, values, (err, rows) => {
+        connection.release();
+        if (err) {
+          return res.status(400).json({ success: false, error: err });
+        }
+        return res.status(200).json({ message: "User Updated" });
+      });
+    });
+  };
+
+/////////////         DELETE STUDENT         /////////////
 deleteStudent = async (req, res) => {
   var studentId = req.params.id;
   var sql = "DELETE FROM student WHERE student_id = ?";
@@ -141,5 +196,6 @@ module.exports = {
   updateStudent,
   deleteStudent,
   getAllUsers,
-  getUserById
+  getUserById,
+  createUser,
 };
