@@ -10,6 +10,7 @@ function App() {
       <NavBar />
       <AddUser />
       <Reset />
+      <Login/>
     </Router>
   );
 }

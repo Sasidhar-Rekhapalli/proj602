@@ -1,6 +1,7 @@
 import react,{useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from '../image/saskpolytech.jpg';
+import '../css/index.css';
 
 function LoginPage() {
 
