@@ -12,6 +12,19 @@ getAllStudents = async(req, res) =>{
     });
 }
 
+getAllUsers = async(req, res) =>{
+    dbObject.getConnection((err, connection) =>{
+        connection.query('SELECT * FROM user', (err, rows)=>{
+            connection.release();
+            if(err){
+                return res.status(400).json({success: false, error: err});
+            }
+            return res.status(200).json({success: true, data: rows});
+        });
+    });
+}
+
+
 getStudentById = async(req, res) =>{
     var studentId = req.params.id;
     var sql = "SELECT * FROM student WHERE student_id = ?";
@@ -110,5 +123,6 @@ module.exports = {
     getStudentById,
     createStudent,
     updateStudent,
-    deleteStudent
+    deleteStudent,
+    getAllUsers
 }
