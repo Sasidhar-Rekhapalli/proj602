@@ -1,4 +1,14 @@
 //////////////////////////////////////               CONTROLLER.JS                //////////////////////////////////////
+/**
+ * 
+ * @file controller.js
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release spring2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ * 
+ */
 
 //////////////////////////////////////                  SUMMARY                  //////////////////////////////////////
 /** 
@@ -24,7 +34,6 @@
  * @param updateUser       this route  update a user's information from table        // Restful, CRUD -> Update
  * @param resetPassword    this route  for reset password andupdate user information // Restful, CRUD -> Update
  */
-
 
 //////////////////////////////////////               SETUPS                //////////////////////////////////////
 
@@ -94,12 +103,12 @@ getStudentById = async (req, res) => {
       connection.release();
       if (err) {
         return res
-        .status(400)
-        .json({ success: false, error: err });
+            .status(400)
+            .json({ success: false, error: err });
       }
       return res
-      .status(200)
-      .json({ success: true, data: rows });
+            .status(200)
+            .json({ success: true, data: rows });
     });
   });
 };
@@ -113,9 +122,7 @@ getStudentById = async (req, res) => {
  *            same as other part response proper output with JSON object and messages:
  *            - if error happend, throws with 400 means unsuccessful result
  *            - if successful, return status 200 and return that student information in JSON object 
- 
-
-* @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
+ * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
             graudate_ind, enroll
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successfull message to user
@@ -147,20 +154,37 @@ createStudent = async (req, res) => {
     connection.query(sql, [values], (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
-      }
-      return res.status(200).json({ message: "Student Created" });
+        return res
+            .status(400)
+            .json({ success: false, error: err });
+        }
+      return res
+            .status(200)
+            .json({ message: "Student Created" });
     });
   });
 };
 //#endregion
 
-/////////////         UPDATE STUDENT         /////////////
+//#region for   UPDATE STUDENT
+/**
+ * @module    for changing and other data manipulation first retrive student's information by student_id and update data. Then put into student table
+ *            and replace with old information. This module use PUT method.
+ *            same as get student by id store student id in local variable, save query in sql and values as give from students in values array
+ * @callback  like other student's modules first anonymous callback function after checking connection, query and  check query in the next steps
+ *            same as other part response proper output with JSON object and messages:
+ *            - if error happend, status 400 otehrwise status 200 and return student information in JSON object 
+ * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
+            graudate_ind, enroll
+ * @throws   throws error 400 if it could not add information to user
+ * @returns  send successfull message to user
+ */
 updateStudent = async (req, res) => {
   var studentId = req.params.id;
   var sql =
-    "UPDATE student SET prospective = ?, std_id = ?, first_name = ?, middle_name = ?, last_name = ?, gender = ?, birthdate = ?, email = ?, country = ?, academic_period = ?, campus = ?, program = ?, degree = ?, year = ?, graudate_ind = ?, enroll = ? WHERE student_id = " +
-    studentId;
+          "UPDATE student SET prospective = ?, std_id = ?, first_name = ?, middle_name = ?, last_name = ?, gender = ?, birthdate = ?," + 
+          "email = ?, country = ?, academic_period = ?, campus = ?, program = ?, degree = ?, year = ?, graudate_ind = ?, enroll = ? " +
+          "WHERE student_id = " + studentId;
   var values = [
     req.body.prospective,
     req.body.std_id,
@@ -183,57 +207,30 @@ updateStudent = async (req, res) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+            .status(400)
+            .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "Student Updated" });
+      return res
+            .status(200)
+            .json({ message: "Student Updated" });
     });
   });
 };
+//#endregion
 
-////////////         UPDATE USER         /////////////
-updateUser = async (req, res) => {
-  var userId = req.params.id;
-  var sql =
-    "UPDATE user SET first_name = ?, last_name = ?, email = ?, tel = ?, user_name = ?, password = ? WHERE user_id = " +
-    userId;
-  var values = [
-    req.body.user_id,
-    req.body.first_name,
-    req.body.last_name,
-    req.body.email,
-    req.body.tel,
-    req.body.user_name,
-    req.body.password,
-  ];
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, values, (err, rows) => {
-      connection.release();
-      if (err) {
-        return res.status(400).json({ success: false, error: err });
-      }
-      return res.status(200).json({ message: "User Updated" });
-    });
-  });
-};
+//#region for   DELETE STUDENT
+/**
+ * @module    Delete student is the last part of CRUD operation and for this module first get student by id and run the query for remove all infoemation 
+ *            of that student
+ * @callback  two anonymous callback functions are responsible to return proper result and if error happened or process is successful return status 400
+ *            or 200 in order for error or success
+ * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
+            graudate_ind, enroll
+ * @throws   throws error 400 if it could not add information to user
+ * @returns  send successfull message to user
+*/
 
-////////////         RESET PASSWORD         /////////////
-resetPassword = async (req, res) => {
-  var userId = req.params.id;
-  var sql =
-    "UPDATE user SET user_name = ?, password = ? WHERE user_id = " + userId;
-  var values = [req.body.user_name, req.body.password];
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, values, (err, rows) => {
-      connection.release();
-      if (err) {
-        return res.status(400).json({ success: false, error: err });
-      }
-      return res.status(200).json({ message: "Password Updated" });
-    });
-  });
-};
-
-/////////////         DELETE STUDENT         /////////////
 deleteStudent = async (req, res) => {
   var studentId = req.params.id;
   var sql = "DELETE FROM student WHERE student_id = ?";
@@ -241,15 +238,17 @@ deleteStudent = async (req, res) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+            .status(400)
+            .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "Student Deleted" });
+      return res
+            .status(200)
+            .json({ message: "Student Deleted" });
     });
   });
 };
-
-
-
+//#endregion
 
 //////////////////////////////////////                USERS               //////////////////////////////////////
 
@@ -380,6 +379,59 @@ getUserById = async (req, res) => {
 };
 
 //#endregion
+
+
+
+
+
+
+
+////////////         UPDATE USER         /////////////
+updateUser = async (req, res) => {
+  var userId = req.params.id;
+  var sql =
+    "UPDATE user SET first_name = ?, last_name = ?, email = ?, tel = ?, user_name = ?, password = ? WHERE user_id = " +
+    userId;
+  var values = [
+    req.body.user_id,
+    req.body.first_name,
+    req.body.last_name,
+    req.body.email,
+    req.body.tel,
+    req.body.user_name,
+    req.body.password,
+  ];
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, values, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res.status(400).json({ success: false, error: err });
+      }
+      return res.status(200).json({ message: "User Updated" });
+    });
+  });
+};
+
+
+
+
+
+////////////         RESET PASSWORD         /////////////
+resetPassword = async (req, res) => {
+  var userId = req.params.id;
+  var sql =
+    "UPDATE user SET user_name = ?, password = ? WHERE user_id = " + userId;
+  var values = [req.body.user_name, req.body.password];
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, values, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res.status(400).json({ success: false, error: err });
+      }
+      return res.status(200).json({ message: "Password Updated" });
+    });
+  });
+};
 
 
 
