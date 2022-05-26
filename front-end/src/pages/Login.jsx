@@ -41,28 +41,28 @@ function Login() {
   return (
     <div className='LoginPage'>
       <div className=' mainBorder container'>
-      <div className='left col-lg-4'>
-      <img src={Logo} width="300px" height="300px" alt="Logo" />
-      </div>
-      <div className='right col-lg-8'>
-      <div className='justify-content-center'>
-        <h2>Login</h2>
-        <div className='formborder col-md-6'>
-          <form id='loginform' onSubmit={loginSubmit}>
-            <div className='form-group'>
-              <label><span><img src={Logo} width="30px" height="30px" alt="Logo" /></span>User name : </label>
-              <input type="text" className="form-control" placeholder='User Name' onChange={(event)=>setusername(event.target.value)}/>
-              <p>{usernameError}</p>
-            </div>
-            <div className='form-group'>
-              <label>Password : </label>
-              <input type="password" className="form-control" placeholder='Password' onChange={(event)=>setpassword(event.target.value)}/>
-              <p>{passwordError}</p>
-            </div>
-            <div className='form-group form-check'>
-              <button type='submit' className='btn btn-primary' onClick="www.google.com">Login</button>
-              <a href=''> | Reset Password</a>
-            </div>
+        <div className='left col-lg-4'>
+          <img src={Logo} width="300px" height="300px" alt="Logo" />
+         </div>
+        <div className='right col-lg-8'>
+            <div className='justify-content-center'>
+                <h2>Login</h2>
+                <div className='formborder col-md-6'>
+                <form id='loginform' onSubmit={loginSubmit}>
+                    <div className='form-group'>
+                        <label><span><img src={Logo} width="30px" height="30px" alt="Logo" /></span>User name : </label>
+                        <input type="text" className="form-control" placeholder='User Name' onChange={(event)=>setusername(event.target.value)}/>
+                        <p>{usernameError}</p>
+                    </div>
+                    <div className='form-group'>
+                    <label>Password : </label>
+                    <input type="password" className="form-control" placeholder='Password' onChange={(event)=>setpassword(event.target.value)}/>
+                    <p>{passwordError}</p>
+                </div>
+                <div className='form-group form-check'>
+                    <button type='submit' className='btn btn-primary' onClick="www.google.com">Login</button>
+                    <a href=''> | Reset Password</a>
+                </div>
           </form>
           </div>
         </div>

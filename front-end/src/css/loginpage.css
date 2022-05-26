@@ -1,0 +1,71 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body{
+    font-family: monospace;
+  }
+  
+  h2{
+    margin: 25px 0px;
+    text-align: center;
+    letter-spacing: 10px;
+  }
+  
+  p{
+    color: red;
+    margin-bottom: 5px;
+  }
+  
+  label{
+    margin: 0px 0px 10px 0px;
+  }
+  
+  .LoginPage {
+    font-family: sans-serif;
+  }
+  
+  .left {
+    background: #744197;
+    text-align: center;
+    padding: 17% 0%;
+  }
+  
+  .mainBorder {
+    border: 1px solid black;
+    height: 700px;
+    display: flex;
+    padding: 0px !important;
+    max-height: 100%;
+    margin: 20px auto;
+  }
+  
+  .right{
+    margin:10% 0%;
+    display: inline-block;
+  }
+  
+  .left img{
+    text-align: center;
+  }
+  
+  .formborder{
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 0 auto;
+    width: 75%;
+  }
+  
+  .form-group a{
+    text-decoration: none;
+  }
+  
+  .form-group button{
+    background: #744197;
+    letter-spacing: 5px;
+    padding: 5px 30px;
+    border: none;
+  }
