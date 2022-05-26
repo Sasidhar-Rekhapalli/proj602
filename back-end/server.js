@@ -1,3 +1,16 @@
+//////////////////////////////////////               ROUTE.JS                //////////////////////////////////////
+/**
+ * 
+ * @file route.js
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release spring2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ * 
+ */
+
+//////////////////////////////////////                 SUMMARY                  //////////////////////////////////////
 /**
  * Main page for backend
  * in this page all require are add 
