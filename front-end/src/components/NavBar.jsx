@@ -58,12 +58,12 @@ const NavBtnLink = styled(Link)`
 export default function NavBar() {
   return (
     <Nav>
-      <NavLink to="/">
+      <NavLink to="">
         <img src={logo} width="50" height="50"></img>
         <Title>International Student Management</Title>
       </NavLink>
       <NavBtn>
-        <NavBtnLink to="/logout">Log out</NavBtnLink>
+        <NavBtnLink to="/">Log out</NavBtnLink>
       </NavBtn>
     </Nav>
   );
