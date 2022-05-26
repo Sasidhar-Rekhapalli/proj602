@@ -58,7 +58,7 @@ const dbObject = require("../db/connect");
  *          degree, year, graudate_ind, enroll
  * @throws   tthrows error 400 if it could not show students information 
  * @throws   throws status 200 and return students information
- * @returns  send successfull message 
+ * @returns  send successfull message.
  */
 getAllStudents = async (req, res) => {
   dbObject.getConnection((err, connection) => {
@@ -66,12 +66,12 @@ getAllStudents = async (req, res) => {
       connection.release();
       if (err) {
         return res
-                .status(400)
-                .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-                .status(200)
-                .json({ success: true, data: rows });
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
@@ -104,12 +104,12 @@ getStudentById = async (req, res) => {
       connection.release();
       if (err) {
         return res
-            .status(400)
-            .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-            .status(200)
-            .json({ success: true, data: rows });
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
@@ -156,12 +156,12 @@ createStudent = async (req, res) => {
       connection.release();
       if (err) {
         return res
-            .status(400)
-            .json({ success: false, error: err });
-        }
+          .status(400)
+          .json({ success: false, error: err });
+      }
       return res
-            .status(200)
-            .json({ message: "Student Created" });
+        .status(200)
+        .json({ message: "Student Created" });
     });
   });
 };
@@ -183,9 +183,9 @@ createStudent = async (req, res) => {
 updateStudent = async (req, res) => {
   var studentId = req.params.id;
   var sql =
-          "UPDATE student SET prospective = ?, std_id = ?, first_name = ?, middle_name = ?, last_name = ?, gender = ?, birthdate = ?," + 
-          "email = ?, country = ?, academic_period = ?, campus = ?, program = ?, degree = ?, year = ?, graudate_ind = ?, enroll = ? " +
-          "WHERE student_id = " + studentId;
+    "UPDATE student SET prospective = ?, std_id = ?, first_name = ?, middle_name = ?, last_name = ?, gender = ?, birthdate = ?," +
+    "email = ?, country = ?, academic_period = ?, campus = ?, program = ?, degree = ?, year = ?, graudate_ind = ?, enroll = ? " +
+    "WHERE student_id = " + studentId;
   var values = [
     req.body.prospective,
     req.body.std_id,
@@ -209,12 +209,12 @@ updateStudent = async (req, res) => {
       connection.release();
       if (err) {
         return res
-            .status(400)
-            .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-            .status(200)
-            .json({ message: "Student Updated" });
+        .status(200)
+        .json({ message: "Student Updated" });
     });
   });
 };
@@ -240,12 +240,12 @@ deleteStudent = async (req, res) => {
       connection.release();
       if (err) {
         return res
-            .status(400)
-            .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-            .status(200)
-            .json({ message: "Student Deleted" });
+        .status(200)
+        .json({ message: "Student Deleted" });
     });
   });
 };
@@ -266,18 +266,18 @@ deleteStudent = async (req, res) => {
  * @throws   throws status 200 and return students information
  * @returns  send successfull message 
  */
- getAllUsers = async (req, res) => {
+getAllUsers = async (req, res) => {
   dbObject.getConnection((err, connection) => {
     connection.query("SELECT * FROM user", (err, rows) => {
       connection.release();
       if (err) {
         return res
-            .status(400)
-            .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-             .status(200)
-             .json({ success: true, data: rows });
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
@@ -310,12 +310,12 @@ getUserById = async (req, res) => {
       connection.release();
       if (err) {
         return res
-              .status(400)
-              .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-              .status(200)
-              .json({ success: true, data: rows });
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
@@ -330,7 +330,7 @@ getUserById = async (req, res) => {
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successfull message to user
  */
- createUser = async (req, res) => {
+createUser = async (req, res) => {
   var sql =
     "INSERT INTO user (user_id,first_name,last_name ,email ,tel ,user_name, password) VALUES ?";
   var values = [
@@ -349,12 +349,12 @@ getUserById = async (req, res) => {
       connection.release();
       if (err) {
         return res
-              .status(400)
-              .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-              .status(200)
-              .json({ message: "User Created" });
+        .status(200)
+        .json({ message: "User Created" });
     });
   });
 };
@@ -391,12 +391,12 @@ updateUser = async (req, res) => {
       connection.release();
       if (err) {
         return res
-            .status(400)
-            .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-            .status(200)
-            .json({ message: "User Updated" });
+        .status(200)
+        .json({ message: "User Updated" });
     });
   });
 };
@@ -421,12 +421,12 @@ deleteUser = async (req, res) => {
       connection.release();
       if (err) {
         return res
-            .status(400)
-            .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-            .status(200)
-            .json({ message: "User Deleted" });
+        .status(200)
+        .json({ message: "User Deleted" });
     });
   });
 };
@@ -451,12 +451,12 @@ resetPassword = async (req, res) => {
       connection.release();
       if (err) {
         return res
-            .status(400)
-            .json({ success: false, error: err });
+          .status(400)
+          .json({ success: false, error: err });
       }
       return res
-            .status(200)
-            .json({ message: "Password Updated" });
+        .status(200)
+        .json({ message: "Password Updated" });
     });
   });
 };
