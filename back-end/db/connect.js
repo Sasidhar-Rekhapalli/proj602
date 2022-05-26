@@ -1,13 +1,11 @@
 //////////////////////////////////////               COONECT.JS                //////////////////////////////////////
 /**
- * 
  * @file connect.js
  * @copyright ISMS(International Student Management System)
  * @version 1.0.0
  * @author cyberbot team, software developer program
  * @release spring2022
  * @owner Saskatchewan Polytechnic, Saskatoon Campus
- * 
  */
 
 //////////////////////////////////////                  SUMMARY                  //////////////////////////////////////
@@ -54,6 +52,7 @@ const mysql = require('mysql2');
 //     password: 'letmein',
 //     database: 'isms'
 // });
+
 const pool = mysql.createPool({
     host:'localhost',
     user: 'root',
