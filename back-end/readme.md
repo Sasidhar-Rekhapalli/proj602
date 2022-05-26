@@ -6,13 +6,13 @@ The back-end provides connections to database and pathes to retrive and manipula
 ### structure:
 -- back-end 
 ---- controllers
------- controller : contains all routes 
+------ controller['./controller/controller.js'] : contains all routes 
 ---- db
 ------ modules
 -------- conversation-model
------- connect   : connect to DataBase server and set up username and password to connect to database
+------ connect['./db/connect.js']   : connect to DataBase server and set up username and password to connect to database
 ---- routes
------- route     : set up all routes create and export in CONTROLER.JS
+------ route['./routes/route.js']     : set up all routes create and export in CONTROLER.JS
 
 ### Server connection
 - If database server changed or ip address manipulated, in connect.js page host:'...' must change

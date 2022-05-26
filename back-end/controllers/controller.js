@@ -260,7 +260,7 @@ deleteStudent = async (req, res) => {
 /**
  * @module    get all users from the database and show them in a JSON file. In this module, use Read in CRUD operation also 
  *            use Get method
- * @callback  anonymous callback function gets the query to return all students filed in the database, the result of the query 
+ * @callback  anonymous callback function gets the query to return all users filed in the database, the result of the query 
  *            if failed first part(error), throws with 400 and JSON object return unsuccessful and error.
  *            if the result of the query is the triumphant return status 200, which means the process is succesful and returns 
  *            data store in the json object.
@@ -275,41 +275,39 @@ deleteStudent = async (req, res) => {
     connection.query("SELECT * FROM user", (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+            .status(400)
+            .json({ success: false, error: err });
       }
-      return res.status(200).json({ success: true, data: rows });
+      return res
+             .status(200)
+             .json({ success: true, data: rows });
     });
   });
 };
 
-
-
-
-
+//#endregion
 
 
 //#region for  GET USER BY ID 
 /**
- * @module    same as GET ALL STUDENTS, but this module return specific student by student_id. when process is successful and 
- *            student by specific id is in the database return the student's information and if query does not return anything 
+ * @module    same as GET ALL USERS, but this module return specific user by user_id. when process is successful and 
+ *            user by specific id is in the database return the user's information and if query does not return anything 
  *            throw an error to user
  *            In this module, use Read in CRUD operation also use Get method
- * @callback  in the first part of the module, save student id that looking for and save it in local studentId varibale. Then 
- *            save qurey for return all fileds of the specific student.
- *            anonymous callback function gets the query, studentID and revoke other nested callback function to return result 
- *            of searching specific student:
+ * @callback  in the first part of the module, save user id that looking for and save it in local userId varibale. Then 
+ *            save qurey for return all fileds of the specific user.
+ *            anonymous callback function gets the query, userID and revoke other nested callback function to return result 
+ *            of searching specific user:
  *            - if result is failed, throws with 400 and JSON object return unsuccessful and error.
  *            - if the result of the query is successful, return status 200, which means the process is succesful and returns 
- *              students inormation in JSON object to show user.
+ *              users inormation in JSON object to show user.
  * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program,
  *          degree, year, graudate_ind, enroll
- * @throws   tthrows error 400 if it could not show the student information 
- * @throws   throws status 200 and return the student information
+ * @throws   tthrows error 400 if it could not show the user information 
+ * @throws   throws status 200 and return the user information
  * @returns  send successfull message 
  */
-
-
-/////////////         GET  USER BY ID        /////////////
 getUserById = async (req, res) => {
   var studentId = req.params.id;
   var sql = "SELECT * FROM user WHERE user_id = ?";
@@ -317,35 +315,19 @@ getUserById = async (req, res) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+              .status(400)
+              .json({ success: false, error: err });
       }
-      return res.status(200).json({ success: true, data: rows });
+      return res
+              .status(200)
+              .json({ success: true, data: rows });
     });
   });
 };
 
 
-
-
-
-//#region for   CREATE A NEW STUDENT
-/**
- * @module    get student's information and put into student table and create a new student with POST method.
- *            in the first part save sql query for insert and save values get from user and save in same order in array variable named values
- * @callback  first anonymous callback function after checking connection invoke query and in second function check query and values saved in array
- *            same as other part response proper output with JSON object and messages:
- *            - if error happend, throws with 400 means unsuccessful result
- *            - if successful, return status 200 and return that student information in JSON object 
- 
-
-* @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
-            graudate_ind, enroll
- * @throws   throws error 400 if it could not add information to user
- * @returns  send successfull message to user
- */
-
-            
-//#region for    ///////       CREATE A NEW USER       ///////
+//#region for   CREATE A NEW USER
 /**
  * @module    ceaate a new user and get user's information and send to user table
  *            save query for insert information in a variable and get data from customer save it in an array, then check the connection and throw proper information
@@ -371,9 +353,13 @@ getUserById = async (req, res) => {
     connection.query(sql, [values], (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+              .status(400)
+              .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "User Created" });
+      return res
+              .status(200)
+              .json({ message: "User Created" });
     });
   });
 };
