@@ -32,6 +32,7 @@
  * @param getUserById      this route  GET one user's information from user table    // Restful, CRUD -> Read
  * @param  createUser      this route  Create a new user and POST it in database     // Restful, CRUD -> Create
  * @param updateUser       this route  update a user's information from table        // Restful, CRUD -> Update
+ *  * @param deleteUser    this route  delete a user from table                      // Restful, CRUD -> Delete
  * @param resetPassword    this route  for reset password andupdate user information // Restful, CRUD -> Update
  */
 
@@ -252,10 +253,6 @@ deleteStudent = async (req, res) => {
 
 //////////////////////////////////////                USERS               //////////////////////////////////////
 
-
-
-
-
 //#region for    GET ALL USERS 
 /**
  * @module    get all users from the database and show them in a JSON file. In this module, use Read in CRUD operation also 
@@ -264,8 +261,7 @@ deleteStudent = async (req, res) => {
  *            if failed first part(error), throws with 400 and JSON object return unsuccessful and error.
  *            if the result of the query is the triumphant return status 200, which means the process is succesful and returns 
  *            data store in the json object.
- * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, 
- *          degree, year, graudate_ind, enroll
+ * @params  user_id, first_name, last_name, email, tel, user_name,password
  * @throws   tthrows error 400 if it could not show students information 
  * @throws   throws status 200 and return students information
  * @returns  send successfull message 
@@ -288,7 +284,6 @@ deleteStudent = async (req, res) => {
 
 //#endregion
 
-
 //#region for  GET USER BY ID 
 /**
  * @module    same as GET ALL USERS, but this module return specific user by user_id. when process is successful and 
@@ -302,8 +297,7 @@ deleteStudent = async (req, res) => {
  *            - if result is failed, throws with 400 and JSON object return unsuccessful and error.
  *            - if the result of the query is successful, return status 200, which means the process is succesful and returns 
  *              users inormation in JSON object to show user.
- * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program,
- *          degree, year, graudate_ind, enroll
+ * @params  user_id, first_name, last_name, email, tel, user_name,password
  * @throws   tthrows error 400 if it could not show the user information 
  * @throws   throws status 200 and return the user information
  * @returns  send successfull message 
@@ -326,6 +320,7 @@ getUserById = async (req, res) => {
   });
 };
 
+//#endregion
 
 //#region for   CREATE A NEW USER
 /**
@@ -366,18 +361,22 @@ getUserById = async (req, res) => {
 
 //#endregion
 
-
-
-
-
-
-
-////////////         UPDATE USER         /////////////
+//#region for   UPDATE USER
+/**
+ * @module    for changing and other data manipulation first retrieve user's information by user_id and update data. Then put into user table
+ *            and replace with old information. This module use PUT method.
+ *            same as get user by id store user id in local variable, save query in sql and values as give from users in values array
+ * @callback  like other user's modules first anonymous callback function after checking connection, query and  check query in the next steps
+ *            same as other part response proper output with JSON object and messages:
+ *            - if error happened, status 400 otherwise status 200 and return user information in JSON object 
+ * @params  user_id, first_name, last_name, email, tel, user_name,password
+ * @throws   throws error 400 if it could not add information to user
+ * @returns  send successful message to user
+ */
 updateUser = async (req, res) => {
   var userId = req.params.id;
   var sql =
-    "UPDATE user SET first_name = ?, last_name = ?, email = ?, tel = ?, user_name = ?, password = ? WHERE user_id = " +
-    userId;
+    "UPDATE user SET first_name = ?, last_name = ?, email = ?, tel = ?, user_name = ?, password = ? WHERE user_id = " + userId;
   var values = [
     req.body.user_id,
     req.body.first_name,
@@ -391,18 +390,57 @@ updateUser = async (req, res) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+            .status(400)
+            .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "User Updated" });
+      return res
+            .status(200)
+            .json({ message: "User Updated" });
     });
   });
 };
 
 
 
+//#region for   DELETE USER
+/**
+ * @module    Delete user is the last part of CRUD operation and for this module first get user by id and run the query for remove all information 
+ *            of that user
+ * @callback  two anonymous callback functions are responsible to return proper result and if error happened or process is successful return status 400
+ *            or 200 in order for error or success
+ * @params  user_id, first_name, last_name, email, tel, user_name,password
+ * @throws   throws error 400 if it could not add information to user
+ * @returns  send successful message to user
+*/
+deleteUser = async (req, res) => {
+  var userId = req.params.id;
+  var sql = "DELETE FROM user WHERE user_id = ?";
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, userId, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+            .status(400)
+            .json({ success: false, error: err });
+      }
+      return res
+            .status(200)
+            .json({ message: "User Deleted" });
+    });
+  });
+};
+//#endregion
 
 
-////////////         RESET PASSWORD         /////////////
+//#region for   RESET PASSWORD
+/**
+ * @module    Reset Password provides reset password for user by getting user_id and reset password
+ * @callback  two anonymous callback functions like other routes responsible to return proper result or error
+ * @params  user_id, user_name,password
+ * @throws   throws error 400 if it could not add information to user
+ * @returns  send successful message to user
+*/
 resetPassword = async (req, res) => {
   var userId = req.params.id;
   var sql =
@@ -412,20 +450,24 @@ resetPassword = async (req, res) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+            .status(400)
+            .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "Password Updated" });
+      return res
+            .status(200)
+            .json({ message: "Password Updated" });
     });
   });
 };
 
 
-
-
-
-
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
-
+/**
+ * in the exports section we export all moudules as created and prepare them to use it in other pages or modules
+ * @params   all routes 
+ * @exports  all routes
+ */
 module.exports = {
   getAllStudents,
   getStudentById,
@@ -437,5 +479,6 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
+  deleteUser,
   resetPassword,
 };

@@ -16,7 +16,6 @@
  *              and other process as required
  * */
 
-
 //////////////////////////////////////               SETUPS                //////////////////////////////////////
 
 //#region for  IMPORT        
@@ -32,7 +31,6 @@ const router = express.Router();
 const controller = require("../controllers/controller");
 
  //#endregion
-
 
 //////////////////////////////////////              STUDENTS               //////////////////////////////////////
 //#region for student's route
@@ -64,6 +62,7 @@ router.get("/users", controller.getAllUsers);
 router.get("/getuser/:id", controller.getUserById);
 router.post("/newuser", controller.createUser);
 router.put("/updateuser/:id", controller.updateUser);
+router.delete("/deleteuser/:id", controller.deleteUser);
 router.put("/resetpassword/:id", controller.resetPassword);
 
 //#endregion
