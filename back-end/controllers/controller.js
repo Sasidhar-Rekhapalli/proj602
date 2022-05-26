@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //////////////////////////////////////               CONTROLLER.JS                //////////////////////////////////////
 /**
  * 
@@ -399,8 +398,9 @@ updateUser = async (req, res) => {
         .status(200)
         .json({ message: "User Updated" });
     });
-  }
-
+  });
+};
+////#endregion
 
 
 //#region for   DELETE USER
@@ -414,71 +414,71 @@ updateUser = async (req, res) => {
  * @returns  send successful message to user
 */
 deleteUser = async (req, res) => {
-      var userId = req.params.id;
-      var sql = "DELETE FROM user WHERE user_id = ?";
-      dbObject.getConnection((err, connection) => {
-        connection.query(sql, userId, (err, rows) => {
-          connection.release();
-          if (err) {
-            return res
-              .status(400)
-              .json({ success: false, error: err });
-          }
-          return res
-            .status(200)
-            .json({ message: "User Deleted" });
-        });
-      });
-    };
-  //#endregion
-
-
-  //#region for   RESET PASSWORD
-  /**
-   * @module    Reset Password provides reset password for user by getting user_id and reset password
-   * @callback  two anonymous callback functions like other routes responsible to return proper result or error
-   * @params  user_id, user_name,password
-   * @throws   throws error 400 if it could not add information to user
-   * @returns  send successful message to user
-  */
-  resetPassword = async (req, res) => {
-    var userId = req.params.id;
-    var sql =
-      "UPDATE user SET user_name = ?, password = ? WHERE user_id = " + userId;
-    var values = [req.body.user_name, req.body.password];
-    dbObject.getConnection((err, connection) => {
-      connection.query(sql, values, (err, rows) => {
-        connection.release();
-        if (err) {
-          return res
-            .status(400)
-            .json({ success: false, error: err });
-        }
+  var userId = req.params.id;
+  var sql = "DELETE FROM user WHERE user_id = ?";
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, userId, (err, rows) => {
+      connection.release();
+      if (err) {
         return res
-          .status(200)
-          .json({ message: "Password Updated" });
-      });
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ message: "User Deleted" });
     });
-  };
+  });
+};
+//#endregion
 
 
-  //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
-  /**
-   * in the exports section we export all moudules as created and prepare them to use it in other pages or modules
-   * @params   all routes 
-   * @exports  all routes
-   */
-  module.exports = {
-    getAllStudents,
-    getStudentById,
-    createStudent,
-    updateStudent,
-    deleteStudent,
+//#region for   RESET PASSWORD
+/**
+ * @module    Reset Password provides reset password for user by getting user_id and reset password
+ * @callback  two anonymous callback functions like other routes responsible to return proper result or error
+ * @params  user_id, user_name,password
+ * @throws   throws error 400 if it could not add information to user
+ * @returns  send successful message to user
+*/
+resetPassword = async (req, res) => {
+  var userId = req.params.id;
+  var sql =
+    "UPDATE user SET user_name = ?, password = ? WHERE user_id = " + userId;
+  var values = [req.body.user_name, req.body.password];
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, values, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ message: "Password Updated" });
+    });
+  });
+};
 
-    getAllUsers,
-    getUserById,
-    createUser,
-    updateUser,
-    deleteUser,
-    resetPassword,
-  };
+
+//////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
+/**
+ * in the exports section we export all moudules as created and prepare them to use it in other pages or modules
+ * @params   all routes 
+ * @exports  all routes
+ */
+module.exports = {
+  getAllStudents,
+  getStudentById,
+  createStudent,
+  updateStudent,
+  deleteStudent,
+
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  resetPassword,
+};
