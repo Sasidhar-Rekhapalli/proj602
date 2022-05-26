@@ -10,13 +10,13 @@
  * 
  */
 
-//////////////////////////////////////                  SUMMARY                  //////////////////////////////////////
+//////////////////////////////////////                 SUMMARY                  //////////////////////////////////////
 /** 
  * @description routes for access sub pages, in this module with express provide different routes for each CRUD operation 
  *              and other process as required
  * */
 
-//////////////////////////////////////               SETUPS                //////////////////////////////////////
+//////////////////////////////////////              SETUPS                //////////////////////////////////////
 
 //#region for  IMPORT        
 /**  after installing express package import it, also assign express.Router to a variable and use it for routes
@@ -32,7 +32,7 @@ const controller = require("../controllers/controller");
 
  //#endregion
 
-//////////////////////////////////////              STUDENTS               //////////////////////////////////////
+//////////////////////////////////////             STUDENTS               //////////////////////////////////////
 //#region for student's route
 /** Route for Create, Update,Read and Delete for STUDENTS 
  * @param getAllStudents  get all student informayion from student table 
