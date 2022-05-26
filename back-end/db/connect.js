@@ -41,7 +41,6 @@
 
 //////////////////////////////////////               SETUPS                //////////////////////////////////////
 const mysql = require('mysql2');
-
 /**
  * if for any reason must to change machine, username and passord change host, user, password with correct data
  */
@@ -54,16 +53,15 @@ const mysql = require('mysql2');
 // });
 
 const pool = mysql.createPool({
-    host:'localhost',
+    host: 'localhost',
     user: 'root',
-    password: 'Mo123456789',
+    password: 'password',
     database: 'isms'
 });
 
 pool.getConnection((err, connection) => {
-    if(err) throw err;
+    if (err) throw err;
     console.log('MySQL Database connection successful');
-   
 });
 
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
