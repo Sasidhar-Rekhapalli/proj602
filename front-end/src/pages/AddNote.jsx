@@ -10,9 +10,6 @@ const Header = styled.h2`
   display: inline-block;
 `;
 
-const LabelText = styled.label`
-
-`
 
 export default function Login() {
     return(

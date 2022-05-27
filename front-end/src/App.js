@@ -1,9 +1,10 @@
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navbar";
 import AddUser from "./components/AddUser";
 import AddStudent from "./components/AddStudent";
 import UserManagement from "./components/UserManagement";
 import Reset from "./pages/RessetPassword";
 import Login from "./components/AddUser";
+import Footer from "./components/footer";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -20,6 +21,7 @@ function App() {
       </Routes>
       <AddStudent />
       <Login />
+      <Footer/>
     </Router>
   );
 }

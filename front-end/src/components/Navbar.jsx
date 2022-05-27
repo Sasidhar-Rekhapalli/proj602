@@ -1,6 +1,6 @@
 import react,{useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from '../image/saskpolytech.jpg';
+import Logo from '../images/logo.png';
 import styled from 'styled-components';
 
 const Container = styled.div.attrs({

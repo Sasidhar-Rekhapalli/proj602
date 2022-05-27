@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Form, Card, Button } from "react-bootstrap";
-import download from "../download.png";
+import download from "../images/download.png";
 import { Link } from "react-router-dom";
 const CloseBtn = styled.button`
   color: #fff;
@@ -18,6 +18,7 @@ const UserButton = styled.button`
   border-radius: 5px;
   float: right;
 `;
+
 export default function UserManagement() {
   return (
     <>
