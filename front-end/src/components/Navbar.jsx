@@ -1,6 +1,6 @@
 import react,{useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from '../image/logo.png';
+import Logo from '../image/saskpolytech.jpg';
 import styled from 'styled-components';
 
 const Container = styled.div.attrs({
@@ -12,7 +12,7 @@ padding :0px;
 const Nav = styled.div.attrs({
     className:'navbar navbar-expand-lg'
 })`
-background-color: #744197;
+background-color: #8c088c;
 padding:35px 0px;
 `
 const Heading = styled.h1.attrs({
