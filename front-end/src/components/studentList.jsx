@@ -10,30 +10,33 @@ const AddStudentButton = styled.button`
   border-color: #f8f6f9;
   border-radius: 5px;
   height: 50px;
+  lette-spacing:0px !important  ;
   float: right;
 `;
 
 const Title = styled.h1.attrs({
   className: "h1",
 })`
-  margin: 0 200px;
+ text-align:center;
+ margin:10px 0px;
 `;
 
 const Label = styled.label`
-  margin: 0 200px;
   font-weight: bold;
+  display:inline-block;
 `;
 
 const Wrapper = styled.div.attrs({
-  className: "form-group",
+  className: "form-group container",
 })`
-  margin: 0 30px;
+  padding:0px;
+  text-transform: capitalize;
 `;
 
 const InputText = styled.input.attrs({
   className: "form-control",
 })`
-  margin: 0 270px;
+  display:inline-block;
   width: 400px;
 `;
 
@@ -44,23 +47,20 @@ export default function StudentList() {
         <Title>Student</Title>
         <Label>Search: </Label>
         <InputText type="text" placeholder="Student ID" />
-        <div
-          className="AddStudent"
-          style={{ marginRight: "170px", marginTop: "40px" }}
-        >
+        <div className="AddStudent">
           <Link to="/addstudent">
-            <AddStudentButton>
+            <AddStudentButton style={{"letterSpacing":"0px", "padding":"0px 10px","margin":"10px 0px"}}>
               <img
                 src={addStudent}
-                width="30"
-                height="30"
+                width="30px"
+                height="30px"
                 style={{ padding: "2px" }}
               ></img>{" "}
               Add New / Prospective Student
             </AddStudentButton>
           </Link>
         </div>
-        <Card className="mx-auto " style={{ width: "75%", marginTop: "80px" }}>
+        <Card className="mx-auto " style={{ width: "100%", marginTop: "80px" }}>
           <table className="table">
             <thead className="thead-dark">
               <tr>
