@@ -24,7 +24,7 @@ export default function UserManagement() {
     <>
       <div
         className="AddUser"
-        style={{ "margin-right": "170px", "margin-top": "40px" }}
+        style={{ marginRight: "170px", marginTop: "40px" }}
       >
         <Link to="/adduser">
           <UserButton>
@@ -38,7 +38,7 @@ export default function UserManagement() {
           </UserButton>
         </Link>
       </div>
-      <Card className="mx-auto " style={{ width: "75%", "margin-top": "80px" }}>
+      <Card className="mx-auto " style={{ width: "75%", marginTop: "80px" }}>
         <table className="table">
           <thead className="thead-dark">
             <tr>
@@ -71,7 +71,9 @@ export default function UserManagement() {
         </table>
 
         <div className="text-right">
-          <CloseBtn className="btn">Back</CloseBtn>
+          <Link to="/addstudent">
+            <CloseBtn className="btn">Student</CloseBtn>
+          </Link>
         </div>
       </Card>
     </>

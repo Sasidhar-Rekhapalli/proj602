@@ -126,7 +126,7 @@ export default function AddStudent() {
           </Form>
 
           {/* Link to go to student page  */}
-          <Link to="/student">
+          <Link to="/addnote">
             {/* Button to save new student  */}
             <Button className="btn btn-primary mt-3" style={{ float: "right" }}>
               Save new student

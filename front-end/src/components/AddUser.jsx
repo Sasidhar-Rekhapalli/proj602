@@ -25,7 +25,9 @@ export default function addUser() {
           <div className="row mb-3">
             <div className="col-sm-12 col-12 text-center">
               <Header className="">Add User</Header>
-              <Btn className="btn btn-danger pull-right">X</Btn>
+              <Link to="/usermanagement">
+                <Btn className="btn btn-danger pull-right">X</Btn>
+              </Link>
             </div>
           </div>
           {/* form */}

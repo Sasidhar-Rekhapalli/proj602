@@ -3,7 +3,7 @@ import AddUser from "./components/AddUser";
 import AddStudent from "./components/AddStudent";
 import UserManagement from "./components/UserManagement";
 import Reset from "./pages/RessetPassword";
-import Login from "./components/AddUser";
+import Login from "./pages/Login";
 import Footer from "./components/footer";
 import AddNote from "./pages/AddNote";
 
@@ -14,16 +14,14 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
+        <Route exact path="/" element={<Login />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/addstudent" element={<AddStudent />} />
         <Route path="/usermanagement" element={<UserManagement />} />
         <Route path="/adduser" element={<AddUser />} />
+        <Route path="/addnote" element={<AddNote />} />
       </Routes>
-      <AddStudent />
-      <Login />
-      <AddNote/>
-      <Footer/>
+      <Footer />
     </Router>
   );
 }
