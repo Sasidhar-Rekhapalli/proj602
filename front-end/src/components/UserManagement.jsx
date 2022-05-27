@@ -71,7 +71,7 @@ export default function UserManagement() {
         </table>
 
         <div className="text-right">
-          <Link to="/addstudent">
+          <Link to="/studentlist">
             <CloseBtn className="btn">Student</CloseBtn>
           </Link>
         </div>
