@@ -1,95 +1,83 @@
-import react, { useState } from "react";
+import auths from '../api/auth';
+import React,{Component} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../images/logo.png";
-import "../css/loginpage.css";
-import { Link } from "react-router-dom";
-
-function Login() {
-  const [password, setpassword] = useState("");
-  const [username, setusername] = useState("");
-  const [passwordError, setpasswordError] = useState("");
-  const [usernameError, setusernameError] = useState("");
-
-  const validationHandler = (event) => {
-    let allvalid = true;
-
-    if (!username.match(/^[a-zA-Z]{6,12}$/)) {
-      allvalid = false;
-      setusernameError("Username must be size between 8 to 12");
-      return false;
-    } else {
-      setusernameError("");
-      allvalid = true;
+import Logo from '../images/logo.png';
+import Navbar from '../components/Navbar';
+import FootNav from '../components/FootNav';
+import '../css/loginpage.css';
+class Login extends Component{
+    constructor(props) {
+        super(props)
+        this.state = {
+            usernameReg:"",
+            PasswordReg:"",
+            loginUsername:"",
+            loginPassword:"",
+            loginStatus:"",
+            isValid:"",
+        }
     }
-
-    if (!password.match(/^[a-zA-Z]{8,40}$/)) {
-      allvalid = false;
-      setpasswordError("Incorrect password");
-      return false;
-    } else {
-      setpasswordError("");
-      allvalid = true;
+    handleInputUser= async event=>{
+        if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+            this.setState({isValid:"Username must be size between 8 to 12"});
+        }else{
+            this.setState({isValid:""});
+            this.setState({loginUsername:event.target.value})}
     }
-    return allvalid;
-  };
+    handleInputPassword= async event=>{
+        if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+            this.setState({isValid:""});
+        }else{
+            this.setState({loginPassword:event.target.value})}
+    }
+    handleLogin= async event=>{
 
-  const loginSubmit = (e) => {
-    e.preventDefault();
-    validationHandler();
-  };
+        await auths.loginUser(this.state.loginUsername,this.state.loginPassword).then((response)=>{
 
-  return (
-    <div className="LoginPage">
-      <div className=" mainBorder container">
-        <div className="left col-lg-4">
-          <img src={Logo} width="300px" height="300px" alt="Logo" />
+            console.log(response)
+            if(response.data.message){
+                this.setState({loginStatus:response.data.message})
+            }else{
+                this.props.history.push('/isms/main');
+            }
+
+        })
+        
+    }
+render(){
+    return(
+        <div className='LoginPage'>
+            <Navbar/>
+        <div className=' mainBorder container'>
+        <div className='left col-lg-4'>
+        <img src={Logo} width="300px" height="300px" alt="Logo" />
         </div>
-        <div className="right col-lg-8">
-          <div className="justify-content-center">
-            <h2>Login</h2>
-            <div className="formborder col-md-6">
-              <form id="loginform" onSubmit={loginSubmit}>
-                <div className="form-group">
-                  <label>
-                    <span>
-                      <img src={Logo} width="30px" height="30px" alt="Logo" />
-                    </span>
-                    User name :{" "}
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="User Name"
-                    onChange={(event) => setusername(event.target.value)}
-                  />
-                  <p>{usernameError}</p>
-                </div>
-                <div className="form-group">
-                  <label>Password : </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Password"
-                    onChange={(event) => setpassword(event.target.value)}
-                  />
-                  <p>{passwordError}</p>
-                </div>
-                <div className="form-group form-check p-0">
-                  <Link to="/studentlist">
-                    <button type="submit" className="btn btn-primary">
-                      Login
-                    </button>
-                  </Link>
-
-                  <a href="/reset"> | Reset Password</a>
-                </div>
-              </form>
+        <div className='right col-lg-8'>
+        <div className='justify-content-center'>
+          <h2>Login</h2>
+          <div className='formborder col-md-6'>
+            <div id="loginform">
+              <div className='form-group'>
+                <label><span><img src={Logo} width="30px" height="30px" alt="Logo" /></span>User name : </label>
+                <input type="text" className="form-control" placeholder='User Name' onChange={this.handleInputUser}/>
+                <p>{this.state.isValid}</p>
+              </div>
+              <div className='form-group'>
+                <label>Password : </label>
+                <input type="password" className="form-control" placeholder='Password' onChange={this.handleInputPassword}/>
+                <p>{this.state.isValid}</p>
+              </div>
+              <div className='form-group form-check'>
+                <button className='btn btn-primary' onClick={this.handleLogin}>Login</button>
+                <a href='/isms/resetpassword'> | Reset Password</a>
+              </div>
+            </div>
             </div>
           </div>
+        </div> 
         </div>
+        <FootNav/>    
       </div>
-    </div>
-  );
+)}
 }
-
 export default Login;

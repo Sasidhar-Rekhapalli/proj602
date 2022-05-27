@@ -1,4 +1,4 @@
-import react,{useState} from 'react';
+import React,{Component} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled from 'styled-components';
 
@@ -22,8 +22,8 @@ const AText = styled.a`
     text-decoration:none;
     color:white;
 `
-
-function footer(){
+class FootNav extends Component{
+render(){
     return(
         <Container>
             <Footerdiv>
@@ -37,5 +37,6 @@ function footer(){
         </Container>
     )
 }
+}
 
-export default footer;
+export default FootNav;

@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col';
 import styled from 'styled-components'
 import { Form, Card, Button, Nav, Placeholder } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import ConversationTable from '../components/ConversationTable';
 
 
 //import apis from '../api';
