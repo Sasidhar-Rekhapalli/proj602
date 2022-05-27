@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Container = styled.div.attrs({
     className:'container'
 })`
-padding:20px;
+padding:20px 0px;
 `
 
 const Footerdiv = styled.div`
