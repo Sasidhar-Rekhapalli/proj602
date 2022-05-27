@@ -81,7 +81,7 @@ function Login() {
                     </button>
                   </Link>
 
-                  <a href=""> | Reset Password</a>
+                  <a href="/reset"> | Reset Password</a>
                 </div>
               </form>
             </div>

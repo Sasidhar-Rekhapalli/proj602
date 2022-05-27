@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Form, Card, Button } from "react-bootstrap";
 import download from "../images/download.png";
 import { Link } from "react-router-dom";
+
+// Styled components for close button
 const CloseBtn = styled.button`
   color: #fff;
   background-color: #800080;
@@ -11,6 +13,8 @@ const CloseBtn = styled.button`
   margin-right: 10px;
   float: right;
 `;
+
+//  Styled components for Add user button
 const UserButton = styled.button`
   color: #fff;
   background-color: #800080;
@@ -19,28 +23,28 @@ const UserButton = styled.button`
   float: right;
 `;
 
+// functional component
 export default function UserManagement() {
   return (
     <>
-      
+      {/* Card for the form  */}
       <Card className="mx-auto container " style={{ marginTop: "80px" }}>
-      <div
-        className="AddUser"
-        style={{ marginTop: "40px" }}
-      >
-        <Link to="/adduser">
-          <UserButton>
-            <img
-              src={download}
-              width="30"
-              height="30"
-              style={{ padding: "2px" }}
-            ></img>{" "}
-            Add User
-          </UserButton>
-        </Link>
-      </div>
-      
+        <div className="AddUser" style={{ marginTop: "40px" }}>
+          {/* Link for add user page with button  */}
+          <Link to="/adduser">
+            <UserButton>
+              <img
+                src={download}
+                width="30"
+                height="30"
+                style={{ padding: "2px" }}
+              ></img>{" "}
+              Add User
+            </UserButton>
+          </Link>
+        </div>
+
+        {/* Table with user name, role, permissions  */}
         <table className="table">
           <thead className="thead-dark">
             <tr>
@@ -50,6 +54,7 @@ export default function UserManagement() {
               <th scope="col">Permissions</th>
             </tr>
           </thead>
+          {/* User name, role, permission */}
           <tbody>
             <tr>
               <th scope="row">Graham Burnigham</th>
@@ -57,12 +62,14 @@ export default function UserManagement() {
               <td>Admin</td>
               <td>All</td>
             </tr>
+            {/* User name, role, permission */}
             <tr>
               <th scope="row">Bill Block</th>
               <td>BillB</td>
               <td>RCIC</td>
               <td>Read,Write</td>
             </tr>
+            {/* User name, role, permission */}
             <tr>
               <th scope="row">Joe Dave</th>
               <td>Joe12</td>
@@ -72,6 +79,7 @@ export default function UserManagement() {
           </tbody>
         </table>
 
+        {/* Button to go back to student list with button  */}
         <div className="text-right">
           <Link to="/studentlist">
             <CloseBtn className="btn">Student</CloseBtn>
