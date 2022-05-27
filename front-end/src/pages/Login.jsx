@@ -75,7 +75,7 @@ function Login() {
                   <p>{passwordError}</p>
                 </div>
                 <div className="form-group form-check">
-                  <Link to="/usermanagement">
+                  <Link to="/studentlist">
                     <button type="submit" className="btn btn-primary">
                       Login
                     </button>

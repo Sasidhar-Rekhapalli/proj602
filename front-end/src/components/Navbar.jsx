@@ -45,7 +45,7 @@ function navBar() {
         <Heading>International Student Management</Heading>
       </Nav>
       <HeaderDown>
-        <TextLine href="">Welcome Admin</TextLine>
+        <TextLine href="/usermanagement">Manage users</TextLine>
         <TextLine href="/">Logout</TextLine>
       </HeaderDown>
     </Container>
