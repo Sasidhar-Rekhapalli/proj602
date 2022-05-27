@@ -9,7 +9,7 @@ export default function AddStudent() {
       {/* Card with title */}
       <Card.Title className="mt-3 mb-3 text-center">Add New Student</Card.Title>
       {/* Card */}
-      <Card className="mx-auto" style={{ width: "900px" }}>
+      <Card className="mx-auto container" >
         <Card.Body style={{ padding: "1rem 2rem" }}>
           {/* Form  */}
           <Form>
