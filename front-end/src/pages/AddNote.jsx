@@ -2,6 +2,8 @@ import react, { useState } from "react";
 import { Form, Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled from "styled-components";
+import NavBar from "../components/Navbar";
+import Footer from "../components/footer";
 import { Link } from "react-router-dom";
 
 const Header = styled.h2`

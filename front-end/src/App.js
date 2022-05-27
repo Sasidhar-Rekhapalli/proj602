@@ -6,7 +6,6 @@ import Reset from "./pages/RessetPassword";
 import Login from "./pages/Login";
 import Footer from "./components/footer";
 import AddNote from "./pages/AddNote";
-import StudentList from "./components/studentList";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -21,7 +20,6 @@ function App() {
         <Route path="/usermanagement" element={<UserManagement />} />
         <Route path="/adduser" element={<AddUser />} />
         <Route path="/addnote" element={<AddNote />} />
-        <Route path="/studentlist" element={<StudentList />} />
       </Routes>
       <Footer />
     </Router>
