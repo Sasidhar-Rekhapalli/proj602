@@ -19,7 +19,7 @@ export default function addUser() {
   return (
     <>
       {/* Card with margin around it */}
-      <Card className="m-3">
+      <Card className="container mt-2">
         <Card.Body>
           {/* Card body with title and cancel button */}
           <div className="row mb-3">

@@ -22,9 +22,11 @@ const UserButton = styled.button`
 export default function UserManagement() {
   return (
     <>
+      
+      <Card className="mx-auto container " style={{ marginTop: "80px" }}>
       <div
         className="AddUser"
-        style={{ marginRight: "170px", marginTop: "40px" }}
+        style={{ marginTop: "40px" }}
       >
         <Link to="/adduser">
           <UserButton>
@@ -38,7 +40,7 @@ export default function UserManagement() {
           </UserButton>
         </Link>
       </div>
-      <Card className="mx-auto " style={{ width: "75%", marginTop: "80px" }}>
+      
         <table className="table">
           <thead className="thead-dark">
             <tr>
