@@ -5,6 +5,7 @@ import UserManagement from "./components/UserManagement";
 import Reset from "./pages/RessetPassword";
 import Login from "./components/AddUser";
 import Footer from "./components/footer";
+import AddNote from "./pages/AddNote";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ function App() {
       </Routes>
       <AddStudent />
       <Login />
+      <AddNote/>
       <Footer/>
     </Router>
   );
