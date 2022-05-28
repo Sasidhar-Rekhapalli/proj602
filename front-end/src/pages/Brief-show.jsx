@@ -1,31 +1,10 @@
 import React,{Component} from 'react';
 import apis from '../api/student';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import styled from 'styled-components'
-import { Form, Card, Button, Nav, Placeholder } from "react-bootstrap";
+import { ConversationList } from '../components';
+import { Form, Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import {Navbar,FootNav} from "../components"
 
-
-//import apis from '../api';
-
-
-// main form container
-const Wrapper = styled.div.attrs({
-    className: 'form-group'
-})`
-margin: 0 30px;
-`
-// label and text input objects
-const Label = styled.div.attrs({
-    className: 'form-label'
-})``
-
-const InputText = styled.input.attrs({
-    className: 'form-control'
-})`
-margin: 5px;
-`
 class BriefShow extends Component{
     //Create the form loaded student info into apporiate box
     constructor(props) {
@@ -74,248 +53,132 @@ class BriefShow extends Component{
         });
     }
     render(){
-        
-       
+         return(
+    <>
+        <Navbar/>
+      {/* Card with title */}
+      <Card.Title className="mt-3 mb-3 text-center">Student Conversation</Card.Title>
+      {/* Card */}
+      <Card className="mx-auto container" >
+        <Card.Body style={{ padding: "1rem 2rem" }}>
+          {/* Form  */}
+          <Form>
+            <Form.Group className="row mb-3">
+              {/* Student ID label with input  */}
+              <Form.Label className="col-md-2">
+                Student ID:
+              </Form.Label>
+              <Form.Control className="col"></Form.Control>
+            </Form.Group>
 
-        return(
-            <div>
-            <Wrapper> 
-                <Row xs="auto">
-                    <Col>
-                    <Label>Student ID</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={"000NNNN"}
-                            readOnly />
-                    </Col>
-                    <Col>
-                    <Label>Prospective Student </Label>
-                    </Col>
-                    <Col>
-                    <input
-                            name="Prospective Student"
-                            type="checkbox"
-                            checked={this.state.prospective}
-                            readOnly
-                            />
-                    </Col>
-                </Row>
-                <Row xs="auto">
-                    <Col>
-                    <Label>First name</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.firstname}
-                            readOnly
-                             />
-                    </Col>
-                    <Col>
-                    <Label>Last name</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.lastname}
-                            readOnly
-                             />
-                    </Col>
-                    <Col>
-                    <Label>Gender</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.gender}
-                            readOnly
-                             />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="auto">
-                    <Label>Day of Birth</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.dayofbirth}
-                            readOnly
-                             />
-                    </Col>
-                    <Col xs="auto">
-                    <Label >Country</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.country}
-                            readOnly
-                             />
-                    </Col>
-                </Row>
-                <Row >
-                    <Col xs="auto">
-                    <Label>Saskpolytech email</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="email"
-                            value={this.state.saskemail}
-                            readOnly
-                             />
-                    </Col>
-                </Row>
-                <Row xs="auto">
-                    <Col>
-                    <Label>Campus</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.campus}
-                            readOnly
-                             />
-                    </Col>
-                    <Col>
-                    <Label>Academic Period</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.period}
-                            readOnly
-                             />
-                    </Col>
-                    <Col>
-                    <Label>Year</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="year"
-                            value={this.state.year}
-                            readOnly
-                             />
-                    </Col>
-                </Row>
+            {/* First and Last name with input and label  */}
+            <Form.Group>
+              <div className="row mb-3">
+                <Form.Label className="col-md-2">First name:</Form.Label>
+                <Form.Control className="col"></Form.Control>
+                <Form.Label className="col-md-2">Last name:</Form.Label>
+                <Form.Control className="col"></Form.Control>
+              </div>
 
-                <Row>
-                    <Col xs="auto">
-                    <Label>Program</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.program}
-                            readOnly
-                             />
-                    </Col>
-                    <Col xs="auto">
-                    <Label >Degree</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.degree}
-                            readOnly
-                             />
-                    </Col>
-                </Row>
-          
-                <Row xs="auto">
-                    <Col >
-                    <Label>Graduate</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.graduate}
-                            readOnly
-                             />
-                    </Col>
-                    <Col>
-                    <Label >Enroll</Label>
-                    </Col>
-                    <Col>
-                    <InputText
-                            type="text"
-                            value={this.state.enroll}
-                            readOnly
-                             />
-                    </Col>
-                </Row>
-            </Wrapper>
-            
-				<Card className="mx-auto " style={{ width: "75%", "margin-top": "80px" }}>
-					<table className="table">
-					<thead className="thead-dark">
-						<tr>
-						<th scope="col">Category</th>
-						<th scope="col">Date Created</th>
-						<th scope="col">Created By</th>
-						<th scope="col">Last Updated By</th>
-                        <th scope="col">Details</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="results">
-							<th scope="row">Sturdy Permit</th>
-							<td>05-22-2022</td>
-							<td>Graham</td>
-							<td>Graham</td>
-                            <td><Button>Details</Button></td>
-						</tr>
-						<tr class="results">
-							<th scope="row">Sturdy Permit</th>
-							<td>05-22-2022</td>
-							<td>Graham</td>
-							<td>Graham</td>
-                            <td><Button>Details</Button></td>
-						</tr>
-						<tr class="results">
-							<th scope="row">Sturdy Permit</th>
-							<td>05-22-2022</td>
-							<td>Graham</td>
-							<td>Graham</td>
-                            <td><Button>Details</Button></td>
-						</tr>
-						<tr class="results">
-							<th scope="row">Sturdy Permit</th>
-							<td>05-22-2022</td>
-							<td>Graham</td>
-							<td>Graham</td>
-                            <td><Button>Details</Button></td>
-						</tr>
-						<tr class="results">
-							<th scope="row">Sturdy Permit</th>
-							<td>05-22-2022</td>
-							<td>Graham</td>
-							<td>Graham</td>
-                            <td><Button>Details</Button></td>
-						</tr>
-						<tr class="results">
-							<th scope="row">Sturdy Permit</th>
-							<td>05-22-2022</td>
-							<td>Graham</td>
-							<td>Graham</td>
-                            <td><Button>Details</Button></td>
-						</tr>
-						<tr class="results">
-							<th scope="row">Sturdy Permit</th>
-							<td>05-22-2022</td>
-							<td>Graham</td>
-							<td>Graham</td>
-                            <td><Button>Details</Button></td>
-						</tr>
-					</tbody>
-					</table>
-				</Card>
-            </div>
-             
-        
-        )
-    }
+              {/* Check box for Gender  */}
+              <div className="row mb-3">
+                <Form.Label className="col-lg-2">Gender:</Form.Label>
+                <div className="form-check col-lg-1">
+                  <input
+                    className="form-check-input col"
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault1"
+                  />
+                  <label className="form-check-label col">Male</label>
+                </div>
+                <div className="form-check col-lg-1">
+                  <input
+                    className="form-check-input col"
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault2"
+                  />
+                  <label className="form-check-label col">Female</label>
+                </div>
+                {/* Date of Birth with input and label  */}
+                <Form.Label className="col-lg-2" style={{ textAlign: "right" }}>
+                  Day of Birth:
+                </Form.Label>
+                <Form.Control type="date" className="col pt-0"></Form.Control>
+              </div>
+
+              {/* Country input and label  */}
+              <div className="row mb-3">
+                <Form.Label className="col-md-2">Country:</Form.Label>
+                <Form.Control className="col"></Form.Control>
+                {/* SaskPolytech email with input and label  */}
+                <Form.Label className="col">Saskpolytech E-mail:</Form.Label>
+                <Form.Control className="col"></Form.Control>
+              </div>
+
+              {/* Campus Select with options and label  */}
+              <div className="row mb-3">
+                <Form.Label className="col-md-2">Campus:</Form.Label>
+                <Form.Select className="col">
+                  <option>Select Campus</option>
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                </Form.Select>
+                {/* Academic period with options and label  */}
+                <Form.Label className="col">Academic Period:</Form.Label>
+                <Form.Select className="col">
+                  <option>Select Period</option>
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                </Form.Select>
+              </div>
+
+              {/* Year and Program with label and input  */}
+              <div className="row mb-3">
+                <Form.Label className="col-md-2">Year:</Form.Label>
+                <Form.Control className="col"></Form.Control>
+                <Form.Label className="col">Program:</Form.Label>
+                <Form.Control className="col"></Form.Control>
+              </div>
+
+              {/* Degree with options and label  */}
+              <div className="row">
+                <Form.Label className="col-md-2">Degree:</Form.Label>
+                <Form.Select className="col">
+                  <option>Select Degree</option>
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                </Form.Select>
+
+                {/* Graduate Ind with label and input  */}
+                <Form.Label className="col" style={{ textAlign: "right" }}>
+                  Graduate Ind:
+                </Form.Label>
+
+                {/* Enroll with label and input  */}
+                <Form.Control className="col"></Form.Control>
+                <Form.Label className="col" style={{ textAlign: "right" }}>
+                  Enroll:
+                </Form.Label>
+                <Form.Control className="col"></Form.Control>
+              </div>
+            </Form.Group>
+          </Form>
+
+          {/* Link to go to student page  */}
+          <Link to="/isms/studentpage">
+            {/* Button to save new student  */}
+            <Button className="btn btn-primary mt-3" style={{ float: "right" }}>
+              Add New Conversation
+            </Button>
+          </Link>
+          <ConversationList/>
+        </Card.Body>
+      </Card>
+      
+      <FootNav/>
+    </>
+    )}
 }
 export default BriefShow;

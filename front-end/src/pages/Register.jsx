@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Form, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import auths from '../api/auth'
+import { FootNav, Navbar } from "../components";
 // Styled components with custom style for the cancel button
 const Btn = styled.button`
   float: right;
@@ -82,7 +83,8 @@ class RegisterUser extends Component{
 }
 render(){
     return (
-      <div>
+      <>
+        <Navbar/>
         <Card className="m-3">
           <Card.Body>
             <div className="row mb-3">
@@ -142,7 +144,8 @@ render(){
             </div>
           </Card.Body>
         </Card>
-      </div>
+        <FootNav/>
+      </>
     );
 }
 }

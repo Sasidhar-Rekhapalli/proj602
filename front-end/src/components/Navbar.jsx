@@ -47,7 +47,7 @@ render() {
             <Heading>International Student Management</Heading>
           </Nav>
           <HeaderDown>
-            <TextLine href="/usermanagement">Manage users</TextLine>
+            <TextLine href="/isms/usermanagement">Manage users</TextLine>
             <TextLine href="/">Logout</TextLine>
           </HeaderDown>
         </Container>
