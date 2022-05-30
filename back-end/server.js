@@ -22,12 +22,15 @@
  */
 const express = require('express');
 const backend = express();
-
+const cors = require('cors')
 const db = require('./db/connect');
 const router = require('./routes/route');
 
 backend.use(express.json());
-
+backend.use(cors({
+    origin:'http://localhost:3000',
+    credentials: true
+})); 
 /**
  * redirect the first page to isms/main and use router to run
  */

@@ -38,7 +38,7 @@ class Login extends Component{
             if(response.data.message){
                 this.setState({loginStatus:response.data.message})
             }else{
-                this.props.history.push('/isms/main');
+                this.props.history.push('/isms/studentpage');
             }
 
         })

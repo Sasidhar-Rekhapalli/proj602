@@ -73,8 +73,15 @@ class RegisterUser extends Component{
         this.setState({password:event.target.value})}
 }
   handleRegister= async event=>{
-    console.log(this.state.username)
-    console.log(this.state.firstName)
+    var values = [
+        this.state.firstName,
+        this.state.lastName,
+        this.state.email,
+        this.state.tel,
+        this.state.username,
+        this.state.password,
+    ];
+    console.log(values)
     await auths.registerUser(this.state.firstName,this.state.lastName,this.state.email,this.state.tel,this.state.username,this.state.password).then(response=>{
 
     });
