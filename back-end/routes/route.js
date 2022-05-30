@@ -58,10 +58,11 @@ router.delete("/deletestudent/:id", controller.deleteStudent);
  * @param  updateUser  update one user and put user's information into student table
  * @param  resetpassword  update a user password */
 
-router.get("/users", controller.getAllUsers);
-router.get("/getuser/:id", controller.getUserById);
-router.post("/newuser", controller.createUser);
-router.put("/updateuser/:id", controller.updateUser);
+router.get("/user/getuser", controller.getAllUsers);
+router.get("/user/getuser/:id", controller.getUserById);
+router.post("/user/register", controller.createUser);
+router.post("/user/login", controller.login);
+router.put("/user/updateuser/:id", controller.updateUser);
 router.delete("/deleteuser/:id", controller.deleteUser);
 router.put("/resetpassword/:id", controller.resetPassword);
 

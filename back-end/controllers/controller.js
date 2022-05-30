@@ -331,21 +331,18 @@ getUserById = async (req, res) => {
  * @returns  send successfull message to user
  */
 createUser = async (req, res) => {
+  var first_name=req.body.first_name
+  var last_name=req.body.last_name
+  var email=req.body.email
+  var tel=req.body.tel
+  var user_name=req.body.user_name
+  var password=req.body.password
   var sql =
-    "INSERT INTO user (user_id,first_name,last_name ,email ,tel ,user_name, password) VALUES ?";
-  var values = [
-    [
-      req.body.user_id,
-      req.body.first_name,
-      req.body.last_name,
-      req.body.email,
-      req.body.tel,
-      req.body.user_name,
-      req.body.password,
-    ],
-  ];
+    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}')`;
+  
+ 
   dbObject.getConnection((err, connection) => {
-    connection.query(sql, [values], (err, rows) => {
+    connection.query(sql, (err, rows) => {
       connection.release();
       if (err) {
         return res
@@ -460,8 +457,27 @@ resetPassword = async (req, res) => {
     });
   });
 };
-
-
+login= async(req,res)=>
+{
+  const username=req.body.username;
+  const password=req.body.password;
+    dbObject.getConnection((err,connection)=>{
+        connection.query("SELECT * FROM user WHERE user_name = ? and password=?",[username,password],(err,rows)=>{
+            
+            if(err){
+                
+                return res.status(400).json({success: false, err: error});
+            }
+            if(rows.length >0 ){
+                return res.status(200).json({success: true, data: rows});
+                
+            }else{
+                return res.send({message:"Wrong username/password combination"})
+            }
+        });
+        
+    });
+  }
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
 /**
  * in the exports section we export all moudules as created and prepare them to use it in other pages or modules
@@ -481,4 +497,5 @@ module.exports = {
   updateUser,
   deleteUser,
   resetPassword,
+  login
 };
