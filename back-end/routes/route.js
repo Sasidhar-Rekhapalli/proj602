@@ -56,11 +56,13 @@ router.delete("/deletestudent/:id", controller.deleteStudent);
  * @param  getAllUsers  get all user informayion from user table 
  * @param  getUserById  get one user with user id from user table  
  * @param  createUser  create a new user and put user's information into student table
+ * @param  addUser   add a new user and put user's information into student table
  * @param  updateUser  update one user and put user's information into student table
  * @param  resetpassword  update a user password */
 
 router.get("/user/getuser", controller.getAllUsers);
 router.get("/user/getuser/:id", controller.getUserById);
+router.get("/user/getUsersView", controller.getUsersView);
 router.post("/user/register", controller.createUser);
 router.post("/user/addUser", controller.addUser);
 router.post("/user/login", controller.login);

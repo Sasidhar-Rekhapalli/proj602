@@ -379,6 +379,39 @@ getUserById = async (req, res) => {
 
 //#endregion
 
+
+
+//#region for    GET  USERS VIEW
+/**
+ * @module    get  users' name , type and other information and report it in user's page  
+ *            use Get method
+ *            in this route make functionality for front end in user page , show all users' information 
+ * @callback  anonymous callback function gets the query to return all users filed in the database, the result of the query 
+ *            if failed first part(error), throws with 400 and JSON object return unsuccessful and error.
+ *            if the result of the query is the triumphant return status 200, which means the process is succesful and returns 
+ *            data store in the json object.
+ * @params  first_name, last_name,user_name,risia , rcic ,  no_certification
+ * @throws   tthrows error 400 if it could not show students information 
+ * @throws   throws status 200 and return students information
+ * @returns  send successfull message 
+ */
+getUsersView = async (req, res) => {
+  dbObject.getConnection((err, connection) => {
+    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As full_name, user_name, risia , rcic ,  no_certification  FROM user JOIN user_role ON(user_role.user_id=user.user_id) JOIN role ON(user_role.role_id=role.role_id)", (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
+    });
+  });
+};
+
+
 //#region for   CREATE A NEW USER
 /**
  * @module    ceaate a new user and get user's information and send to user table
@@ -585,9 +618,10 @@ module.exports = {
   deleteStudent,
 
   getAllUsers,
-  addUser,
   getUserById,
+  getUsersView,
   createUser,
+  addUser,
   updateUser,
   deleteUser,
   resetPassword,
