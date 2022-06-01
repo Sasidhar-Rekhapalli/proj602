@@ -92,7 +92,7 @@ render(){
     return (
       <>
         <Navbar/>
-        <Card className="m-3">
+        <Card className="container">
           <Card.Body>
             <div className="row mb-3">
               <div className="col-sm-12 col-12 text-center">
@@ -145,7 +145,7 @@ render(){
                   <option>No Certification</option>
                 </Form.Select>
                 <div className="text-center">
-                  <Button className="btn btn-primary" onClick={this.handleRegister}>Create</Button>
+                  <Button className="btn" style={{"background":"#744197","border":"none"}} onClick={this.handleRegister}>Create</Button>
                 </div>
               </div>
             </div>

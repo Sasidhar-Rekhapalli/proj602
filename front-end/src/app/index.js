@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router,Route, Switch } from 'react-router-dom';
+<<<<<<< HEAD
 import {LoginView, RegisterUser,BriefShowStudent,AddNote, StudentPage, UserManagement,AddStudent,ResetPassword} from '../pages';
+=======
+import {LoginView, RegisterUser,BriefShow, StudentPage, UserManagement,AddStudent,ResetPassword,AddNote} from '../pages';
+>>>>>>> addnotespage
 import"bootstrap/dist/css/bootstrap.min.css"
 
 class App extends Component{

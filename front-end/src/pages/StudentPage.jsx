@@ -2,6 +2,7 @@ import {Navbar,FootNav } from "../components";
 import React, {Component} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import addStudent from "../images/logo.png";
 import {  Card  } from "react-bootstrap";
 import apis from "../api/student"
@@ -10,9 +11,10 @@ import 'react-table/react-table.css';
 const AddStudentButton = styled.button`
   color: #fff;
   background-color: #800080;
-  border-color: #f8f6f9;
-  border-radius: 5px;
-  height: 50px;
+  border:none;
+  border-radius:5px;
+  padding:10px;
+  margin:10px;
   lette-spacing:0px !important  ;
   float: right;
 `;
@@ -149,8 +151,9 @@ handleFilter= async event=>{
               showTable = false
           }
 		return(
-			<>
+			<div className="container">
             <Navbar/>
+<<<<<<< HEAD
             <Card>
 			    <Link to="/isms/addstudent">
 					<AddStudentButton className="AddStudent">
@@ -182,9 +185,24 @@ handleFilter= async event=>{
                     />
                 )}
             </Wrapper>
+=======
+            <Card className="mt-3 mb-3">
+	    	    	<Link to="/isms/addstudent">
+			  		  <AddStudentButton className="AddStudent">
+						    <img
+						    src={addStudent}
+						    width="30"
+					    	height="30"
+						
+						    ></img>{" "}
+					    	Add New / Prospective Student
+					      </AddStudentButton>
+					    </Link>
+                 <StudentList/>
+>>>>>>> addnotespage
             </Card>
             <FootNav />
-			</>
+			</div>
 		);
 	}; 
 

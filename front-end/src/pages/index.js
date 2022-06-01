@@ -7,4 +7,8 @@ import AddStudent from './AddNewStudent';
 import ResetPassword from './ResetPassword';
 import AddNote from './AddNote';
 
+<<<<<<< HEAD
 export{BriefShowStudent,LoginView,RegisterUser,StudentPage,UserManagement,AddStudent,ResetPassword,AddNote}
+=======
+export{BriefShow,LoginView,RegisterUser,StudentPage,UserManagement,AddStudent,ResetPassword,AddNote}
+>>>>>>> addnotespage

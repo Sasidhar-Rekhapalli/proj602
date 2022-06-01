@@ -30,7 +30,7 @@ class UserManagement extends Component {
     return (
         <>
         <Navbar/>
-          <Card className="mx-auto container " style={{ marginTop: "80px" }}>
+          <Card className="mx-auto container " style={{ marginTop: "15px" }}>
             <div className="AddUser" style={{ marginTop: "40px" }}>
               {/* Link for add user page with button  */}
               <Link to="/isms/register">

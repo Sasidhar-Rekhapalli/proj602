@@ -47,7 +47,6 @@ class Login extends Component{
 render(){
     return(
         <div className='LoginPage'>
-            <Navbar/>
         <div className=' mainBorder container'>
         <div className='left col-lg-4'>
         <img src={Logo} width="300px" height="300px" alt="Logo" />
@@ -68,7 +67,7 @@ render(){
                 <p>{this.state.isValid}</p>
               </div>
               <div className='form-group form-check'>
-                <button className='btn btn-primary' onClick={this.handleLogin}>Login</button>
+                <button className='btn' onClick={this.handleLogin}>Login</button>
                 <a href='/isms/resetpassword'> | Reset Password</a>
               </div>
             </div>
@@ -76,7 +75,6 @@ render(){
           </div>
         </div> 
         </div>
-        <FootNav/>    
       </div>
 )}
 }
