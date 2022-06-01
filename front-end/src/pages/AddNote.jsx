@@ -25,9 +25,9 @@ class AddNote extends Component{
         {/* Card for form  */}
         <Card className="m-3">
           <Card.Body>
-            <div className="d-flex justify-content-center">
+            <div className="col-md-12">
               {/* Form  */}
-              <Form>
+              <Form className="m-3">
                 <Form.Group>
                   <div className="row mb-3">
                     {/* Label for student Id and input  */}
@@ -48,11 +48,10 @@ class AddNote extends Component{
                     <Form.Label className="col-md-2">Subject : </Form.Label>
                     <Form.Control
                       className="col"
-                      style={{ width: "600px" }}
                     ></Form.Control>
   
                     {/* Label with category and select options  */}
-                    <Form.Label className="col">Category :</Form.Label>
+                    <Form.Label className="col-md-3">Category :</Form.Label>
                     <Form.Select className="col">
                       <option>-----Select Category---</option>
                       <option>Option 1</option>
@@ -91,24 +90,26 @@ class AddNote extends Component{
             </div>
           </nav>
           {/* Update the notes for specific student  */}
-          <Link to="/studentlist" style={{ display: "inline-block" }}>
+          <div style={{display:"inline-block"}}>
+          <Link to="/studentlist">
             <Button
-              className="btn btn-primary m-3 col-md-2"
-              style={{ float: "right" }}
+              className="btn m-3 col-md-2"
+              style={{ float: "right",background:"#744197",border:"none",cursor:"pointer" }}
             >
               Update
             </Button>
           </Link>
   
           {/* Cancel button to go back to student list  */}
-          <Link to="/isms/briefshow" style={{ display: "inline-block" }}>
+          <Link to="/isms/briefshow">
             <Button
-              className="btn btn-primary m-3 col-md-2"
-              style={{ float: "right" }}
+              className="btn btn-danger m-3 col-md-2"
+              style={{ float: "right",cursor:"pointer" }}
             >
               Cancel
             </Button>
           </Link>
+          </div>
         </Card>
       </div>
     );

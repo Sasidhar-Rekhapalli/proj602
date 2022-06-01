@@ -92,7 +92,7 @@ render(){
     return (
       <>
         <Navbar/>
-        <Card className="container">
+        <Card className="container mt-3">
           <Card.Body>
             <div className="row mb-3">
               <div className="col-sm-12 col-12 text-center">

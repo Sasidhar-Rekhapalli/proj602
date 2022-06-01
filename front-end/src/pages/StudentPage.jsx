@@ -153,7 +153,6 @@ handleFilter= async event=>{
 		return(
 			<div className="container">
             <Navbar/>
-<<<<<<< HEAD
             <Card>
 			    <Link to="/isms/addstudent">
 					<AddStudentButton className="AddStudent">
@@ -167,7 +166,7 @@ handleFilter= async event=>{
 					</AddStudentButton>
 					</Link>
           <Wrapper>
-				<Label>Search: </Label>
+				<Label className="m-3">Search: </Label>
 				<InputText
                     type="text"
 					          placeholder="Student ID"
@@ -185,21 +184,6 @@ handleFilter= async event=>{
                     />
                 )}
             </Wrapper>
-=======
-            <Card className="mt-3 mb-3">
-	    	    	<Link to="/isms/addstudent">
-			  		  <AddStudentButton className="AddStudent">
-						    <img
-						    src={addStudent}
-						    width="30"
-					    	height="30"
-						
-						    ></img>{" "}
-					    	Add New / Prospective Student
-					      </AddStudentButton>
-					    </Link>
-                 <StudentList/>
->>>>>>> addnotespage
             </Card>
             <FootNav />
 			</div>
