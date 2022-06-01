@@ -12,6 +12,6 @@ export const getAllUsers=()=>auth.get(`/user/getuser`);
 const auths={
     registerUser,
     loginUser,
-  
+    getAllUsers
 }
 export default auths;
