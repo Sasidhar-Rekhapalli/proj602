@@ -31,17 +31,6 @@ const Title = styled.h1.attrs({
     width: 400px;
   `;
  
-class Detail extends Component {
-    updateUser = event => {
-        event.preventDefault()
-        window.location.href=`/isms/update/${this.props.id}`
-    }
-
-    render(){
-        // invike the update view for the current row -> this.props
-        return <Detail onClick={this.updateUser}>Details</Detail>
-    }
-} 
 class UserList extends Component{
 	constructor(props) {
         super(props)
@@ -78,7 +67,7 @@ class UserList extends Component{
         const columns = [
 			{
                 Header: 'Name',
-                accessor:'first_name',
+                accessor:'name',
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
@@ -86,7 +75,7 @@ class UserList extends Component{
             },
             {
                 Header: 'Username',
-                accessor:'std_id',
+                accessor:'user_name',
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
@@ -94,7 +83,7 @@ class UserList extends Component{
             },
             {
                 Header: 'Role ',
-                accessor:'first_name',
+                accessor:'role',
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
@@ -102,11 +91,10 @@ class UserList extends Component{
             },
             {
                 Header: 'Permissions',
-                accessor:'last_name',
+                accessor:'permission',
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-
             }, 
 
         ]
@@ -131,8 +119,6 @@ class UserList extends Component{
                     />
                 )}
             </Wrapper>
-
-
         )
     }
 }
