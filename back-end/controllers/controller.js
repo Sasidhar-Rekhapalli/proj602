@@ -332,16 +332,16 @@ getUserById = async (req, res) => {
  * @returns  send successfull message to user
  */
 createUser = async (req, res) => {
-  var first_name=req.body.first_name
-  var last_name=req.body.last_name
-  var email=req.body.email
-  var tel=req.body.tel
-  var user_name=req.body.user_name
-  var password=req.body.password
+  var first_name = req.body.first_name
+  var last_name = req.body.last_name
+  var email = req.body.email
+  var tel = req.body.tel
+  var user_name = req.body.user_name
+  var password = req.body.password
   var sql =
     `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}')`;
-  
- 
+
+
   dbObject.getConnection((err, connection) => {
     connection.query(sql, (err, rows) => {
       connection.release();
@@ -357,6 +357,42 @@ createUser = async (req, res) => {
   });
 };
 
+//#endregion
+
+
+//#region for   ADD A USER
+/**
+ * @module    Add a new user , send to user table
+ *            save query for insert information in a variable and get data from customer save it in an array, then check the connection and throw proper information
+ * @params  user_id, first_name, last_name, email,tel ,user_name, password
+ * @throws   throws error 400 if it could not add information to user
+ * @returns  send successfull message to user
+ */
+addUser = async (req, res) => {
+  var first_name = req.body.first_name
+  var last_name = req.body.last_name
+  var email = req.body.email
+  var tel = req.body.tel
+  var user_name = req.body.user_name
+  var password = req.body.password
+  var sql =
+    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}')`;
+
+
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ message: "User Added" });
+    });
+  });
+};
 //#endregion
 
 //#region for   UPDATE USER
@@ -458,27 +494,26 @@ resetPassword = async (req, res) => {
     });
   });
 };
-login= async(req,res)=>
-{
-  const username=req.body.username;
-  const password=req.body.password;
-    dbObject.getConnection((err,connection)=>{
-        connection.query("SELECT * FROM user WHERE user_name = ? and password=?",[username,password],(err,rows)=>{
-            
-            if(err){
-                
-                return res.status(400).json({success: false, err: error});
-            }
-            if(rows.length >0 ){
-                return res.status(200).json({success: true, data: rows});
-                
-            }else{
-                return res.send({message:"Wrong username/password combination"})
-            }
-        });
-        
+login = async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  dbObject.getConnection((err, connection) => {
+    connection.query("SELECT * FROM user WHERE user_name = ? and password=?", [username, password], (err, rows) => {
+
+      if (err) {
+
+        return res.status(400).json({ success: false, err: error });
+      }
+      if (rows.length > 0) {
+        return res.status(200).json({ success: true, data: rows });
+
+      } else {
+        return res.send({ message: "Wrong username/password combination" })
+      }
     });
-  }
+
+  });
+}
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
 /**
  * in the exports section we export all moudules as created and prepare them to use it in other pages or modules
@@ -493,6 +528,7 @@ module.exports = {
   deleteStudent,
 
   getAllUsers,
+  addUser,
   getUserById,
   createUser,
   updateUser,
