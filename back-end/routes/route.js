@@ -41,8 +41,8 @@ const controller = require('../controllers/controller');
  * @param  updateStudent  update one student information 
  * @param  deleteStudent  delete one student's from table */
 
-router.get("/main", controller.getAllStudents);
-router.get("/getstuent/:id", controller.getStudentById);
+router.get("/getallstudent", controller.getAllStudents);
+router.get("/getstudent/:id", controller.getStudentById);
 router.post("/newstudent", controller.createStudent);
 router.put("/updatestudent/:id", controller.updateStudent);
 router.delete("/deletestudent/:id", controller.deleteStudent);
