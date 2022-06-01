@@ -216,7 +216,7 @@ addStudent = async (req, res) => {
       }
       return res
         .status(200)
-        .json({ message: "Student Created" });
+        .json({ message: "Student Added" });
     });
   });
 };
@@ -580,6 +580,7 @@ module.exports = {
   getAllStudents,
   getStudentById,
   createStudent,
+  addStudent,
   updateStudent,
   deleteStudent,
 
