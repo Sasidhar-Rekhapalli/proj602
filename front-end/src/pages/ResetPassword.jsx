@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import styled from "styled-components";
 import { Form, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FootNav,Navbar } from "../components";
 
 // Styled component for cancel button
@@ -25,14 +26,16 @@ class ResetPassword extends Component{
       <>
       <Navbar/>
         {/* Card for form  */}
-        <Card className="mx-auto " style={{ width: "85%", marginTop: "120px" }}>
+        <Card className="container " style={{ marginTop: "10px" }}>
           <Card.Body>
             <div className="row mb-3">
               <div className="col-sm-12 col-12 text-center">
                 {/* Card Title  */}
                 <Header className="">Reset Password</Header>
                 {/* Button to cancel the page  */}
-                <Btn className="btn btn-danger pull-right">X</Btn>
+                <Link to="/">
+                  <Btn className="btn btn-danger pull-right">X</Btn>
+                </Link>
               </div>
             </div>
             <div className="d-flex justify-content-center">
@@ -51,9 +54,10 @@ class ResetPassword extends Component{
                   <Form.Control placeholder="RetypePassword"></Form.Control>
                 </Form.Group>
                 {/* Reset button  */}
-                <div className="text-center">
-                  <ResetBtn className="btn">Reset</ResetBtn>
-                </div>
+                
+                  <div className="text-center">
+                    <ResetBtn className="btn">Reset</ResetBtn>
+                  </div>
               </Form>
             </div>
           </Card.Body>

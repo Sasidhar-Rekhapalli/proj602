@@ -2,14 +2,16 @@ import { StudentList,Navbar,FootNav } from "../components";
 import React, {Component} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import addStudent from "../images/logo.png";
 import {  Card  } from "react-bootstrap";
 const AddStudentButton = styled.button`
   color: #fff;
   background-color: #800080;
-  border-color: #f8f6f9;
-  border-radius: 5px;
-  height: 50px;
+  border:none;
+  border-radius:5px;
+  padding:10px;
+  margin:10px;
   lette-spacing:0px !important  ;
   float: right;
 `;
@@ -42,24 +44,24 @@ const InputText = styled.input.attrs({
 class StudentPage extends Component{
 	render(){
 		return(
-			<>
+			<div className="container">
             <Navbar/>
-            <Card>
-			<Link to="/isms/addstudent">
-					<AddStudentButton className="AddStudent">
-						<img
-						src={addStudent}
-						width="30"
-						height="30"
+            <Card className="mt-3 mb-3">
+	    	    	<Link to="/isms/addstudent">
+			  		  <AddStudentButton className="AddStudent">
+						    <img
+						    src={addStudent}
+						    width="30"
+					    	height="30"
 						
-						></img>{" "}
-						Add New / Prospective Student
-					</AddStudentButton>
-					</Link>
-            <StudentList/>
+						    ></img>{" "}
+					    	Add New / Prospective Student
+					      </AddStudentButton>
+					    </Link>
+                 <StudentList/>
             </Card>
             <FootNav />
-			</>
+			</div>
 		);
 	}; 
 

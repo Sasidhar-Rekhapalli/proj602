@@ -29,8 +29,8 @@ render(){
             <Footerdiv>
                 <TextP>
                     <AText>Disclaimer</AText>|
-                    <AText>PrivacyVision</AText>
-                    <AText> | © Saskatchewan Polytechnic | </AText>
+                    <AText>PrivacyVision</AText>|
+                    <AText>© Saskatchewan Polytechnic</AText>|
                     <AText>Vision</AText>
                 </TextP>
             </Footerdiv>

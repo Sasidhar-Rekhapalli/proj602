@@ -32,11 +32,13 @@ class StudentList extends Component{
     render(){
         return(
             <>
-            
             <Title>Student</Title>
-            <Label>Search: </Label>
-            <InputText type="text" placeholder="Student ID" />
-				<Card className="mx-auto " style={{ width: "75%", "margin-top": "80px" }}>
+            
+			<div style={{"display":"flex"}}>
+				<Label style={{"margin":"12px"}}>Search: </Label>
+            	<InputText type="text" placeholder="Student ID" />
+			</div>
+				<Card className="mx-auto " style={{ width: "85%", "margin": "20px" }}>
 					<table className="table">
 					<thead className="thead-dark">
 						<tr>

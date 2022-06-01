@@ -7,29 +7,26 @@ class AddStudent extends Component{
         return(
             <>
             <Navbar/>
-      {/* Card with title */}
-      <Card.Title className="mt-3 mb-3 text-center">Add New Student</Card.Title>
-      {/* Card */}
-      <Card className="mx-auto container" >
-        <Card.Body style={{ padding: "1rem 2rem" }}>
-          {/* Form  */}
-          <Form>
-            <Form.Group className="row mb-3">
-              {/* Prospective Student Checkbox  */}
-              <div className=" col">
-                <input
-                  type="checkbox"
-                  className="form-check-input "
-                  id="exampleCheck1"
-                />
-                <label className="col">Prospective Student</label>
-              </div>
-              {/* Student ID label with input  */}
-              <Form.Label className="col-sm-2" style={{ textAlign: "right" }}>
-                Student ID:
-              </Form.Label>
-              <Form.Control className="col pt-0"></Form.Control>
-            </Form.Group>
+            {/* Card with title */}
+            <Card.Title className="mt-3 mb-3 text-center">Add New Student</Card.Title>
+              {/* Card */}
+              <Card className="mx-auto container" >
+                <Card.Body style={{ padding: "1rem 2rem" }}>
+                {/* Form  */}
+                <Form>
+                  <Form.Group className="row mb-3">
+                  {/* Prospective Student Checkbox  */}
+                    <div className=" col">
+                      <input type="checkbox" className="form-check-input " id="exampleCheck1" />
+                      <label className="col">Prospective Student</label>
+                     </div>
+                    
+                    {/* Student ID label with input  */}
+                    <Form.Label className="col-sm-2" style={{ textAlign: "right" }}>
+                      Student ID:
+                    </Form.Label>
+                    <Form.Control className="col pt-0"></Form.Control>
+                  </Form.Group>
 
             {/* First and Last name with input and label  */}
             <Form.Group>
@@ -67,7 +64,7 @@ class AddStudent extends Component{
                 </Form.Label>
                 <Form.Control type="date" className="col pt-0"></Form.Control>
               </div>
-
+          
               {/* Country input and label  */}
               <div className="row mb-3">
                 <Form.Label className="col-md-2">Country:</Form.Label>
