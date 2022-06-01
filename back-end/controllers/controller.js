@@ -98,7 +98,8 @@ getAllStudents = async (req, res) => {
  */
 getStudentById = async (req, res) => {
   var studentId = req.params.id;
-  var sql = "SELECT * FROM student WHERE student_id = ?";
+  console.log(studentId)
+  var sql = "SELECT * FROM student WHERE std_id = ?";
   dbObject.getConnection((err, connection) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
