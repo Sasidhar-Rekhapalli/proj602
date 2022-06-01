@@ -5,5 +5,6 @@ import StudentPage from './StudentPage';
 import UserManagement from './UserManagement';
 import AddStudent from './AddNewStudent';
 import ResetPassword from './ResetPassword';
+import AddNote from './AddNote';
 
-export{BriefShowStudent,LoginView,RegisterUser,StudentPage,UserManagement,AddStudent,ResetPassword}
+export{BriefShowStudent,LoginView,RegisterUser,StudentPage,UserManagement,AddStudent,ResetPassword,AddNote}

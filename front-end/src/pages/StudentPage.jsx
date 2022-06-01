@@ -48,6 +48,7 @@ const InputText = styled.input.attrs({
 class Details extends Component {
   updateUser = event => {
       event.preventDefault()
+      // console.log(this.props.id)
       window.location.href=`/isms/briefshow/${this.props.id}`
   }
 
@@ -61,8 +62,9 @@ class StudentPage extends Component{
     super(props)
     this.state = {
         student: [],
+        allstudents:[],
         isLoading: false,
-        search:''
+        
     }
 }
 componentDidMount = async() => {
@@ -77,11 +79,19 @@ componentDidMount = async() => {
                           student: student.data.data,
                           // need to reference the data using syntax above right
                           // then turn isLoading off now that we're done
+                          allstudents:student.data.data,
                           isLoading: false
+                          
                       })
                   }
               )
 }
+handleFilter= async event=>{
+  let {student}=this.state
+  student=this.state.allstudents.filter(a=>a.std_id.toString().includes(event.target.value) || a.first_name.includes(event.target.value) ||a.last_name.includes(event.target.value));
+  this.setState({student:student})
+  }
+  
 	render(){
     const {student, isLoading} = this.state;
     const columns = [
@@ -122,9 +132,12 @@ componentDidMount = async() => {
               accessor: '',
               width: 100,
               Cell: function(props) {
+                // console.log(props.original.std_id);
+                // const rows=props;
+                // console.log(rows);
                   return(
                       <span>
-                          <Details id={props.original._id} />
+                          <Details id={props.original.std_id} />
                       </span>
                   )
               }
@@ -154,7 +167,8 @@ componentDidMount = async() => {
 				<Label>Search: </Label>
 				<InputText
                     type="text"
-					placeholder="Student ID"
+					          placeholder="Student ID"
+                    onChange={this.handleFilter}
                 />
                 {showTable && (
                     <ReactTable 

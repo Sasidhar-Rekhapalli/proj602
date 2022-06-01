@@ -57,13 +57,11 @@ class BriefShowStudent extends Component{
                     })
                   }
                 )
-          console.log(this.state.student);
-          console.log(this.state.studentID);
-          console.log(this.state.firstname);
-          console.log(id)
+          
         // use api call to retrieve doccument here
      
     }
+    handleAddNote
     render(){
       
          return(
@@ -197,7 +195,7 @@ class BriefShowStudent extends Component{
           </Form>
 
           {/* Link to go to student page  */}
-          <Link to="/isms/studentpage">
+          <Link to="/isms/addnote/id">
             {/* Button to save new student  */}
             <Button className="btn btn-primary mt-3" style={{ float: "right" }}>
               Add New Conversation
