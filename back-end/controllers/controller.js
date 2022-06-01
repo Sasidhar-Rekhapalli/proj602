@@ -168,6 +168,62 @@ createStudent = async (req, res) => {
 };
 //#endregion
 
+
+
+//#region for   ADD A  STUDENT
+/**
+ * @module    Add student's information and put into student table.
+ *            in the first part save sql query for insert and save values get from user and save in same order in array variable named values
+ * @callback  first anonymous callback function after checking connection invoke query and in second function check query and values saved in array
+ *            same as other part response proper output with JSON object and messages:
+ *            - if error happend, throws with 400 means unsuccessful result
+ *            - if successful, return status 200 and return that student information in JSON object 
+ * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
+            graudate_ind, enroll
+ * @throws   throws error 400 if it could not add information to user
+ * @returns  send successfull message to user
+ */
+addStudent = async (req, res) => {
+  var sql =
+    "INSERT INTO student (prospective, std_id, first_name, middle_name, last_name, gender, birthdate, email, country, academic_period, campus, program, degree, year, graudate_ind, enroll) VALUES ?";
+  var values = [
+    [
+      req.body.prospective,
+      req.body.std_id,
+      req.body.first_name,
+      req.body.middle_name,
+      req.body.last_name,
+      req.body.gender,
+      req.body.birthdate,
+      req.body.email,
+      req.body.country,
+      req.body.academic_period,
+      req.body.campus,
+      req.body.program,
+      req.body.degree,
+      req.body.year,
+      req.body.graudate_ind,
+      req.body.enroll,
+    ],
+  ];
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, [values], (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ message: "Student Created" });
+    });
+  });
+};
+//#endregion
+
+
+
 //#region for   UPDATE STUDENT
 /**
  * @module    for changing and other data manipulation first retrive student's information by student_id and update data. Then put into student table

@@ -44,6 +44,7 @@ const controller = require('../controllers/controller');
 router.get("/getallstudent", controller.getAllStudents);
 router.get("/getstudent/:id", controller.getStudentById);
 router.post("/newstudent", controller.createStudent);
+router.post("/addstudent", controller.addStudent);
 router.put("/updatestudent/:id", controller.updateStudent);
 router.delete("/deletestudent/:id", controller.deleteStudent);
 
