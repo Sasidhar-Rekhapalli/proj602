@@ -35,7 +35,7 @@ class UserList extends Component{
 	constructor(props) {
         super(props)
         this.state = {
-            student: [],
+            user: [],
             isLoading: false,
             search:''
         }
