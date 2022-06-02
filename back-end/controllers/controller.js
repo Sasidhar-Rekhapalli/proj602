@@ -168,8 +168,6 @@ createStudent = async (req, res) => {
 };
 //#endregion
 
-
-
 //#region for   ADD A  STUDENT
 /**
  * @module    Add student's information and put into student table.
@@ -221,8 +219,6 @@ addStudent = async (req, res) => {
   });
 };
 //#endregion
-
-
 
 //#region for   UPDATE STUDENT
 /**
@@ -339,7 +335,6 @@ getAllUsers = async (req, res) => {
     });
   });
 };
-
 //#endregion
 
 //#region for  GET USER BY ID 
@@ -380,8 +375,6 @@ getUserById = async (req, res) => {
 
 //#endregion
 
-
-
 //#region for    GET  USERS VIEW
 /**
  * @module    get  users' name , type and other information and report it in user's page  
@@ -398,7 +391,7 @@ getUserById = async (req, res) => {
  */
 getUsersView = async (req, res) => {
   dbObject.getConnection((err, connection) => {
-    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As full_name, user_name, risia , rcic ,  no_certification  FROM user JOIN user_role ON(user_role.user_id=user.user_id) JOIN role ON(user_role.role_id=role.role_id)", (err, rows) => {
+    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, risia , rcic ,  no_certification  FROM user JOIN user_role ON(user_role.user_id=user.user_id) JOIN role ON(user_role.role_id=role.role_id)", (err, rows) => {
       connection.release();
       if (err) {
         return res
@@ -411,7 +404,7 @@ getUsersView = async (req, res) => {
     });
   });
 };
-
+//#endregion
 
 //#region for   CREATE A NEW USER
 /**
@@ -448,7 +441,6 @@ createUser = async (req, res) => {
 };
 
 //#endregion
-
 
 //#region for   ADD A USER
 /**
@@ -524,8 +516,7 @@ updateUser = async (req, res) => {
     });
   });
 };
-////#endregion
-
+//#endregion
 
 //#region for   DELETE USER
 /**
@@ -555,7 +546,6 @@ deleteUser = async (req, res) => {
   });
 };
 //#endregion
-
 
 //#region for   RESET PASSWORD
 /**
@@ -604,7 +594,7 @@ login = async (req, res) => {
 
   });
 }
-
+//#endregion
 
 //#region for  Get Conversation
 /**
