@@ -324,6 +324,7 @@ deleteStudent = async (req, res) => {
  * @returns  send successfull message 
  */
 getAllUsers = async (req, res) => {
+
   dbObject.getConnection((err, connection) => {
     connection.query("SELECT * FROM user", (err, rows) => {
       connection.release();
@@ -603,6 +604,38 @@ login = async (req, res) => {
 
   });
 }
+
+
+//#region for  Get Conversation
+/**
+ * @module    get information for each student and get conversation result for specific student
+ * @params  category,datecreated,createdby,lastupdatedby
+ * @throws   tthrows error 400 if it could not show the user information 
+ * @throws   throws status 200 and return the user information
+ * @returns  send successfull message 
+ */
+getConversation = async (req, res) => {
+  var studentId = req.params.id;
+  console.log(studentId);
+  var sql = "SELECT category,datecreated,createdby,lastupdatedby FROM conversation JOIN student USING(student_id) WHERE std_id= ?";
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, studentId, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
+    });
+  });
+};
+
+//#endregion
+
+
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
 /**
  * in the exports section we export all moudules as created and prepare them to use it in other pages or modules
@@ -625,5 +658,6 @@ module.exports = {
   updateUser,
   deleteUser,
   resetPassword,
-  login
+  login,
+  getConversation
 };

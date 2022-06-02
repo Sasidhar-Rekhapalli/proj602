@@ -38,8 +38,10 @@ const controller = require('../controllers/controller');
  * @param getAllStudents  get all student informayion from student table 
  * @param getStudentById  get one student with student id from student table  
  * @param  createStudent  create a new student and put student's information into student table 
+ * @param  addstudent  create a new student and put student's information into student table 
  * @param  updateStudent  update one student information 
- * @param  deleteStudent  delete one student's from table */
+ * @param  deleteStudent  delete one student's from table 
+ * @param  getconversation retun all conversation for each student */
 
 router.get("/getallstudent", controller.getAllStudents);
 router.get("/getstudent/:id", controller.getStudentById);
@@ -47,6 +49,7 @@ router.post("/newstudent", controller.createStudent);
 router.post("/addstudent", controller.addStudent);
 router.put("/updatestudent/:id", controller.updateStudent);
 router.delete("/deletestudent/:id", controller.deleteStudent);
+router.get("/getconversation/:id", controller.getConversation);
 
 //#endregion
 
