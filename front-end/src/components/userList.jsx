@@ -35,7 +35,7 @@ class UserList extends Component{
 	constructor(props) {
         super(props)
         this.state = {
-            student: [],
+            user: [],
             isLoading: false,
             search:''
         }
@@ -82,21 +82,27 @@ class UserList extends Component{
 
             },
             {
-                Header: 'Role ',
-                accessor:'role',
+                Header: 'RISIA',
+                accessor:'risia',
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
 
             },
             {
-                Header: 'Permissions',
-                accessor:'permission',
+                Header: 'RCIC',
+                accessor:'rcic',
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
             }, 
-
+            {
+                Header: 'No Certification',
+                accessor:'no_certification',
+                style: {'whiteSpace':'unset'},
+                // specify a row of data to display
+                Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+            },
         ]
 
         let showTable = true
