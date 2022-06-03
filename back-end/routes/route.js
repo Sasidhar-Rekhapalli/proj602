@@ -67,7 +67,7 @@ router.get("/user/getuser", controller.getAllUsers);
 router.get("/user/getuser/:id", controller.getUserById);
 router.get("/user/getUsersView", controller.getUsersView);
 router.post("/user/register", controller.createUser);
-router.post("/user/addUser", controller.addUser);
+router.post("/user/adduser", controller.addUser);
 router.post("/user/login", controller.login);
 router.put("/user/updateuser/:id", controller.updateUser);
 router.delete("/deleteuser/:id", controller.deleteUser);
