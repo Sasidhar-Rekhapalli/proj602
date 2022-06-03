@@ -62,7 +62,7 @@ const dbObject = require("../db/connect");
  */
 getAllStudents = async (req, res) => {
   dbObject.getConnection((err, connection) => {
-    connection.query("SELECT * FROM student", (err, rows) => {
+    connection.query("SELECT * FROM student ORDER BY student_id DESC", (err, rows) => {
       connection.release();
       if (err) {
         return res
@@ -391,7 +391,7 @@ getUserById = async (req, res) => {
  */
 getUsersView = async (req, res) => {
   dbObject.getConnection((err, connection) => {
-    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, risia , rcic ,  no_certification  FROM user JOIN user_role ON(user_role.user_id=user.user_id) JOIN role ON(user_role.role_id=role.role_id)", (err, rows) => {
+    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, role)", (err, rows) => {
       connection.release();
       if (err) {
         return res
@@ -421,8 +421,9 @@ createUser = async (req, res) => {
   var tel = req.body.tel
   var user_name = req.body.user_name
   var password = req.body.password
+  var role = req.body.role
   var sql =
-    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}')`;
+    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, role) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}' '${role}')`;
 
 
   dbObject.getConnection((err, connection) => {
@@ -457,8 +458,9 @@ addUser = async (req, res) => {
   var tel = req.body.tel
   var user_name = req.body.user_name
   var password = req.body.password
+  var role = req.body.role
   var sql =
-    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}')`;
+    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, role) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}', '${role}')`;
 
 
   dbObject.getConnection((err, connection) => {
@@ -624,6 +626,8 @@ getConversation = async (req, res) => {
 };
 
 //#endregion
+
+
 
 
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
