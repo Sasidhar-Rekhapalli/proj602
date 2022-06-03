@@ -38,14 +38,18 @@ const controller = require('../controllers/controller');
  * @param getAllStudents  get all student informayion from student table 
  * @param getStudentById  get one student with student id from student table  
  * @param  createStudent  create a new student and put student's information into student table 
+ * @param  addstudent  create a new student and put student's information into student table 
  * @param  updateStudent  update one student information 
- * @param  deleteStudent  delete one student's from table */
+ * @param  deleteStudent  delete one student's from table 
+ * @param  getconversation retun all conversation for each student */
 
 router.get("/getallstudent", controller.getAllStudents);
 router.get("/getstudent/:id", controller.getStudentById);
 router.post("/newstudent", controller.createStudent);
+router.post("/addstudent", controller.addStudent);
 router.put("/updatestudent/:id", controller.updateStudent);
 router.delete("/deletestudent/:id", controller.deleteStudent);
+router.get("/getconversation/:id", controller.getConversation);
 
 //#endregion
 
@@ -55,12 +59,15 @@ router.delete("/deletestudent/:id", controller.deleteStudent);
  * @param  getAllUsers  get all user informayion from user table 
  * @param  getUserById  get one user with user id from user table  
  * @param  createUser  create a new user and put user's information into student table
+ * @param  addUser   add a new user and put user's information into student table
  * @param  updateUser  update one user and put user's information into student table
  * @param  resetpassword  update a user password */
 
 router.get("/user/getuser", controller.getAllUsers);
 router.get("/user/getuser/:id", controller.getUserById);
+router.get("/user/getUsersView", controller.getUsersView);
 router.post("/user/register", controller.createUser);
+router.post("/user/addUser", controller.addUser);
 router.post("/user/login", controller.login);
 router.put("/user/updateuser/:id", controller.updateUser);
 router.delete("/deleteuser/:id", controller.deleteUser);
