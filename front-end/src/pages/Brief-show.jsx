@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import {Navbar,FootNav} from "../components"
 import { format } from 'date-fns';
 
-
 class BriefShowStudent extends Component{
     //Create the form loaded student info into apporiate box
     constructor(props) {
@@ -17,6 +16,7 @@ class BriefShowStudent extends Component{
             student:[],
             studentID: '',
             firstname: '',
+            middlename: '',
             lastname: '',
             gender: '',
             dayofbirth:'',
@@ -30,9 +30,128 @@ class BriefShowStudent extends Component{
             graduate:'',
             enroll:'',
             prospective:false
-        }
-        
+        }   
     }
+
+    handleValidatedStudentID = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Student ID must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({studentID:event.target.value});
+      }
+    }
+
+    handleValidatedFirstName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"First Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({firstname:event.target.value});
+      }
+    }
+
+    handleValidatedMiddleName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Middle Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({middlename:event.target.value});
+      }
+    }
+
+    handleValidatedLastName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Last Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({lastname:event.target.value});
+      }
+    }
+
+    handleValidatedDayOfBirth = async event => {
+      this.setState({dayofbirth:event.target.value});
+    }
+
+    handleValidatedCountry = async event => {
+      this.setState({country:event.target.value});
+    }
+
+    handleValidatedEmail = async event => {
+      if(!event.target.value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/)){
+        this.setState({isValid:"Verify Email"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({saskemail:event.target.value});
+      }
+    }
+
+    handleValidatedCampus = async event => {
+      this.setState({campus:event.target.value});
+    }
+
+    handleValidatedPeriod = async event => {
+      this.setState({period:event.target.value});
+    }
+
+    handleValidatedYear = async event => {
+      this.setState({year:event.target.value});
+    }
+
+    handleValidatedProgram = async event => {
+      this.setState({program:event.target.value});
+    }
+
+    handleValidatedDegree = async event => {
+      this.setState({degree:event.target.value});
+    }
+
+    handleValidatedGraduate = async event => {
+      this.setState({graduate:event.target.value});
+    }
+
+    handleValidatedEnroll = async event => {
+      this.setState({enroll:event.target.value});
+    }
+
+    handleGenderMale = async event => {
+      this.setState({gender:'M'});
+    }
+    handleGenderFemale = async event => {
+      this.setState({gender:'F'});
+    }
+    handleGenderNone = async event => {
+      this.setState({gender:'N'});
+    }
+
+    handleProspectiveStudent = async event => {
+      this.setState({prospective:true});
+    }
+    
+    handleUpdateStudent = async event => {
+      await apis.updateStudent(
+                                this.state.studentMainID,
+                                this.state.studentID,
+                                this.state.firstname,
+                                this.state.middlename,
+                                this.state.lastname,
+                                this.state.gender,
+                                this.state.dayofbirth,
+                                this.state.country,
+                                this.state.saskemail,
+                                this.state.campus,
+                                this.state.period,
+                                this.state.year,
+                                this.state.program,
+                                this.state.degree,
+                                this.state.graduate,
+                                this.state.enroll,
+                                this.state.prospective
+        ).then(response =>{});
+        window.alert("Student updated successfully");
+        this.props.history.push('/isms/studentpage');  
+    }
+
     componentDidMount = async () => {
         const {id} = this.state;
        await apis.getStudentById(id)
@@ -40,8 +159,10 @@ class BriefShowStudent extends Component{
                   student=>{
                     this.setState({
             student:student.data.data,
+            studentMainID: student.data.data[0].student_id,
             studentID: student.data.data[0].std_id,
             firstname: student.data.data[0].first_name,
+            firstname: student.data.data[0].middle_name,
             lastname: student.data.data[0].last_name,
             dayofbirth: student.data.data[0].birthdate,
             saskemail: student.data.data[0].email,
@@ -79,16 +200,18 @@ class BriefShowStudent extends Component{
               <Form.Label className="col-md-2">
                 Student ID:
               </Form.Label>
-              <Form.Control className="col" value={this.state.studentID}></Form.Control>
+              <Form.Control className="col" value={this.state.studentID} onChange={this.handleValidatedStudentID}></Form.Control>
             </Form.Group>
 
             {/* First and Last name with input and label  */}
             <Form.Group>
               <div className="row mb-3">
                 <Form.Label className="col-md-2">First name:</Form.Label>
-                <Form.Control className="col" value={this.state.firstname}></Form.Control>
+                <Form.Control className="col" value={this.state.firstname} onChange={this.handleValidatedFirstName}></Form.Control>
+                <Form.Label className="col-md-2">Middle name:</Form.Label>
+                <Form.Control className="col" value={this.state.middlename} onChange={this.handleValidatedMiddleName}></Form.Control>
                 <Form.Label className="col-md-2" >Last name:</Form.Label>
-                <Form.Control className="col" value={this.state.lastname}></Form.Control>
+                <Form.Control className="col" value={this.state.lastname} onChage={this.handleValidatedLastName}></Form.Control>
               </div>
 
               {/* Check box for Gender  */}
@@ -102,6 +225,7 @@ class BriefShowStudent extends Component{
                     id="flexRadioDefault1"
                     value="Male"
                     checked={this.state.gender==="M"}
+                    onChange={this.handleGenderMale}
                   />
                   <label className="form-check-label col">Male</label>
                 </div>
@@ -113,6 +237,7 @@ class BriefShowStudent extends Component{
                     id="flexRadioDefault2"
                     value="Female"
                     checked={this.state.gender==="F"}
+                    onChange={this.handleGenderFemale}
                   />
                   <label className="form-check-label col">Female</label>
                 </div>
@@ -120,22 +245,23 @@ class BriefShowStudent extends Component{
                 <Form.Label className="col-lg-2" style={{ textAlign: "right" }}>
                   Day of Birth:
                 </Form.Label>
-                <Form.Control type="text" className="col pt-0" value={this.state.dayofbirth}></Form.Control>
+                <Form.Control type="text" className="col pt-0" value={this.state.dayofbirth.substring(0,10)} onChange={this.handleValidatedDayOfBirth}></Form.Control>
+
               </div>
 
               {/* Country input and label  */}
               <div className="row mb-3">
                 <Form.Label className="col-md-2">Country:</Form.Label>
-                <Form.Control className="col" value={this.state.country}></Form.Control>
+                <Form.Control className="col" value={this.state.country} onChange={this.handleValidatedCountry}></Form.Control>
                 {/* SaskPolytech email with input and label  */}
                 <Form.Label className="col">Saskpolytech E-mail:</Form.Label>
-                <Form.Control type="email" className="col" value={this.state.saskemail}></Form.Control>
+                <Form.Control type="email" className="col" value={this.state.saskemail} onChange={this.handleValidatedEmail}></Form.Control>
               </div>
 
               {/* Campus Select with options and label  */}
               <div className="row mb-3">
                 <Form.Label className="col-md-2">Campus:</Form.Label>
-                <Form.Select className="col">
+                <Form.Select className="col" onChange={this.handleValidatedCampus}>
                   <option 
                   value="Moose Jaw"
                   checked={this.state.gender==="Moose Jaw"}>Moose Jaw</option>
@@ -151,22 +277,22 @@ class BriefShowStudent extends Component{
                 </Form.Select>
                 {/* Academic period with options and label  */}
                 <Form.Label className="col">Academic Period:</Form.Label>
-                <Form.Control type="text" className="col" value={this.state.period}></Form.Control>
+                <Form.Control type="text" className="col" value={this.state.period} onChange={this.handleValidatedPeriod}></Form.Control>
                   
               </div>
 
               {/* Year and Program with label and input  */}
               <div className="row mb-3">
                 <Form.Label className="col-md-2">Year:</Form.Label>
-                <Form.Control type="text" className="col" value={this.state.year}></Form.Control>
+                <Form.Control type="text" className="col" value={this.state.year} onChange={this.handleValidatedYear}></Form.Control>
                 <Form.Label className="col">Program:</Form.Label>
-                <Form.Control type="text" className="col" value={this.state.program}></Form.Control>
+                <Form.Control type="text" className="col" value={this.state.program} onChange={this.handleValidatedProgram}></Form.Control>
               </div>
 
               {/* Degree with options and label  */}
               <div className="row">
                 <Form.Label className="col-md-2">Degree:</Form.Label>
-                <Form.Select className="col" aria-readonly >
+                <Form.Select className="col" aria-readonly onChange={this.handleValidatedDegree}>
                 <option 
                   value="DIPC"
                   checked={this.state.degree==="DIPC"}>DIPC</option>
@@ -183,13 +309,13 @@ class BriefShowStudent extends Component{
                 <Form.Label className="col" style={{ textAlign: "right" }}>
                   Graduate Ind:
                 </Form.Label>
-                <Form.Control type="text" className="col" value={this.state.graduate}></Form.Control>
+                <Form.Control type="text" className="col" value={this.state.graduate} onChange={this.handleValidatedGraduate}></Form.Control>
                 {/* Enroll with label and input  */}
               
                 <Form.Label className="col" style={{ textAlign: "right" }}>
                   Enroll:
                 </Form.Label>
-                <Form.Control type="text" className="col" value={this.state.enroll}></Form.Control>
+                <Form.Control type="text" className="col" value={this.state.enroll} onChange={this.handleValidatedEnroll}></Form.Control>
               </div>
             </Form.Group>
           </Form>
@@ -201,6 +327,11 @@ class BriefShowStudent extends Component{
               Add New Conversation
             </Button>
           </Link>
+          {/* Link to go to student page  */}
+            {/* Button to save new student  */}
+            <Button className="btn btn-primary mt-3" style={{ float: "right" }} onClick={this.handleUpdateStudent}>
+              Update Student
+            </Button>
           <ConversationList/>
         </Card.Body>
       </Card>
