@@ -27,7 +27,8 @@ class RegisterUser extends Component{
       email:'',
       tel:'',
       username:'',
-      password:''
+      password:'',
+      role
     }
   }
   handleFirstNameReg= async event=>{
@@ -72,6 +73,9 @@ class RegisterUser extends Component{
     }else{
         this.setState({password:event.target.value})}
 }
+handleValidatedRole = async event => {
+  this.setState({role:event.target.value});
+}
   handleRegister= async event=>{
     var values = [
         this.state.firstName,
@@ -80,9 +84,10 @@ class RegisterUser extends Component{
         this.state.tel,
         this.state.username,
         this.state.password,
+        this.state.role,
     ];
     console.log(values)
-    await auths.registerUser(this.state.firstName,this.state.lastName,this.state.email,this.state.tel,this.state.username,this.state.password).then(response=>{
+    await auths.registerUser(this.state.firstName,this.state.lastName,this.state.email,this.state.tel,this.state.username,this.state.password,this.state.role).then(response=>{
 
     });
     window.alert('User added successfully')
@@ -138,7 +143,8 @@ render(){
                     type="text"
                     onChange={this.handlePasswordReg} />
                 </Form.Group>
-                <Form.Select className="mb-3 col-md-auto">
+                <Form.Label className="col-md-2">Role</Form.Label>
+                <Form.Select className="mb-3 col-md-auto" onChange={this.handleValidatedRole}>
                   <option>Select Role</option>
                   <option>RISIA</option>
                   <option>RCIC</option>
