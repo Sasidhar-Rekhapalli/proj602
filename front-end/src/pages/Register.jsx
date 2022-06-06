@@ -148,6 +148,7 @@ render(){
                   <option>Select Role</option>
                   <option>RISIA</option>
                   <option>RCIC</option>
+                  <option>RISIA with RCIC</option>
                   <option>No Certification</option>
                 </Form.Select>
                 <div className="text-center">
