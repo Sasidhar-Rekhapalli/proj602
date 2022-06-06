@@ -1,17 +1,17 @@
 //////////////////////////////////////               CONTROLLER.JS                //////////////////////////////////////
 /**
- * 
+ *
  * @file controller.js
  * @copyright ISMS(International Student Management System)
  * @version 1.0.0
  * @author cyberbot team, software developer program
  * @release spring2022
  * @owner Saskatchewan Polytechnic, Saskatoon Campus
- * 
+ *
  */
 
 //////////////////////////////////////                  SUMMARY                  //////////////////////////////////////
-/** 
+/**
  * @description All routes are on this page and for connection to the database is necessary to require connect.js
  *              Database in this application is Relational Database and use MySQL.
  * @returns for each route we get connection associate with the specific query to return proper result that is expecting for
@@ -38,79 +38,74 @@
 
 //////////////////////////////////////               SETUPS                //////////////////////////////////////
 
-//#region for  IMPORT        
+//#region for  IMPORT
 /**  attach the database setting in this file by using require
  *   @notice watch to address, if change path, must modify in the require part*/
 const dbObject = require("../db/connect");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const User = require("../db/models/user");
 //#endregion
 
 //////////////////////////////////////              STUDENTS               //////////////////////////////////////
 
 //#region for  GET ALL STUDENTS
 /**
- * @module    get all students from the database and show them in a JSON file. In this module, use Read in CRUD operation also 
+ * @module    get all students from the database and show them in a JSON file. In this module, use Read in CRUD operation also
  *            use Get method
  * @callback  anonymous callback function gets the query to return all students filed in the database, the result of the query:
  *            - if failed go to the first part(error), throws with 400 and JSON object return unsuccessful and error.
- *            - if the result of the query is successful, return status 200, which means the process is succesful and returns 
+ *            - if the result of the query is successful, return status 200, which means the process is succesful and returns
  *                data store in the json object.
  * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program,
  *          degree, year, graudate_ind, enroll
- * @throws   tthrows error 400 if it could not show students information 
+ * @throws   tthrows error 400 if it could not show students information
  * @throws   throws status 200 and return students information
  * @returns  send successfull message.
  */
 getAllStudents = async (req, res) => {
   dbObject.getConnection((err, connection) => {
-    connection.query("SELECT * FROM student ORDER BY student_id DESC", (err, rows) => {
+    connection.query("SELECT * FROM student", (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ success: true, data: rows });
+      return res.status(200).json({ success: true, data: rows });
     });
   });
 };
 //#endregion
 
-//#region for  GET STUDENT BY ID 
+//#region for  GET STUDENT BY ID
 /**
- * @module    same as GET ALL STUDENTS, but this module return specific student by student_id. when process is successful and 
- *            student by specific id is in the database return the student's information and if query does not return anything 
+ * @module    same as GET ALL STUDENTS, but this module return specific student by student_id. when process is successful and
+ *            student by specific id is in the database return the student's information and if query does not return anything
  *            throw an error to user
  *            In this module, use Read in CRUD operation also use Get method
- * @callback  in the first part of the module, save student id that looking for and save it in local studentId varibale. Then 
+ * @callback  in the first part of the module, save student id that looking for and save it in local studentId varibale. Then
  *            save qurey for return all fileds of the specific student.
- *            anonymous callback function gets the query, studentID and revoke other nested callback function to return result 
+ *            anonymous callback function gets the query, studentID and revoke other nested callback function to return result
  *            of searching specific student:
  *            - if result is failed, throws with 400 and JSON object return unsuccessful and error.
- *            - if the result of the query is successful, return status 200, which means the process is succesful and returns 
+ *            - if the result of the query is successful, return status 200, which means the process is succesful and returns
  *              students inormation in JSON object to show user.
  * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program,
  *          degree, year, graudate_ind, enroll
- * @throws   tthrows error 400 if it could not show the student information 
+ * @throws   tthrows error 400 if it could not show the student information
  * @throws   throws status 200 and return the student information
- * @returns  send successfull message 
+ * @returns  send successfull message
  */
 getStudentById = async (req, res) => {
   var studentId = req.params.id;
-  console.log(studentId)
+  console.log(studentId);
   var sql = "SELECT * FROM student WHERE std_id = ?";
   dbObject.getConnection((err, connection) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ success: true, data: rows });
+      return res.status(200).json({ success: true, data: rows });
     });
   });
 };
@@ -118,17 +113,17 @@ getStudentById = async (req, res) => {
 
 //#region for   CREATE A NEW STUDENT
 /**
- * @module    get student's information and put into student table and create a new student with POST method.
- *            in the first part save sql query for insert and save values get from user and save in same order in array variable named values
- * @callback  first anonymous callback function after checking connection invoke query and in second function check query and values saved in array
- *            same as other part response proper output with JSON object and messages:
- *            - if error happend, throws with 400 means unsuccessful result
- *            - if successful, return status 200 and return that student information in JSON object 
- * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
-            graudate_ind, enroll
- * @throws   throws error 400 if it could not add information to user
- * @returns  send successfull message to user
- */
+  * @module    get student's information and put into student table and create a new student with POST method.
+  *            in the first part save sql query for insert and save values get from user and save in same order in array variable named values
+  * @callback  first anonymous callback function after checking connection invoke query and in second function check query and values saved in array
+  *            same as other part response proper output with JSON object and messages:
+  *            - if error happend, throws with 400 means unsuccessful result
+  *            - if successful, return status 200 and return that student information in JSON object 
+  * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
+             graudate_ind, enroll
+  * @throws   throws error 400 if it could not add information to user
+  * @returns  send successfull message to user
+  */
 createStudent = async (req, res) => {
   var sql =
     "INSERT INTO student (prospective, std_id, first_name, middle_name, last_name, gender, birthdate, email, country, academic_period, campus, program, degree, year, graudate_ind, enroll) VALUES ?";
@@ -156,65 +151,9 @@ createStudent = async (req, res) => {
     connection.query(sql, [values], (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ message: "Student Created" });
-    });
-  });
-};
-//#endregion
-
-//#region for   ADD A  STUDENT
-/**
- * @module    Add student's information and put into student table.
- *            in the first part save sql query for insert and save values get from user and save in same order in array variable named values
- * @callback  first anonymous callback function after checking connection invoke query and in second function check query and values saved in array
- *            same as other part response proper output with JSON object and messages:
- *            - if error happend, throws with 400 means unsuccessful result
- *            - if successful, return status 200 and return that student information in JSON object 
- * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
-            graudate_ind, enroll
- * @throws   throws error 400 if it could not add information to user
- * @returns  send successfull message to user
- */
-addStudent = async (req, res) => {
-  var sql =
-    "INSERT INTO student (prospective, std_id, first_name, middle_name, last_name, gender, birthdate, email, country, academic_period, campus, program, degree, year, graudate_ind, enroll) VALUES ?";
-  var values = [
-    [
-      req.body.prospective,
-      req.body.std_id,
-      req.body.first_name,
-      req.body.middle_name,
-      req.body.last_name,
-      req.body.gender,
-      req.body.birthdate,
-      req.body.email,
-      req.body.country,
-      req.body.academic_period,
-      req.body.campus,
-      req.body.program,
-      req.body.degree,
-      req.body.year,
-      req.body.graudate_ind,
-      req.body.enroll,
-    ],
-  ];
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, [values], (err, rows) => {
-      connection.release();
-      if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
-      }
-      return res
-        .status(200)
-        .json({ message: "Student Added" });
+      return res.status(200).json({ message: "Student Created" });
     });
   });
 };
@@ -222,23 +161,24 @@ addStudent = async (req, res) => {
 
 //#region for   UPDATE STUDENT
 /**
- * @module    for changing and other data manipulation first retrive student's information by student_id and update data. Then put into student table
- *            and replace with old information. This module use PUT method.
- *            same as get student by id store student id in local variable, save query in sql and values as give from students in values array
- * @callback  like other student's modules first anonymous callback function after checking connection, query and  check query in the next steps
- *            same as other part response proper output with JSON object and messages:
- *            - if error happend, status 400 otehrwise status 200 and return student information in JSON object 
- * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
-            graudate_ind, enroll
- * @throws   throws error 400 if it could not add information to user
- * @returns  send successfull message to user
- */
+  * @module    for changing and other data manipulation first retrive student's information by student_id and update data. Then put into student table
+  *            and replace with old information. This module use PUT method.
+  *            same as get student by id store student id in local variable, save query in sql and values as give from students in values array
+  * @callback  like other student's modules first anonymous callback function after checking connection, query and  check query in the next steps
+  *            same as other part response proper output with JSON object and messages:
+  *            - if error happend, status 400 otehrwise status 200 and return student information in JSON object 
+  * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
+             graudate_ind, enroll
+  * @throws   throws error 400 if it could not add information to user
+  * @returns  send successfull message to user
+  */
 updateStudent = async (req, res) => {
   var studentId = req.params.id;
   var sql =
     "UPDATE student SET prospective = ?, std_id = ?, first_name = ?, middle_name = ?, last_name = ?, gender = ?, birthdate = ?," +
     "email = ?, country = ?, academic_period = ?, campus = ?, program = ?, degree = ?, year = ?, graudate_ind = ?, enroll = ? " +
-    "WHERE student_id = " + studentId;
+    "WHERE student_id = " +
+    studentId;
   var values = [
     req.body.prospective,
     req.body.std_id,
@@ -261,13 +201,9 @@ updateStudent = async (req, res) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ message: "Student Updated" });
+      return res.status(200).json({ message: "Student Updated" });
     });
   });
 };
@@ -275,15 +211,15 @@ updateStudent = async (req, res) => {
 
 //#region for   DELETE STUDENT
 /**
- * @module    Delete student is the last part of CRUD operation and for this module first get student by id and run the query for remove all infoemation 
- *            of that student
- * @callback  two anonymous callback functions are responsible to return proper result and if error happened or process is successful return status 400
- *            or 200 in order for error or success
- * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
-            graudate_ind, enroll
- * @throws   throws error 400 if it could not add information to user
- * @returns  send successfull message to user
-*/
+  * @module    Delete student is the last part of CRUD operation and for this module first get student by id and run the query for remove all infoemation 
+  *            of that student
+  * @callback  two anonymous callback functions are responsible to return proper result and if error happened or process is successful return status 400
+  *            or 200 in order for error or success
+  * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
+             graudate_ind, enroll
+  * @throws   throws error 400 if it could not add information to user
+  * @returns  send successfull message to user
+ */
 
 deleteStudent = async (req, res) => {
   var studentId = req.params.id;
@@ -292,13 +228,9 @@ deleteStudent = async (req, res) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ message: "Student Deleted" });
+      return res.status(200).json({ message: "Student Deleted" });
     });
   });
 };
@@ -306,54 +238,50 @@ deleteStudent = async (req, res) => {
 
 //////////////////////////////////////                USERS               //////////////////////////////////////
 
-//#region for    GET ALL USERS 
+//#region for    GET ALL USERS
 /**
- * @module    get all users from the database and show them in a JSON file. In this module, use Read in CRUD operation also 
+ * @module    get all users from the database and show them in a JSON file. In this module, use Read in CRUD operation also
  *            use Get method
- * @callback  anonymous callback function gets the query to return all users filed in the database, the result of the query 
+ * @callback  anonymous callback function gets the query to return all users filed in the database, the result of the query
  *            if failed first part(error), throws with 400 and JSON object return unsuccessful and error.
- *            if the result of the query is the triumphant return status 200, which means the process is succesful and returns 
+ *            if the result of the query is the triumphant return status 200, which means the process is succesful and returns
  *            data store in the json object.
  * @params  user_id, first_name, last_name, email, tel, user_name,password
- * @throws   tthrows error 400 if it could not show students information 
+ * @throws   tthrows error 400 if it could not show students information
  * @throws   throws status 200 and return students information
- * @returns  send successfull message 
+ * @returns  send successfull message
  */
 getAllUsers = async (req, res) => {
-
   dbObject.getConnection((err, connection) => {
     connection.query("SELECT * FROM user", (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ success: true, data: rows });
+      return res.status(200).json({ success: true, data: rows });
     });
   });
 };
+
 //#endregion
 
-//#region for  GET USER BY ID 
+//#region for  GET USER BY ID
 /**
- * @module    same as GET ALL USERS, but this module return specific user by user_id. when process is successful and 
- *            user by specific id is in the database return the user's information and if query does not return anything 
+ * @module    same as GET ALL USERS, but this module return specific user by user_id. when process is successful and
+ *            user by specific id is in the database return the user's information and if query does not return anything
  *            throw an error to user
  *            In this module, use Read in CRUD operation also use Get method
- * @callback  in the first part of the module, save user id that looking for and save it in local userId varibale. Then 
+ * @callback  in the first part of the module, save user id that looking for and save it in local userId varibale. Then
  *            save qurey for return all fileds of the specific user.
- *            anonymous callback function gets the query, userID and revoke other nested callback function to return result 
+ *            anonymous callback function gets the query, userID and revoke other nested callback function to return result
  *            of searching specific user:
  *            - if result is failed, throws with 400 and JSON object return unsuccessful and error.
- *            - if the result of the query is successful, return status 200, which means the process is succesful and returns 
+ *            - if the result of the query is successful, return status 200, which means the process is succesful and returns
  *              users inormation in JSON object to show user.
  * @params  user_id, first_name, last_name, email, tel, user_name,password
- * @throws   tthrows error 400 if it could not show the user information 
+ * @throws   tthrows error 400 if it could not show the user information
  * @throws   throws status 200 and return the user information
- * @returns  send successfull message 
+ * @returns  send successfull message
  */
 getUserById = async (req, res) => {
   var studentId = req.params.id;
@@ -362,48 +290,13 @@ getUserById = async (req, res) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ success: true, data: rows });
+      return res.status(200).json({ success: true, data: rows });
     });
   });
 };
 
-//#endregion
-
-//#region for    GET  USERS VIEW
-/**
- * @module    get  users' name , type and other information and report it in user's page  
- *            use Get method
- *            in this route make functionality for front end in user page , show all users' information 
- * @callback  anonymous callback function gets the query to return all users filed in the database, the result of the query 
- *            if failed first part(error), throws with 400 and JSON object return unsuccessful and error.
- *            if the result of the query is the triumphant return status 200, which means the process is succesful and returns 
- *            data store in the json object.
- * @params  first_name, last_name,user_name,risia , rcic ,  no_certification
- * @throws   tthrows error 400 if it could not show students information 
- * @throws   throws status 200 and return students information
- * @returns  send successfull message 
- */
-getUsersView = async (req, res) => {
-  dbObject.getConnection((err, connection) => {
-    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, role FROM user;)", (err, rows) => {
-      connection.release();
-      if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
-      }
-      return res
-        .status(200)
-        .json({ success: true, data: rows });
-    });
-  });
-};
 //#endregion
 
 //#region for   CREATE A NEW USER
@@ -414,69 +307,36 @@ getUsersView = async (req, res) => {
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successfull message to user
  */
-createUser = async (req, res) => {
-  var first_name = req.body.first_name
-  var last_name = req.body.last_name
-  var email = req.body.email
-  var tel = req.body.tel
-  var user_name = req.body.user_name
-  var password = req.body.password
-  var role = req.body.role
-  var sql =
-    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, role) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}' '${role}')`;
-
-
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, (err, rows) => {
-      connection.release();
+createNewUser = async (req, res) => {
+  try {
+    // I added not for isAuthenticated
+    const userData = req.body.vals; // grab onto the new user array of values
+    bcrypt.hash(userData[5], saltRounds, (err, hash) => {
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        console.error(err);
       }
-      return res
-        .status(200)
-        .json({ message: "User Created" });
+      userData[5] = hash; // replace plain text password with hash
+      const vals = [
+        userData[0],
+        userData[1],
+        userData[2],
+        userData[3],
+        userData[4],
+        userData[5],
+      ];
+      const queryString = `INSERT INTO user (first_name ,last_name ,email ,tel  ,user_name  , password ) VALUES (?,?,?,?,?,?)`;
+      dbObject.execute(queryString, vals, (err, result) => {
+        if (err) throw err;
+        else {
+          return res.status(200).json({ success: true });
+        }
+      });
     });
-  });
+  } catch (err) {
+    return res.status(400).json({ success: false });
+  }
 };
 
-//#endregion
-
-//#region for   ADD A USER
-/**
- * @module    Add a new user , send to user table
- *            save query for insert information in a variable and get data from customer save it in an array, then check the connection and throw proper information
- * @params  user_id, first_name, last_name, email,tel ,user_name, password
- * @throws   throws error 400 if it could not add information to user
- * @returns  send successfull message to user
- */
-addUser = async (req, res) => {
-  var first_name = req.body.first_name
-  var last_name = req.body.last_name
-  var email = req.body.email
-  var tel = req.body.tel
-  var user_name = req.body.user_name
-  var password = req.body.password
-  var role = req.body.role
-  var sql =
-    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, role) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}', '${role}')`;
-
-
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, (err, rows) => {
-      connection.release();
-      if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
-      }
-      return res
-        .status(200)
-        .json({ message: "User Added" });
-    });
-  });
-};
 //#endregion
 
 //#region for   UPDATE USER
@@ -486,7 +346,7 @@ addUser = async (req, res) => {
  *            same as get user by id store user id in local variable, save query in sql and values as give from users in values array
  * @callback  like other user's modules first anonymous callback function after checking connection, query and  check query in the next steps
  *            same as other part response proper output with JSON object and messages:
- *            - if error happened, status 400 otherwise status 200 and return user information in JSON object 
+ *            - if error happened, status 400 otherwise status 200 and return user information in JSON object
  * @params  user_id, first_name, last_name, email, tel, user_name,password
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successful message to user
@@ -494,7 +354,8 @@ addUser = async (req, res) => {
 updateUser = async (req, res) => {
   var userId = req.params.id;
   var sql =
-    "UPDATE user SET first_name = ?, last_name = ?, email = ?, tel = ?, user_name = ?, password = ? WHERE user_id = " + userId;
+    "UPDATE user SET first_name = ?, last_name = ?, email = ?, tel = ?, user_name = ?, password = ? WHERE user_id = " +
+    userId;
   var values = [
     req.body.user_id,
     req.body.first_name,
@@ -508,28 +369,24 @@ updateUser = async (req, res) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ message: "User Updated" });
+      return res.status(200).json({ message: "User Updated" });
     });
   });
 };
-//#endregion
+////#endregion
 
 //#region for   DELETE USER
 /**
- * @module    Delete user is the last part of CRUD operation and for this module first get user by id and run the query for remove all information 
+ * @module    Delete user is the last part of CRUD operation and for this module first get user by id and run the query for remove all information
  *            of that user
  * @callback  two anonymous callback functions are responsible to return proper result and if error happened or process is successful return status 400
  *            or 200 in order for error or success
  * @params  user_id, first_name, last_name, email, tel, user_name,password
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successful message to user
-*/
+ */
 deleteUser = async (req, res) => {
   var userId = req.params.id;
   var sql = "DELETE FROM user WHERE user_id = ?";
@@ -537,13 +394,9 @@ deleteUser = async (req, res) => {
     connection.query(sql, userId, (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ message: "User Deleted" });
+      return res.status(200).json({ message: "User Deleted" });
     });
   });
 };
@@ -556,7 +409,7 @@ deleteUser = async (req, res) => {
  * @params  user_id, user_name,password
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successful message to user
-*/
+ */
 resetPassword = async (req, res) => {
   var userId = req.params.id;
   var sql =
@@ -566,92 +419,62 @@ resetPassword = async (req, res) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
+        return res.status(400).json({ success: false, error: err });
       }
-      return res
-        .status(200)
-        .json({ message: "Password Updated" });
-    });
-  });
-};
-login = async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  dbObject.getConnection((err, connection) => {
-    connection.query("SELECT * FROM user WHERE user_name = ? and password=?", [username, password], (err, rows) => {
-
-      if (err) {
-
-        return res.status(400).json({ success: false, err: error });
-      }
-      if (rows.length > 0) {
-        return res.status(200).json({ success: true, data: rows });
-
-      } else {
-        return res.send({ message: "Wrong username/password combination" })
-      }
-    });
-
-  });
-}
-//#endregion
-
-//#region for  Get Conversation
-/**
- * @module    get information for each student and get conversation result for specific student
- * @params  category,datecreated,createdby,lastupdatedby
- * @throws   tthrows error 400 if it could not show the user information 
- * @throws   throws status 200 and return the user information
- * @returns  send successfull message 
- */
-getConversation = async (req, res) => {
-  var studentId = req.params.id;
-  console.log(studentId);
-  var sql = "SELECT category,datecreated,createdby,lastupdatedby FROM conversation JOIN student USING(student_id) WHERE std_id= ?";
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, studentId, (err, rows) => {
-      connection.release();
-      if (err) {
-        return res
-          .status(400)
-          .json({ success: false, error: err });
-      }
-      return res
-        .status(200)
-        .json({ success: true, data: rows });
+      return res.status(200).json({ message: "Password Updated" });
     });
   });
 };
 
-//#endregion
+login = async (req, res, done) => {
+  try {
+    dbObject.query(
+      "SELECT * from user where user_name=?",
+      req.body.vals[0],
+      function (error, rows) {
+        if (error) {
+          console.log("user doesn't exist");
+        } else {
+          let user = rows[0];
+          if (
+            user.password.length !== "null" ||
+            user.password.length !== "undefined"
+          ) {
+            let match = bcrypt.compareSync(req.body.vals[1], user.password);
 
-
-
+            if (match) {
+              console.log("password matched");
+              res.status(200).json({ done: req.body.vals[0] });
+            } else {
+              console.log("Wrong password");
+              return res.status(400).json({ message: "Wrong password" });
+            }
+          }
+        }
+      }
+    );
+  } catch (err) {}
+  return res;
+};
 
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
 /**
  * in the exports section we export all moudules as created and prepare them to use it in other pages or modules
- * @params   all routes 
+ * @params   all routes
  * @exports  all routes
  */
 module.exports = {
   getAllStudents,
   getStudentById,
   createStudent,
-  addStudent,
   updateStudent,
   deleteStudent,
 
   getAllUsers,
   getUserById,
-  getUsersView,
-  createUser,
-  addUser,
   updateUser,
   deleteUser,
   resetPassword,
   login,
-  getConversation
+  createNewUser,
 };
