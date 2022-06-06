@@ -31,6 +31,17 @@ const Title = styled.h1.attrs({
     width: 400px;
   `;
  
+  class UserDetail extends Component {
+    updateUser = event => {
+        event.preventDefault()
+        window.location.href=`/isms/update/${this.props.id}`
+    }
+
+    render(){
+        // invike the update view for the current row -> this.props
+        return <UserDetail onClick={this.updateUser}>Details</UserDetail>
+    }
+} 
 class UserList extends Component{
 	constructor(props) {
         super(props)
@@ -87,6 +98,19 @@ class UserList extends Component{
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+
+            },
+            {
+                Header: '',
+                accessor: '',
+                width: 100,
+                Cell: function(props) {
+                    return(
+                        <span>
+                            <UserDetail id={props.original._user_id} />
+                        </span>
+                    )
+                }
 
             },
             
