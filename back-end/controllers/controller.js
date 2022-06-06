@@ -391,7 +391,7 @@ getUserById = async (req, res) => {
  */
 getUsersView = async (req, res) => {
   dbObject.getConnection((err, connection) => {
-    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, role)", (err, rows) => {
+    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, role FROM user;)", (err, rows) => {
       connection.release();
       if (err) {
         return res

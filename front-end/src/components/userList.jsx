@@ -44,7 +44,7 @@ class UserList extends Component{
         // turn on isLoading flag which we load data
         this.setState({isLoading:true})
 
-        await auths.getAllUsers()
+        await auths.getUsersView()
                     .then(
                         // this album is the data coming from api call
                         user => {
@@ -82,27 +82,14 @@ class UserList extends Component{
 
             },
             {
-                Header: 'RISIA',
-                accessor:'risia',
+                Header: 'Role',
+                accessor:'role',
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
 
             },
-            {
-                Header: 'RCIC',
-                accessor:'rcic',
-                style: {'whiteSpace':'unset'},
-                // specify a row of data to display
-                Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-            }, 
-            {
-                Header: 'No Certification',
-                accessor:'no_certification',
-                style: {'whiteSpace':'unset'},
-                // specify a row of data to display
-                Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-            },
+            
         ]
 
         let showTable = true
