@@ -44,16 +44,7 @@ export default {
       return console.log(err);
     }
   },
-  getAllUsers: async () => {
-    try {
-      console.log("test!!!!!!!!!!!!");
-      const res = await auth.get("/user");
-      // console.log(res)
-      return res.data;
-    } catch (err) {
-      return console.log(err);
-    }
-  },
+ 
   deleteUserById: async (id) => {
     try {
       const res = await auth.delete(`/user/${id}`);

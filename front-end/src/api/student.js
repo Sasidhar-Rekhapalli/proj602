@@ -79,6 +79,7 @@ export const updateStudent = (
 }); 
 export const deleteStudent=id=>api.delete(`/deletestudent/${id}`);
 export const getConversation =id=>api.get(`/getconversation/${id}`);
+export const getAllUsers=()=>api.get(`/user/getuser`);
  
 const apis={
     createStudent,
@@ -86,6 +87,7 @@ const apis={
     getStudentById,
     updateStudent,
     deleteStudent,
-    getConversation
+    getConversation,
+    getAllUsers
 }
 export default apis;
