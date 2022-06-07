@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../images/logo.png";
+import Logo from "../images/navlogo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const Container = styled.div.attrs({
@@ -43,8 +43,8 @@ class Navbar extends Component {
     return (
       <Container>
         <Nav>
-          <img src={Logo} width="100px" height="100px" alt="Logo" />
-          <Heading>International Student Management</Heading>
+          <img src={Logo} width="200px" height="100px" alt="Logo" />
+          <Heading>International Student Management System</Heading>
         </Nav>
         <HeaderDown>
           <TextLine href="/isms/usermanagement">Manage users</TextLine>

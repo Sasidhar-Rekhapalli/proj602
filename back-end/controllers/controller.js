@@ -401,8 +401,10 @@ createNewUser = async (req, res) => {
         userData[3],
         userData[4],
         userData[5],
+        userData[6]
       ];
-      const queryString = `INSERT INTO user (first_name ,last_name ,email ,tel  ,user_name  , password ) VALUES (?,?,?,?,?,?)`;
+      const queryString = `INSERT INTO user (first_name ,last_name ,email ,tel  ,user_name  , password, role ) VALUES (?,?,?,?,?,?,?
+        )`;
       dbObject.execute(queryString, vals, (err, result) => {
         if (err) throw err;
         else {
@@ -520,22 +522,52 @@ deleteUser = async (req, res) => {
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successful message to user
  */
-resetPassword = async (req, res) => {
+ resetPassword = async (req, res) => {
+   
+  try {
    var userName = req.body.vals[0];
-   console.log(req.body.vals[1])
-  var sql =
-    "UPDATE user SET  password = ? WHERE user_name = '" + userName + "'";
-    var values = [req.body.vals[1]];
-    dbObject.getConnection((err, connection) => {
-    connection.query(sql, values, (err, rows) => {
-      connection.release();
-      if (err) {
-        return res.status(400).json({ success: false, error: err });
-      }
-      return res.status(200).json({ message: "Password Updated" });
-    });
-  });
-};
+   // I added not for isAuthenticated
+   // grab onto the new user array of values
+   bcrypt.hash(req.body.vals[1], saltRounds, (err, hash) => {
+     if (err) {
+       console.error(err);
+     }
+     req.body.vals[1] = hash;
+  console.log(req.body.vals[1])
+ var sql =
+   "UPDATE user SET  password = ? WHERE user_name = '" + userName + "'";
+   var values = [req.body.vals[1]];
+   dbObject.getConnection((err, connection) => {
+   connection.query(sql, values, (err, rows) => {
+     connection.release();
+     if (err) {
+       return res.status(400).json({ success: false, error: err });
+     }
+     return res.status(200).json({ message: "Password Updated" });
+     });
+   });
+ });
+  } catch{
+
+ }
+}
+
+// resetPassword = async (req, res) => {
+//    var userName = req.body.vals[0];
+//    console.log(req.body.vals[1])
+//   var sql =
+//     "UPDATE user SET  password = ? WHERE user_name = '" + userName + "'";
+//     var values = [req.body.vals[1]];
+//     dbObject.getConnection((err, connection) => {
+//     connection.query(sql, values, (err, rows) => {
+//       connection.release();
+//       if (err) {
+//         return res.status(400).json({ success: false, error: err });
+//       }
+//       return res.status(200).json({ message: "Password Updated" });
+//     });
+//   });
+// };
 //#endregion
 
 //#region for   LOGIN

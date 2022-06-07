@@ -13,6 +13,9 @@ const Btn = styled.button`
 // Styled component for Reset button
 const ResetBtn = styled.button`
   color: #fff;
+  border:none;
+  text
+  padding : 5px 100px;
   background-color: #743c96;
 `;
 
@@ -105,28 +108,6 @@ handleCheck = async event =>{
                 {/* Reset button  */}
                 
                   <div className="text-center">
-                  {/* <div style={{ display: 'block', padding: 30 }}>
-      <h4>How to use Modal Component in ReactJS?</h4>
-      <button type="button" 
-      onClick={this.handleOpen}>
-        Click Me to Open Modal
-      </button>
-      <Modal
-        onClose={this.handleClose}
-        open={this.state.open}
-        style={{
-          position: 'absolute',
-          border: '2px solid #000',
-          backgroundColor: 'gray',
-          boxShadow: '2px solid black',
-          height:80,
-          width: 240,
-          margin: 'auto'
-        }}
-      >
-        <h2>How are you?</h2>
-      </Modal> */}
-    {/* </div> */}
                     <ResetBtn type="submit">Reset</ResetBtn>
                   </div>
                
