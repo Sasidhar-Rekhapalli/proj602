@@ -521,11 +521,12 @@ deleteUser = async (req, res) => {
  * @returns  send successful message to user
  */
 resetPassword = async (req, res) => {
-  var userName = req.params.id;
+   var userName = req.body.vals[0];
+   console.log(req.body.vals[1])
   var sql =
     "UPDATE user SET  password = ? WHERE user_name = '" + userName + "'";
-  var values = [req.body.password];
-  dbObject.getConnection((err, connection) => {
+    var values = [req.body.vals[1]];
+    dbObject.getConnection((err, connection) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {

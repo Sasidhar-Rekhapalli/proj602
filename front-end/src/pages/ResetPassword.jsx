@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Form, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FootNav,Navbar } from "../components";
+import auths from '../api/auth';
 
 // Styled component for cancel button
 const Btn = styled.button`
@@ -20,7 +21,52 @@ const Header = styled.h2`
   margin: 0;
   display: inline-block;
 `;
+
+const {REACT_APP_PASSWORD} = process.env;
+
 class ResetPassword extends Component{
+  constructor(props){
+    super(props)
+    this.state={
+      username:'',
+      password:'',
+      masterpassword:''
+
+    }
+  }
+
+  handleusername = async event=>{
+    var username  = event.target.value;
+    this.setState({username:username})
+}
+
+handlepassword = async event=>{
+  var password  = event.target.value;
+  this.setState({password:password})
+}
+
+handlemasterPassword = async event=>{
+  var masterpassword  = event.target.value;
+  this.setState({masterpassword:masterpassword})
+}
+
+handleCheck = async event =>{
+  event.preventDefault();
+  const masterpassword = this.state.masterpassword;
+  
+  if(REACT_APP_PASSWORD===masterpassword){
+    
+    const {username, password } = this.state;
+    await auths.resetPassword({username, password}).then((response)=>{
+        window.alert("Password reset successfully");
+        this.props.history.push("/");
+      })
+  }
+  else{
+    console.log("not match--------------")
+  }
+}
+
   render(){
     return (
       <>
@@ -40,14 +86,17 @@ class ResetPassword extends Component{
             </div>
             <div className="d-flex justify-content-center">
               {/* Form for reset password  */}
-              <Form>
+              <Form  onSubmit={this.handleCheck}>
+              <Form.Group className="mb-3 col-md-auto">
+                  <Form.Control placeholder="Master Password" onChange={this.handlemasterPassword}></Form.Control>
+                </Form.Group>
                 {/* Form input for username  */}
                 <Form.Group className="mb-3 col-md-auto">
-                  <Form.Control placeholder="UserName"></Form.Control>
+                  <Form.Control placeholder="UserName" onChange={this.handleusername}></Form.Control>
                 </Form.Group>
                 {/* Form input for password  */}
                 <Form.Group className="mb-3 col-md-auto">
-                  <Form.Control placeholder="Password"></Form.Control>
+                  <Form.Control placeholder="Password" onChange={this.handlepassword}></Form.Control>
                 </Form.Group>
                 {/* Form input for Retype password  */}
                 <Form.Group className="mb-3 col-md-auto">
@@ -56,8 +105,31 @@ class ResetPassword extends Component{
                 {/* Reset button  */}
                 
                   <div className="text-center">
-                    <ResetBtn className="btn">Reset</ResetBtn>
+                  {/* <div style={{ display: 'block', padding: 30 }}>
+      <h4>How to use Modal Component in ReactJS?</h4>
+      <button type="button" 
+      onClick={this.handleOpen}>
+        Click Me to Open Modal
+      </button>
+      <Modal
+        onClose={this.handleClose}
+        open={this.state.open}
+        style={{
+          position: 'absolute',
+          border: '2px solid #000',
+          backgroundColor: 'gray',
+          boxShadow: '2px solid black',
+          height:80,
+          width: 240,
+          margin: 'auto'
+        }}
+      >
+        <h2>How are you?</h2>
+      </Modal> */}
+    {/* </div> */}
+                    <ResetBtn type="submit">Reset</ResetBtn>
                   </div>
+               
               </Form>
             </div>
           </Card.Body>

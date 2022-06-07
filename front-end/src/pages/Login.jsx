@@ -1,7 +1,7 @@
 import auths from "../api/auth";
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../images/logo.png";
+import Logo from "../images/saskpolytechlogo.png";
 import Navbar from "../components/Navbar";
 import FootNav from "../components/FootNav";
 import "../css/loginpage.css";
@@ -52,21 +52,20 @@ class Login extends Component {
   render() {
     return (
       <div className="LoginPage">
-        <Navbar />
-        <div className=" mainBorder container">
+        <div className=" shadowshade mainBorder container">
           <div className="left col-lg-4">
             <img src={Logo} width="300px" height="300px" alt="Logo" />
           </div>
           <div className="right col-lg-8">
             <div className="justify-content-center">
               <h2>Login</h2>
-              <div className="formborder col-md-6">
+              <div className="shadowshade formborder col-md-6 ">
                 <div id="loginform">
                   <div className="form-group">
                     <label>
-                      <span>
+                      {/* <span>
                         <img src={Logo} width="30px" height="30px" alt="Logo" />
-                      </span>
+                      </span> */}
                       User name :{" "}
                     </label>
                     <input
@@ -87,7 +86,7 @@ class Login extends Component {
                     />
                     <p>{this.state.isValid}</p>
                   </div>
-                  <div className="form-group form-check">
+                  <div className="form-group form-check floatbtn">
                     <button
                       className="btn btn-primary"
                       onClick={this.handleLogin}
@@ -101,7 +100,6 @@ class Login extends Component {
             </div>
           </div>
         </div>
-        <FootNav />
       </div>
     );
   }

@@ -63,4 +63,15 @@ export default {
       return console.log(err);
     }
   },
+
+  resetPassword: async (user) => {
+    try {
+      const {username, password } = user;
+      const res = await auth.put(`/resetpassword/${user}`, {
+        vals: [username, password],
+      });
+
+      return res;
+    } catch (err) {}
+  }
 };
