@@ -406,9 +406,13 @@ getUsersView = async (req, res) => {
       (err, rows) => {
         connection.release();
         if (err) {
-          return res.status(400).json({ success: false, error: err });
+          return res
+            .status(400)
+            .json({ success: false, error: err });
         }
-        return res.status(200).json({ success: true, data: rows });
+        return res
+          .status(200)
+          .json({ success: true, data: rows });
       }
     );
   });
@@ -446,12 +450,16 @@ createNewUser = async (req, res) => {
       dbObject.execute(queryString, vals, (err, result) => {
         if (err) throw err;
         else {
-          return res.status(200).json({ success: true });
+          return res
+            .status(200)
+            .json({ success: true });
         }
       });
     });
   } catch (err) {
-    return res.status(400).json({ success: false });
+    return res
+      .status(400)
+      .json({ success: false });
   }
 };
 
@@ -837,7 +845,6 @@ module.exports = {
   addStudent,
   updateStudent,
   deleteStudent,
-
   getAllUsers,
   getUserById,
   getUsersView,
@@ -848,4 +855,8 @@ module.exports = {
   resetPassword,
   login,
   getConversation,
+  getConversationByConsID,
+  createConversation,
+  updateConversation,
+  updateFile
 };
