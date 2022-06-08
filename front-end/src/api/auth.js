@@ -35,9 +35,10 @@ export default {
     // console.log("postNewUser");
     // console.log(newUser.username + "in post new user");
     try {
-      const { firstname, lastname, email, tel, username, password } = newUser;
+      const { firstname, lastname, email, tel, username, password, role } = newUser;
+      console.log(role);
       const res = await auth.post("/register", {
-        vals: [firstname, lastname, email, tel, username, password],
+        vals: [firstname, lastname, email, tel, username, password, role],
       });
       return res;
     } catch (err) {

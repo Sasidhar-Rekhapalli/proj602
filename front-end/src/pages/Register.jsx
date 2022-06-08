@@ -32,6 +32,7 @@ class RegisterUser extends Component {
       tel: "",
       username: "",
       password: "",
+      role: ""
     };
   }
   handleFirstNameReg = async (event) => {
@@ -82,12 +83,18 @@ class RegisterUser extends Component {
       this.setState({ password: event.target.value });
     }
   };
+
+  handleRole = async(event) => {
+    console.log(event.target.value);
+    this.setState({ role: event.target.value});
+  }
+
   handleRegister = async (event) => {
     event.preventDefault();
 
-    const { firstname, lastname, email, tel, username, password } = this.state;
+    const { firstname, lastname, email, tel, username, password,role } = this.state;
     await auths
-      .postNewUser({ firstname, lastname, email, tel, username, password })
+      .postNewUser({ firstname, lastname, email, tel, username, password, role })
       .then(() => {
         /* if (response.data.message) {
           console.log("Unsuccessful");
@@ -103,7 +110,7 @@ class RegisterUser extends Component {
     return (
       <>
         <Navbar />
-        <Card className="m-3">
+        <Card className="container mt-3">
           <Card.Body>
             <div className="row mb-3">
               <div className="col-sm-12 col-12 text-center">
@@ -139,11 +146,11 @@ class RegisterUser extends Component {
                   <Label>Password</Label>
                   <InputText type="text" onChange={this.handlePasswordReg} />
                 </Form.Group>
-                <Form.Select className="mb-3 col-md-auto">
+                <Form.Select className="mb-3 col-md-auto" onChange={this.handleRole}>
                   <option>Select Role</option>
-                  <option>RISIA</option>
-                  <option>RCIC</option>
-                  <option>No Certification</option>
+                  <option value="RISIA">RISIA</option>
+                  <option value="RCIC">RCIC</option>
+                  <option value="No Certification">No Certification</option>
                 </Form.Select>
                 <div className="text-center">
                   <Button

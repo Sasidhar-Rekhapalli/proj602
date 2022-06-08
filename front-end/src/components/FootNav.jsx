@@ -28,10 +28,10 @@ render(){
         <Container>
             <Footerdiv>
                 <TextP>
-                    <AText>Disclaimer</AText>|
-                    <AText>PrivacyVision</AText>|
-                    <AText>© Saskatchewan Polytechnic</AText>|
-                    <AText>Vision</AText>
+                    <AText href='https://saskpolytech.ca/disclaimer.aspx'>Disclaimer</AText>|
+                    <AText href='https://saskpolytech.ca/privacy.aspx'>PrivacyVision</AText>|
+                    <AText href='https://saskpolytech.ca/'>© Saskatchewan Polytechnic</AText>|
+                    <AText href='https://saskpolytech.ca/about/about-us/vision-mission-mandate.aspx'>Vision</AText>
                 </TextP>
             </Footerdiv>
         </Container>
