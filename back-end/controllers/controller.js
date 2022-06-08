@@ -334,9 +334,13 @@ getAllUsers = async (req, res) => {
     connection.query("SELECT * FROM user", (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ success: true, data: rows });
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
@@ -368,9 +372,13 @@ getUserById = async (req, res) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ success: true, data: rows });
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
@@ -394,7 +402,7 @@ getUserById = async (req, res) => {
 getUsersView = async (req, res) => {
   dbObject.getConnection((err, connection) => {
     connection.query(
-      "SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, risia , rcic ,  no_certification  FROM user JOIN user_role ON(user_role.user_id=user.user_id) JOIN role ON(user_role.role_id=role.role_id)",
+      "SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, role FROM user)",
       (err, rows) => {
         connection.release();
         if (err) {
@@ -472,9 +480,13 @@ addUser = async (req, res) => {
     connection.query(sql, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "User Added" });
+      return res
+        .status(200)
+        .json({ message: "User Added" });
     });
   });
 };
@@ -511,9 +523,13 @@ updateUser = async (req, res) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "User Updated" });
+      return res
+        .status(200)
+        .json({ message: "User Updated" });
     });
   });
 };
@@ -536,9 +552,13 @@ deleteUser = async (req, res) => {
     connection.query(sql, userId, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "User Deleted" });
+      return res
+        .status(200)
+        .json({ message: "User Deleted" });
     });
   });
 };
@@ -556,7 +576,7 @@ resetPassword = async (req, res) => {
 
   try {
     var userName = req.body.vals[0];
-    // I added not for isAuthenticated
+    //  not for isAuthenticated
     // grab onto the new user array of values
     bcrypt.hash(req.body.vals[1], saltRounds, (err, hash) => {
       if (err) {
@@ -571,9 +591,13 @@ resetPassword = async (req, res) => {
         connection.query(sql, values, (err, rows) => {
           connection.release();
           if (err) {
-            return res.status(400).json({ success: false, error: err });
+            return res
+              .status(400)
+              .json({ success: false, error: err });
           }
-          return res.status(200).json({ message: "Password Updated" });
+          return res
+            .status(200)
+            .json({ message: "Password Updated" });
         });
       });
     });
@@ -582,22 +606,6 @@ resetPassword = async (req, res) => {
   }
 }
 
-// resetPassword = async (req, res) => {
-//    var userName = req.body.vals[0];
-//    console.log(req.body.vals[1])
-//   var sql =
-//     "UPDATE user SET  password = ? WHERE user_name = '" + userName + "'";
-//     var values = [req.body.vals[1]];
-//     dbObject.getConnection((err, connection) => {
-//     connection.query(sql, values, (err, rows) => {
-//       connection.release();
-//       if (err) {
-//         return res.status(400).json({ success: false, error: err });
-//       }
-//       return res.status(200).json({ message: "Password Updated" });
-//     });
-//   });
-// };
 //#endregion
 
 //#region for   LOGIN
