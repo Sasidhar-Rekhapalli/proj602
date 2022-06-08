@@ -5,7 +5,7 @@
  * @copyright ISMS(International Student Management System)
  * @version 1.0.0
  * @author cyberbot team, software developer program
- * @release spring2022
+ * @release summer 2022
  * @owner Saskatchewan Polytechnic, Saskatoon Campus
  *
  */
@@ -23,17 +23,27 @@
  *          between 200 to 299)
  * @callback each route has callback function attach to database object variable, that create in connect.js located in db folder
  *
- * @param getAllStudents   this route  GET all student's information                 // Restful, CRUD -> Read
- * @param getStudentById   this route  GET one student's information                 // Restful, CRUD -> Read
- * @param createStudent    this route  POST a student's information                  // Restful, CRUD -> Create
- * @param updateStudent    this route  update a student's information                // Restful, CRUD -> Update
- * @param deleteStudent    this route  delete a student from table                   // Restful, CRUD -> Delete
- * @param  getAllUsers     this route  GET all user's information from database      // Restful, CRUD -> Read
- * @param getUserById      this route  GET one user's information from user table    // Restful, CRUD -> Read
- * @param  createUser      this route  Create a new user and POST it in database     // Restful, CRUD -> Create
- * @param updateUser       this route  update a user's information from table        // Restful, CRUD -> Update
- *  * @param deleteUser    this route  delete a user from table                      // Restful, CRUD -> Delete
- * @param resetPassword    this route  for reset password andupdate user information // Restful, CRUD -> Update
+ * 
+ *@module getAllStudents  this route  GET all student's information                 // Restful, CRUD -> Read
+ *@module getStudentById  this route  GET one student's information                 // Restful, CRUD -> Read
+ *@module createStudent   this route  POST a student's information                  // Restful, CRUD -> Create
+ *@module addStudent      this route  POST a new student's information              // Restful, CRUD -> Create
+ *@module updateStudent   this route  update a student's information                // Restful, CRUD -> Update
+ *@module deleteStudent   this route  delete a student from table                   // Restful, CRUD -> Delete
+ *@module getAllUsers     this route  GET all user's information from database      // Restful, CRUD -> Read
+ *@module getUserById     this route  GET one user's information from user table    // Restful, CRUD -> Read
+ *@module getUsersView
+ *@module createUser      this route  Create a new user and POST it in database     // Restful, CRUD -> Create
+ *@module addUser         this route  POST a new user's information                 // Restful, CRUD -> Create
+ *@module updateUser      this route  update a user's information from table        // Restful, CRUD -> Update
+ *@module deleteUser      this route  delete a user from table                      // Restful, CRUD -> Delete
+ *@module resetPassword   this route  for reset password andupdate user information // Restful, CRUD -> Update
+ *@module login           this route  for login user into systme                    // Restful, CRUD -> Read
+ *@module getConversation this route  GET conversation for each student             // Restful, CRUD -> Read
+ *@module getConversationByConsID  this route  GET conversation for specific student// Restful, CRUD -> Read
+ *@module createConversation       this route  create a new conversation            // Restful, CRUD -> Create
+ *@module updateConversation        this route  update a conversation   from table  // Restful, CRUD -> Update
+ *@module updateFile     this route  POST a file and uplad it                       // Restful, CRUD -> Create
  */
 
 //////////////////////////////////////               SETUPS                //////////////////////////////////////
@@ -522,34 +532,34 @@ deleteUser = async (req, res) => {
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successful message to user
  */
- resetPassword = async (req, res) => {
-   
-  try {
-   var userName = req.body.vals[0];
-   // I added not for isAuthenticated
-   // grab onto the new user array of values
-   bcrypt.hash(req.body.vals[1], saltRounds, (err, hash) => {
-     if (err) {
-       console.error(err);
-     }
-     req.body.vals[1] = hash;
-  console.log(req.body.vals[1])
- var sql =
-   "UPDATE user SET  password = ? WHERE user_name = '" + userName + "'";
-   var values = [req.body.vals[1]];
-   dbObject.getConnection((err, connection) => {
-   connection.query(sql, values, (err, rows) => {
-     connection.release();
-     if (err) {
-       return res.status(400).json({ success: false, error: err });
-     }
-     return res.status(200).json({ message: "Password Updated" });
-     });
-   });
- });
-  } catch{
+resetPassword = async (req, res) => {
 
- }
+  try {
+    var userName = req.body.vals[0];
+    // I added not for isAuthenticated
+    // grab onto the new user array of values
+    bcrypt.hash(req.body.vals[1], saltRounds, (err, hash) => {
+      if (err) {
+        console.error(err);
+      }
+      req.body.vals[1] = hash;
+      console.log(req.body.vals[1])
+      var sql =
+        "UPDATE user SET  password = ? WHERE user_name = '" + userName + "'";
+      var values = [req.body.vals[1]];
+      dbObject.getConnection((err, connection) => {
+        connection.query(sql, values, (err, rows) => {
+          connection.release();
+          if (err) {
+            return res.status(400).json({ success: false, error: err });
+          }
+          return res.status(200).json({ message: "Password Updated" });
+        });
+      });
+    });
+  } catch {
+
+  }
 }
 
 // resetPassword = async (req, res) => {
