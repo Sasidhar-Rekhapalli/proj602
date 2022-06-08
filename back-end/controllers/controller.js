@@ -425,7 +425,7 @@ getUsersView = async (req, res) => {
  */
 createNewUser = async (req, res) => {
   try {
-    // I added not for isAuthenticated
+    // add not for isAuthenticated
     const userData = req.body.vals; // grab onto the new user array of values
     bcrypt.hash(userData[5], saltRounds, (err, hash) => {
       if (err) {
@@ -648,29 +648,180 @@ login = async (req, res, done) => {
 };
 //#endregion
 
-//#region for  Get Conversation
+//////////////////////////////////////           CONVERSATION           //////////////////////////////////////
+
+//#region for  Get CONVERSATION
 /**
- * @module    get information for each student and get conversation result for specific student
- * @params  category,datecreated,createdby,lastupdatedby
- * @throws   tthrows error 400 if it could not show the user information
- * @throws   throws status 200 and return the user information
- * @returns  send successfull message
+ * @module    get information for each student and get conversation result
+ * @params    conversation_id,category,datecreated,createdby,lastupdatedby,subject,sharedLink,permission
+ * @throws    throws error 400 if it could not show the user information 
+ * @throws    throws status 200 and return the user information
+ * @returns   send successfull message 
  */
 getConversation = async (req, res) => {
   var studentId = req.params.id;
-  var sql =
-    "SELECT category,datecreated,createdby,lastupdatedby FROM conversation JOIN student USING(student_id) WHERE student_id= ?";
+
+  var sql = "SELECT conversation_id,category,datecreated,createdby,lastupdatedby,subject,sharedLink,permission FROM conversation JOIN student USING(student_id) WHERE student_id= ?";
   dbObject.getConnection((err, connection) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ success: true, data: rows });
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
+//#endregion
 
+//#region for  Get CONVERSATION By ID
+/**
+ * @module    get information for one student and get conversation 
+ * @params    student_id,category,datecreated,createdby,lastupdatedby,subject,note,comments,sharedLink,permission
+ * @throws   throws error 400 if it could not show the user information 
+ * @throws   throws status 200 and return the user information
+ * @returns  send successfull message 
+ */
+getConversationByConsID = async (req, res) => {
+  var cons_id = req.params.id;
+  var sql = "SELECT student_id,category,datecreated,createdby,lastupdatedby,subject,note,comments,sharedLink,permission FROM conversation JOIN student USING(student_id) WHERE conversation_id= ?";
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, cons_id, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
+    });
+  });
+};
+//#endregion
+
+//#region for  CREATE CONVERSATION
+/**
+ * @module    Create a new conversation 
+ * @params    student_id,note,category,subject,sharedLink,permission,createdby,comments
+ * @throws   throws error 400 if it could not show the user information 
+ * @throws   throws status 200 and return the user information
+ * @returns  send successfull message 
+ */
+createConversation = async (req, res) => {
+  var student_id = req.body.student_id
+  var note = req.body.note
+  var category = req.body.category
+  var subject = req.body.subject
+  var sharedLink = req.body.sharedLink
+  var permission = req.body.permission
+  var created = req.body.created
+  var comments = req.body.comments
+  var sql =
+    `INSERT INTO conversation (student_id,note,category,subject,sharedLink,permission,createdby,comments) VALUES ('${student_id}','${note}','${category}','${subject}','${sharedLink}','${permission}','${created}','${comments}')`;
+
+
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ message: "User Created" });
+    });
+  });
+};
+//#endregion
+
+//#region for  CREATE CONVERSATION
+/**
+ * @module    Create a new conversation 
+ * @params    note , comments, sharedLink 
+ * @throws   throws error 400 if it could not show the user information 
+ * @throws   throws status 200 and return the user information
+ * @returns  send successfull message 
+ */
+updateConversation = async (req, res) => {
+  var conversation_id = req.params.id;
+  var note = req.body.note;
+  var comments = req.body.comments;
+  var sharedLink = req.body.sharedLink;
+  console.log(conversation_id);
+  console.log(req.body.note);
+  console.log(req.body.comments);
+  console.log(req.body.sharedLink)
+  var sql =
+    "UPDATE conversation SET note = ?, comments = ?, sharedLink = ? WHERE conversation_id = " + conversation_id;
+  var values = [note, comments, sharedLink]
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, values, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ message: "Conversation Updated" });
+    });
+  });
+};
+//#endregion
+
+//#region for  UPLOAD FILE
+/**
+ * @module    upload file for conversation
+ * @params    file_upload
+ * @throws   throws error 400 if it could not show the user information 
+ * @throws   throws status 200 and return the user information
+ * @returns  send successfull message 
+ */
+updateFile = async (req, res) => {
+  let conversation_id = req.params.id;
+  let uploadFile;
+  let uploadFileName;
+  let uploadPath;
+  console.log(req.params.id)
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).json({ message: "No files were uploaded" });
+  }
+
+  uploadFile = req.files.file;
+  uploadFileName = `${conversation_id}_` + req.files.file.name;
+
+  uploadPath = __dirname + '\\upload\\' + uploadFileName;
+
+  uploadFile.mv(uploadPath, function (err) {
+    if (err)
+      return res
+        .status(500)
+        .json({ success: false, error: err });
+    dbObject.getConnection((err, connection) => {
+      connection.query(`UPDATE conversation SET file_upload = ? WHERE conversation_id = ${conversation_id}`, uploadFileName, (err, rows) => {
+        connection.release();
+        if (!err) {
+          return res
+            .status(200)
+            .json({ message: "Updated File" });
+        } else {
+          return res
+            .status(500)
+            .json({ success: false, error: err });
+        }
+      });
+    });
+  });
+};
 //#endregion
 
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
