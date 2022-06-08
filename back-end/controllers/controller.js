@@ -54,7 +54,6 @@
 const dbObject = require("../db/connect");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const User = require("../db/models/user");
 //#endregion
 
 //////////////////////////////////////              STUDENTS               //////////////////////////////////////
@@ -78,9 +77,13 @@ getAllStudents = async (req, res) => {
     connection.query("SELECT * FROM student", (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ success: true, data: rows });
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
@@ -107,15 +110,18 @@ getAllStudents = async (req, res) => {
  */
 getStudentById = async (req, res) => {
   var studentId = req.params.id;
-  console.log(studentId);
   var sql = "SELECT * FROM student WHERE std_id = ?";
   dbObject.getConnection((err, connection) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ success: true, data: rows });
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
     });
   });
 };
@@ -161,9 +167,13 @@ createStudent = async (req, res) => {
     connection.query(sql, [values], (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "Student Created" });
+      return res
+        .status(200)
+        .json({ message: "Student Created" });
     });
   });
 };
@@ -183,8 +193,7 @@ createStudent = async (req, res) => {
  * @returns  send successfull message to user
  */
 addStudent = async (req, res) => {
-  var sql =
-    "INSERT INTO student (prospective, std_id, first_name, middle_name, last_name, gender, birthdate, email, country, academic_period, campus, program, degree, year, graudate_ind, enroll) VALUES ?";
+  var sql = "INSERT INTO student (prospective, std_id, first_name, middle_name, last_name, gender, birthdate, email, country, academic_period, campus, program, degree, year, graudate_ind, enroll) VALUES ?";
   var values = [
     [
       req.body.prospective,
@@ -209,9 +218,13 @@ addStudent = async (req, res) => {
     connection.query(sql, [values], (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "Student Added" });
+      return res
+        .status(200)
+        .json({ message: "Student Added" });
     });
   });
 };
@@ -235,8 +248,7 @@ updateStudent = async (req, res) => {
   var sql =
     "UPDATE student SET prospective = ?, std_id = ?, first_name = ?, middle_name = ?, last_name = ?, gender = ?, birthdate = ?," +
     "email = ?, country = ?, academic_period = ?, campus = ?, program = ?, degree = ?, year = ?, graudate_ind = ?, enroll = ? " +
-    "WHERE student_id = " +
-    studentId;
+    "WHERE student_id = " + studentId;
   var values = [
     req.body.prospective,
     req.body.std_id,
@@ -259,9 +271,13 @@ updateStudent = async (req, res) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "Student Updated" });
+      return res
+        .status(200)
+        .json({ message: "Student Updated" });
     });
   });
 };
@@ -286,9 +302,13 @@ deleteStudent = async (req, res) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
-        return res.status(400).json({ success: false, error: err });
+        return res
+          .status(400)
+          .json({ success: false, error: err });
       }
-      return res.status(200).json({ message: "Student Deleted" });
+      return res
+        .status(200)
+        .json({ message: "Student Deleted" });
     });
   });
 };
