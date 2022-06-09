@@ -747,7 +747,7 @@ login = async (req, res, done) => {
               res.status(200).json({ data: user.permission });
             } else {
               console.log("Wrong password");
-              return res.status(400).json({ message: "Wrong password" });
+              return res.json({ message: "Wrong password" });
             }
           }
         }
