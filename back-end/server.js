@@ -5,7 +5,7 @@
  * @copyright ISMS(International Student Management System)
  * @version 1.0.0
  * @author cyberbot team, software developer program
- * @release spring2022
+ * @release Summer 2022
  * @owner Saskatchewan Polytechnic, Saskatoon Campus
  * 
  */
@@ -26,14 +26,14 @@ const cors = require('cors')
 const db = require('./db/connect');
 const router = require('./routes/route');
 
-const fileUpload=require('express-fileupload');
+const fileUpload = require('express-fileupload');
 backend.use(fileUpload());
 backend.use(express.static('upload'));
 backend.use(express.json());
 backend.use(cors({
-    origin:'http://localhost:3000',
+    origin: 'http://localhost:3000',
     credentials: true
-})); 
+}));
 /**
  * redirect the first page to isms/main and use router to run
  */

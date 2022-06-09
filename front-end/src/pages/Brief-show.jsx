@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import apis from '../api/student';
-import { ConversationList } from '../components';
 import { Form, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {Navbar,FootNav} from "../components"
@@ -38,6 +37,7 @@ class BriefShowStudent extends Component{
             student:[],
             studentID: '',
             firstname: '',
+            middlename: '',
             lastname: '',
             gender: '',
             dayofbirth:'',
@@ -51,8 +51,92 @@ class BriefShowStudent extends Component{
             graduate:'',
             enroll:'',
             prospective:false
-        }
-        
+        }   
+    }
+
+    handleValidatedStudentID = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Student ID must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({studentID:event.target.value});
+      }
+    }
+
+    handleValidatedFirstName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"First Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({firstname:event.target.value});
+      }
+    }
+
+    handleValidatedMiddleName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Middle Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({middlename:event.target.value});
+      }
+    }
+
+    handleValidatedLastName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Last Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({lastname:event.target.value});
+      }
+    }
+
+    handleValidatedDayOfBirth = async event => {
+      this.setState({dayofbirth:event.target.value});
+    }
+
+    handleValidatedCountry = async event => {
+      this.setState({country:event.target.value});
+    }
+
+    handleValidatedEmail = async event => {
+      if(!event.target.value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/)){
+        this.setState({isValid:"Verify Email"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({saskemail:event.target.value});
+      }
+    }
+
+    handleValidatedCampus = async event => {
+      this.setState({campus:event.target.value});
+    }
+
+    handleValidatedPeriod = async event => {
+      this.setState({period:event.target.value});
+    }
+
+    handleValidatedYear = async event => {
+      this.setState({year:event.target.value});
+    }
+
+    handleValidatedProgram = async event => {
+      this.setState({program:event.target.value});
+    }
+
+    handleValidatedDegree = async event => {
+      this.setState({degree:event.target.value});
+    }
+
+    handleValidatedGraduate = async event => {
+      this.setState({graduate:event.target.value});
+    }
+
+    handleValidatedEnroll = async event => {
+      this.setState({enroll:event.target.value});
+    }
+
+    handleGenderMale = async event => {
+      this.setState({gender:'M'});
     }
     handleValidatedStudentID = async event => {
       if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
@@ -179,8 +263,10 @@ class BriefShowStudent extends Component{
                   student=>{
                     this.setState({
             student:student.data.data,
+            studentMainID: student.data.data[0].student_id,
             studentID: student.data.data[0].std_id,
             firstname: student.data.data[0].first_name,
+            middle_name: student.data.data[0].middle_name,
             lastname: student.data.data[0].last_name,
             dayofbirth: student.data.data[0].birthdate,
             saskemail: student.data.data[0].email,

@@ -40,7 +40,6 @@ export const createStudent = (
 }); 
 export const getAllStudents=()=>api.get(`/getallstudent`);
 export const getStudentById=id=>api.get(`/getstudent/${id}`);
-export const getAllUsers=()=>api.get(`/getalluser`);
 export const updateStudent = (
     studentMainID,
     studentID,
@@ -78,6 +77,8 @@ export const updateStudent = (
     "enroll": enroll
 }); 
 export const deleteStudent=id=>api.delete(`/deletestudent/${id}`);
+export const getConversation =id=>api.get(`/getconversation/${id}`);
+export const getAllUsers=()=>api.get(`/user/getuser`);
  
 const apis={
     createStudent,

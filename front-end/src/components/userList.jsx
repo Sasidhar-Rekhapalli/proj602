@@ -93,7 +93,6 @@ class UserList extends Component{
                         // this album is the data coming from api call
         console.log(this.state.user)
     }
-
     render() {
         // get data from state
         const {user, isLoading} = this.state;

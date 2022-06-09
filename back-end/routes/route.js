@@ -1,29 +1,29 @@
 //////////////////////////////////////               ROUTE.JS                //////////////////////////////////////
 /**
- * 
+ *
  * @file route.js
  * @copyright ISMS(International Student Management System)
  * @version 1.0.0
  * @author cyberbot team, software developer program
- * @release spring2022
+ * @release summer 2022
  * @owner Saskatchewan Polytechnic, Saskatoon Campus
- * 
+ *
  */
 
 //////////////////////////////////////                 SUMMARY                  //////////////////////////////////////
-/** 
- * @description routes for access sub pages, in this module with express provide different routes for each CRUD operation 
+/**
+ * @description routes for access sub pages, in this module with express provide different routes for each CRUD operation
  *              and other process as required
  * */
 
 //////////////////////////////////////              SETUPS                //////////////////////////////////////
 
-//#region for  IMPORT        
+//#region for  IMPORT
 /**  after installing express package import it, also assign express.Router to a variable and use it for routes
- * import all routes located in controller.js 
- * @param express  for import express 
- * @param router  for use Router method in express 
- * @param controller for import routes in controller.js 
+ * import all routes located in controller.js
+ * @param express  for import express
+ * @param router  for use Router method in express
+ * @param controller for import routes in controller.js
  * */
  const express = require("express");
  
@@ -31,13 +31,13 @@
  const passport = require("passport");
 
 const router = express.Router();
-
+const controller = require("../controllers/controller");
 
 //#endregion
 
 //////////////////////////////////////             STUDENTS               //////////////////////////////////////
 //#region for student's route
-/** Route for Create, Update,Read and Delete for STUDENTS 
+/** Route for Create, Update,Read and Delete for STUDENTS
  * @param getAllStudents  get all student informayion from student table 
  * @param getStudentById  get one student with student id from student table  
  * @param  createStudent  create a new student and put student's information into student table 
@@ -55,7 +55,7 @@ router.delete("/deletestudent/:id", controller.deleteStudent);
 router.get("/getconversationid/:id", controller.getConversation);
 router.get("/getconversationbyconsid/:id", controller.getConversationByConsID);
 router.post("/newconversation", controller.createConversation);
-router.put("/updateconversation/:id",controller.updateConversation)
+router.put("/updateconversation/:id", controller.updateConversation)
 //#endregion
 
 //////////////////////////////////////                USERS               //////////////////////////////////////
@@ -77,6 +77,7 @@ router.post("/login", controller.login);
 router.put("/user/updateuser/:id", controller.updateUser);
 router.delete("/deleteuser/:id", controller.deleteUser);
 router.put("/resetpassword/:id", controller.resetPassword);
+router.post("/updateFile/:id", controller.updateFile);
 
 router.post("/updateFile/:id", controller.updateFile);
 

@@ -49,8 +49,8 @@ class Navbar extends Component {
     return (
       <Container>
         <Nav>
-          <img src={Logo} width="100px" height="100px" alt="Logo" />
-          <Heading>International Student Management</Heading>
+          <img src={Logo} width="200px" height="100px" alt="Logo" />
+          <Heading>International Student Management System</Heading>
         </Nav>
         <HeaderDown>
           <TextLine>Username:{localStorage.getItem('user_name')}</TextLine>
