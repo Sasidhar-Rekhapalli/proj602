@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import addStudent from "../images/logo.png";
+import addStudent from "../images/download.png";
 import {  Card  } from "react-bootstrap";
 import apis from "../api/student"
 import ReactTable from 'react-table';

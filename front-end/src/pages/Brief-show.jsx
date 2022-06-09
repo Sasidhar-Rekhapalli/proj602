@@ -496,17 +496,17 @@ class BriefShowStudent extends Component{
           {/* Link to go to student page  */}
           <Link to={{pathname: `/isms/addnote/${this.state.id}`}}>
             {/* Button to save new student  */}
-            <Button className="btn btn-primary mt-3" style={{ float: "right" }}>
+            <Button className="btn mt-3" style={{ float: "right" ,background:"#800080",border:"none"}}>
               Add New Conversation
             </Button>
           </Link>
           {/* Link to go to student page  */}
             {/* Button to save new student  */}
-            <Button className="btn btn-primary mt-3" style={{ float: "right" , margin:20}} onClick={this.handleUpdateStudent}>
+            <Button className="btn mt-3" style={{ float: "right" , margin:20,background:"#800080",border:"none"}} onClick={this.handleUpdateStudent}>
               Update Student
             </Button>
             <Link to={`/isms/studentpage`}>
-            <Button className="btn btn-primary mt-3" style={{ float: "Left" }} onClick={this.handleUpdateStudent}>
+            <Button className="btn mt-3" style={{ float: "Left",background:"#800080",border:"none" }} onClick={this.handleUpdateStudent}>
               Student
             </Button>
             </Link>

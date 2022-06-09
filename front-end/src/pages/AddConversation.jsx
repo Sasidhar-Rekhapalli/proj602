@@ -14,7 +14,7 @@ import  UploadFile  from "../components/uploadFile";
 const Header = styled.h2`
   margin: 0px 20px;
   text-align:center;
-  display: inline-block;
+  
 `;
 // class Cancel extends Component {
 //   comebackStudent = event => {
@@ -111,7 +111,7 @@ class AddConversation extends Component{
         <div className="row mb-3">
           <div className="col-sm-12 col-12">
             {/* Card Title  */}
-            <Header className="">Add Notes</Header>
+            <Header className="text-center">Add Notes</Header>
           </div>
         </div>
         {/* Card for form  */}
@@ -188,7 +188,7 @@ class AddConversation extends Component{
                 <TabPanel>
                 <Form.Group>
                     <Form.Label className="col-md-2">Note</Form.Label>
-                    <Form.Control className="col" type="textarea" value={this.state.note} onChange={this.handleNote}></Form.Control>
+                    <Form.Control className="col" type="textarea" style={{padding:"50px 10px"}} value={this.state.note} onChange={this.handleNote}></Form.Control>
                     
                     <Form.Label className="col-md-2">
                       Comment:
