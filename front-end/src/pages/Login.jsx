@@ -91,6 +91,7 @@ class Login extends Component {
                     />
                     <p>{this.state.isValid}</p>
                   </div>
+                  <div><p>{this.state.loginStatus}</p></div>
                   <div className="form-group form-check floatbtn">
                     <button
                       className="btn btn-primary"
