@@ -79,13 +79,15 @@ export const updateStudent = (
 export const deleteStudent=id=>api.delete(`/deletestudent/${id}`);
 export const getConversation =id=>api.get(`/getconversation/${id}`);
 export const getAllUsers=()=>api.get(`/getalluser`);
+export const updatePermission=(id,permission)=>api.put(`/updatepermission/`,{id:id,permission:permission});
  
 const apis={
     createStudent,
     getAllStudents,
-    getStudentById,
     updateStudent,
     deleteStudent,
-    getAllUsers
+    getAllUsers,
+    updatePermission,
+    getStudentById
 }
 export default apis;

@@ -75,7 +75,7 @@
  */
 getAllStudents = async (req, res) => {
   dbObject.getConnection((err, connection) => {
-    connection.query("SELECT * FROM student", (err, rows) => {
+    connection.query("SELECT * FROM student ORDER BY student_id DESC", (err, rows) => {
       connection.release();
       if (err) {
         return res
@@ -368,11 +368,15 @@ getAllUsers = async (req, res) => {
  * @throws   throws status 200 and return the user information
  * @returns  send successfull message
  */
-getUserById = async (req, res) => {
-  var studentId = req.params.id;
-  var sql = "SELECT * FROM user WHERE user_id = ?";
+ updatePermission = async (req, res) => {
+  var user_id = req.body.id;
+  var permission=req.body.permission
+  console.log(user_id);
+  console.log(permission);
+  var sql = "UPDATE user SET permission=?  WHERE user_id = " +
+  user_id;
   dbObject.getConnection((err, connection) => {
-    connection.query(sql, studentId, (err, rows) => {
+    connection.query(sql, permission, (err, rows) => {
       connection.release();
       if (err) {
         return res
@@ -492,41 +496,6 @@ createConversation= async (req, res) => {
   });
 };
     
-createNewUser = async (req, res) => {
-  try {
-    // add not for isAuthenticated
-    const userData = req.body.vals; // grab onto the new user array of values
-    bcrypt.hash(userData[5], saltRounds, (err, hash) => {
-      if (err) {
-        console.error(err);
-      }
-      userData[5] = hash; // replace plain text password with hash
-      const vals = [
-        userData[0],
-        userData[1],
-        userData[2],
-        userData[3],
-        userData[4],
-        userData[5],
-        userData[6]
-      ];
-      const queryString = `INSERT INTO user (first_name ,last_name ,email ,tel  ,user_name  , password, role ) VALUES (?,?,?,?,?,?,?
-        )`;
-      dbObject.execute(queryString, vals, (err, result) => {
-        if (err) throw err;
-        else {
-          return res
-            .status(200)
-            .json({ success: true });
-        }
-      });
-    });
-  } catch (err) {
-    return res
-      .status(400)
-      .json({ success: false });
-  }
-};
 //#region for   ADD A USER
 /**
  * @module    Add a new user , send to user table
@@ -726,21 +695,17 @@ getConversation = async (req, res) => {
     });
   });
 };
-login = async (req, res, done) => {
-  try {
-    dbObject.query(
+login = async (req, res) => {
+  dbObject.getConnection((err,connection)=>{
+    if(err){
+      return res.json({message:"Wrong username"})
+    }
+    connection.query(
       "SELECT * from user where user_name=?",
       req.body.vals[0],
-      function (error, rows) {
-        if (error) {
-          console.log("user doesn't exist");
-        } else {
+      (error, rows)=> {
           let user = rows[0];
-          if (
-            user.password.length !== "null" ||
-            user.password.length !== "undefined"
-          ) {
-            let match = bcrypt.compareSync(req.body.vals[1], user.password);
+          let match = bcrypt.compareSync(req.body.vals[1], user.password);
 
             if (match) {
               console.log("password matched");
@@ -749,13 +714,8 @@ login = async (req, res, done) => {
               console.log("Wrong password");
               return res.json({ message: "Wrong password" });
             }
-          }
-        }
-      }
-    );
-  } catch (err) { }
-  return res;
-};
+          })
+        })};
 
 //#endregion
 
@@ -877,7 +837,7 @@ module.exports =
   updateStudent,
   deleteStudent,
   getAllUsers,
-  getUserById,
+
   getUsersView,
   createNewUser,
   addUser,
@@ -889,5 +849,6 @@ module.exports =
   getConversationByConsID,
   createConversation,
   updateConversation,
-  updateFile
+  updateFile,
+  updatePermission
 }

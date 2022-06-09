@@ -22,10 +22,16 @@ class Details extends Component {
     
 handleClose= async event=>{
         this.setState({showModal:false})
+        await apis.updatePermission(this.props.id,this.state.permission).then(
+            window.alert("Permission is updated!!")
+            
+        )
+        window.location.reload();
     }
 handlePermission= async event=>{
         this.setState({permission:event.target.value})
-    }    
+    }
+     
 handleModal = event => {
       event.preventDefault()
       this.setState({showModal:true,permission:this.props.permission})

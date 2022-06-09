@@ -68,7 +68,7 @@ router.put("/updateconversation/:id", controller.updateConversation)
  * @param  resetpassword  update a user password */
 
 router.get("/getalluser", controller.getAllUsers);
-router.get("/user/getuser/:id", controller.getUserById);
+router.put("/updatepermission", controller.updatePermission);
 router.get("/user/getUsersView", controller.getUsersView);
 router.post("/register", controller.createNewUser);
 router.post("/user/adduser", controller.addUser);

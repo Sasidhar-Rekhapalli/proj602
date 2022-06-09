@@ -91,7 +91,7 @@ handleCheck = async event =>{
               {/* Form for reset password  */}
               <Form  onSubmit={this.handleCheck}>
               <Form.Group className="mb-3 col-md-auto">
-                  <Form.Control placeholder="Master Password" onChange={this.handlemasterPassword}></Form.Control>
+                  <Form.Control placeholder="Master Password" type="password" onChange={this.handlemasterPassword}></Form.Control>
                 </Form.Group>
                 {/* Form input for username  */}
                 <Form.Group className="mb-3 col-md-auto">
@@ -99,11 +99,11 @@ handleCheck = async event =>{
                 </Form.Group>
                 {/* Form input for password  */}
                 <Form.Group className="mb-3 col-md-auto">
-                  <Form.Control placeholder="Password" onChange={this.handlepassword}></Form.Control>
+                  <Form.Control placeholder="Password" type="password" onChange={this.handlepassword}></Form.Control>
                 </Form.Group>
                 {/* Form input for Retype password  */}
                 <Form.Group className="mb-3 col-md-auto">
-                  <Form.Control placeholder="RetypePassword"></Form.Control>
+                  <Form.Control placeholder="RetypePassword" type="password"></Form.Control>
                 </Form.Group>
                 {/* Reset button  */}
                 
