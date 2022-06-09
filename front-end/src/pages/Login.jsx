@@ -2,10 +2,8 @@ import auths from "../api/auth";
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../images/saskpolytechlogo.png";
-import Navbar from "../components/Navbar";
-import FootNav from "../components/FootNav";
 import "../css/loginpage.css";
-import { Redirect } from "react-router-dom";
+
 
 class Login extends Component {
   constructor(props) {
@@ -14,8 +12,10 @@ class Login extends Component {
       loginUsername: "",
       loginPassword: "",
       loginStatus: "",
+      permission:""
     };
   }
+  
   handleInputUser = async (event) => {
     if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
       this.setState({ isValid: "Username must be size between 8 to 12" });
@@ -45,7 +45,12 @@ class Login extends Component {
           this.setState({ loginStatus: response.data[0] });
           console.log("Successful");
           alert("Successful");
-          this.props.history.push("/isms/");
+          this.setState({permission:response.data.data})
+          localStorage.setItem('permission',this.state.permission)
+          localStorage.setItem('user_name',this.state.loginUsername)
+
+          this.props.history.push("/isms/studentpage");
+
         }
       });
   };

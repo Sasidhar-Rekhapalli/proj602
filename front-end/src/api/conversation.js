@@ -1,16 +1,20 @@
 import axios from 'axios';
 
-const api=axios.create({
-    baseURL:'http://localhost:3001/isms/conversation'
+const conv_api=axios.create({
+    baseURL:'http://localhost:3001/isms'
 
 })
-export const getConversationByID=id=>api.get(`/getconversationid/${id}`)
-export const getAllConversation=()=>api.get(`/getallconversation`)
-export const createConversation=payload=>api.post(`/newconversation`,payload);
+export const getConversationByID=id=>conv_api.get(`/getconversationid/${id}`)
+export const getConversationByConsID=id=>conv_api.get(`/getconversationbyconsid/${id}`)
+export const getAllConversation=()=>conv_api.get(`/getallconversation`)
+export const updateConversation=(id,note,comments,sharedLink)=>conv_api.put(`/updateconversation/${id}`,{note:note,comments:comments,sharedLink:sharedLink})
+export const createConversation=(student_id,note,category,subject,sharedLink,permission,created,comments)=>conv_api.post(`/newconversation`,{"student_id":student_id,"note":note,"category":category,"subject":subject,"sharedLink":sharedLink,"permission":permission,"created":created,"comments":comments});
 
-const apis={
+const conv_apis={
     getAllConversation,
     getConversationByID,
-    createConversation
+    createConversation,
+    getConversationByConsID,
+    updateConversation
 }
-export default apis
+export default conv_apis

@@ -32,7 +32,7 @@ class RegisterUser extends Component {
       tel: "",
       username: "",
       password: "",
-      role: ""
+      permission: ""
     };
   }
   handleFirstNameReg = async (event) => {
@@ -84,17 +84,17 @@ class RegisterUser extends Component {
     }
   };
 
-  handleRole = async(event) => {
-    console.log(event.target.value);
-    this.setState({ role: event.target.value});
+  handlepermission = async(event) => {
+
+    this.setState({ permission: event.target.value});
   }
 
   handleRegister = async (event) => {
     event.preventDefault();
 
-    const { firstname, lastname, email, tel, username, password,role } = this.state;
+    const { firstname, lastname, email, tel, username, password,permission } = this.state;
     await auths
-      .postNewUser({ firstname, lastname, email, tel, username, password, role })
+      .postNewUser({ firstname, lastname, email, tel, username, password, permission })
       .then(() => {
         /* if (response.data.message) {
           console.log("Unsuccessful");
@@ -146,11 +146,13 @@ class RegisterUser extends Component {
                   <Label>Password</Label>
                   <InputText type="text" onChange={this.handlePasswordReg} />
                 </Form.Group>
-                <Form.Select className="mb-3 col-md-auto" onChange={this.handleRole}>
-                  <option>Select Role</option>
+                <Form.Select className="mb-3 col-md-auto" onChange={this.handlepermission}>
+                  <option>Select permission</option>
                   <option value="RISIA">RISIA</option>
                   <option value="RCIC">RCIC</option>
-                  <option value="No Certification">No Certification</option>
+                  <option value="RISIA and RCIC">RCIC and RISIA</option>
+                  <option value="admin">admin</option>
+                  <option value="">No Certification</option>
                 </Form.Select>
                 <div className="text-center">
                   <Button

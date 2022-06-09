@@ -25,10 +25,12 @@
  * @param router  for use Router method in express
  * @param controller for import routes in controller.js
  * */
+ const express = require("express");
+ 
+ const controller = require("../controllers/controller");
+ const passport = require("passport");
 
-const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/controller");
 
 //#endregion
 
@@ -65,7 +67,7 @@ router.put("/updateconversation/:id", controller.updateConversation)
  * @param  updateUser  update one user and put user's information into student table
  * @param  resetpassword  update a user password */
 
-router.get("/user/getuser", controller.getAllUsers);
+router.get("/getalluser", controller.getAllUsers);
 router.get("/user/getuser/:id", controller.getUserById);
 router.get("/user/getUsersView", controller.getUsersView);
 router.post("/register", controller.createNewUser);
@@ -74,6 +76,8 @@ router.post("/login", controller.login);
 router.put("/user/updateuser/:id", controller.updateUser);
 router.delete("/deleteuser/:id", controller.deleteUser);
 router.put("/resetpassword/:id", controller.resetPassword);
+router.post("/updateFile/:id", controller.updateFile);
+
 router.post("/updateFile/:id", controller.updateFile);
 
 //#endregion

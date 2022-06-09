@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button, Card } from "react-bootstrap";
-import apis from '../api/student';
+import conv_apis from '../api/conversation';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import styled from 'styled-components';
@@ -11,6 +11,7 @@ class ConversationList extends Component{
     constructor(props){
         super(props);
         this.state = {
+            id:this.props.match.params.id,
             conversation:[],
             isLoading:false
         }
@@ -19,8 +20,9 @@ class ConversationList extends Component{
     componentDidMount = async() => {
         // turn on isLoading flag which we load data
         this.setState({isLoading:true})
+        const {id} = this.state;
       
-        await apis.getConversation()
+        await conv_apis.getConversationByID(id)
                     .then(
                         // this album is the data coming from api call
                         conversation => {
@@ -44,10 +46,16 @@ class ConversationList extends Component{
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
             },
             {
-                Header: 'Date Created',
+                Header: 'Subject',
+                accessor: 'subject',
+                style: {'whiteSpace':'unset'},
+                Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+            },
+            {
+                Header: 'Date created',
                 accessor: 'datecreated',
                 style: {'whiteSpace':'unset'},
-                Cell: row => <div style={{textAlign: "center"}}>{row.value.substring(0, 10)}</div>
+                Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
             },
             {
                 Header: 'Created By',

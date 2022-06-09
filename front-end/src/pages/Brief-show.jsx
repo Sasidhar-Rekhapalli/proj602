@@ -1,11 +1,30 @@
 import React,{Component} from 'react';
 import apis from '../api/student';
-import { ConversationList } from '../components';
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {Navbar,FootNav} from "../components"
-import { format } from 'date-fns';
+import conv_apis from '../api/conversation';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import styled from 'styled-components';
+const Wrapper = styled.div`padding: 0 40px 40px 40px;`
+const Detail = styled.div`
+    color: #0000ff;
+    cursor: pointer;
+`
 
+class Details extends Component {
+  updateDialog = event => {
+      event.preventDefault()
+      console.log(this.props.id)
+      window.location.href=`/isms/detaildialog/${this.props.id}`
+  }
+
+  render(){
+      // invike the update view for the current row -> this.props
+      return <Detail onClick={this.updateDialog}>Details</Detail>
+  }
+}
 class BriefShowStudent extends Component{
     //Create the form loaded student info into apporiate box
     constructor(props) {
@@ -13,6 +32,8 @@ class BriefShowStudent extends Component{
         super(props)
         this.state = {
             id: this.props.match.params.id,
+            conversation:[],
+            isLoading:false,
             student:[],
             studentID: '',
             firstname: '',
@@ -117,6 +138,90 @@ class BriefShowStudent extends Component{
     handleGenderMale = async event => {
       this.setState({gender:'M'});
     }
+    handleValidatedStudentID = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Student ID must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({studentID:event.target.value});
+      }
+    }
+
+    handleValidatedFirstName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"First Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({firstname:event.target.value});
+      }
+    }
+
+    handleValidatedMiddleName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Middle Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({middlename:event.target.value});
+      }
+    }
+
+    handleValidatedLastName = async event => {
+      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
+        this.setState({isValid:"Last Name must be size between 8 to 12"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({lastname:event.target.value});
+      }
+    }
+
+    handleValidatedDayOfBirth = async event => {
+      this.setState({dayofbirth:event.target.value});
+    }
+
+    handleValidatedCountry = async event => {
+      this.setState({country:event.target.value});
+    }
+
+    handleValidatedEmail = async event => {
+      if(!event.target.value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/)){
+        this.setState({isValid:"Verify Email"});
+      }else{
+        this.setState({isValid:""});
+        this.setState({saskemail:event.target.value});
+      }
+    }
+
+    handleValidatedCampus = async event => {
+      this.setState({campus:event.target.value});
+    }
+
+    handleValidatedPeriod = async event => {
+      this.setState({period:event.target.value});
+    }
+
+    handleValidatedYear = async event => {
+      this.setState({year:event.target.value});
+    }
+
+    handleValidatedProgram = async event => {
+      this.setState({program:event.target.value});
+    }
+
+    handleValidatedDegree = async event => {
+      this.setState({degree:event.target.value});
+    }
+
+    handleValidatedGraduate = async event => {
+      this.setState({graduate:event.target.value});
+    }
+
+    handleValidatedEnroll = async event => {
+      this.setState({enroll:event.target.value});
+    }
+
+    handleGenderMale = async event => {
+      this.setState({gender:'M'});
+    }
     handleGenderFemale = async event => {
       this.setState({gender:'F'});
     }
@@ -127,7 +232,6 @@ class BriefShowStudent extends Component{
     handleProspectiveStudent = async event => {
       this.setState({prospective:true});
     }
-    
     handleUpdateStudent = async event => {
       await apis.updateStudent(
                                 this.state.studentMainID,
@@ -151,9 +255,9 @@ class BriefShowStudent extends Component{
         window.alert("Student updated successfully");
         this.props.history.push('/isms/studentpage');  
     }
-
     componentDidMount = async () => {
         const {id} = this.state;
+        this.setState({isLoading:true})
        await apis.getStudentById(id)
                 .then(
                   student=>{
@@ -162,7 +266,7 @@ class BriefShowStudent extends Component{
             studentMainID: student.data.data[0].student_id,
             studentID: student.data.data[0].std_id,
             firstname: student.data.data[0].first_name,
-            firstname: student.data.data[0].middle_name,
+            middle_name: student.data.data[0].middle_name,
             lastname: student.data.data[0].last_name,
             dayofbirth: student.data.data[0].birthdate,
             saskemail: student.data.data[0].email,
@@ -180,14 +284,83 @@ class BriefShowStudent extends Component{
                 )
           
         // use api call to retrieve doccument here
-     
+        await conv_apis.getConversationByID(id)
+        .then(
+            // this album is the data coming from api call
+            conversation => {
+                this.setState({
+                    conversation: conversation.data.data,
+                    // need to reference the data using syntax above right
+                    // then turn isLoading off now that we're done
+                    isLoading: false
+                })
+            }
+        )
     }
-    handleAddNote
     render(){
-      
-         return(
+      const {conversation, isLoading} = this.state;
+      const columns  = [
+          {
+             Header: 'ID',
+            accessor: 'conversation_id',
+            style: {'whiteSpace':'unset'},
+            Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+          },
+          {
+              Header: 'Category',
+              accessor: 'category',
+              style: {'whiteSpace':'unset'},
+              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+          },
+          {
+              Header: 'Subject',
+              accessor: 'subject',
+              style: {'whiteSpace':'unset'},
+              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+          },
+          {
+              Header: 'Date created',
+              accessor: 'datecreated',
+              style: {'whiteSpace':'unset'},
+              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+          },
+          {
+              Header: 'Created By',
+              accessor: 'createdby',
+              style: {'whiteSpace':'unset'},
+              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+          },
+          {
+              Header: 'Last Updated',
+              accessor: 'lastupdatedby',
+              style: {'whiteSpace':'unset'},
+              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
+          },
+          {
+            Header: '',
+            accessor: '',
+            width: 100,
+            Cell: function(props) {
+              //  console.log(props.original.conversation_id);
+              // const rows=props;
+              // console.log(rows);
+                return(
+                    <span>
+                        <Details id={props.original.conversation_id} />
+                    </span>
+                )
+            }
+
+        },    
+      ]
+
+      let showTable = true;
+      if(!conversation.length){
+          showTable = false;
+      }
+    return(
     <>
-        <Navbar/>
+         <Navbar/>
       {/* Card with title */}
       <Card.Title className="mt-3 mb-3 text-center">Student Conversation</Card.Title>
       {/* Card */}
@@ -321,7 +494,7 @@ class BriefShowStudent extends Component{
           </Form>
 
           {/* Link to go to student page  */}
-          <Link to="/isms/addnote/id">
+          <Link to={{pathname: `/isms/addnote/${this.state.id}`}}>
             {/* Button to save new student  */}
             <Button className="btn btn-primary mt-3" style={{ float: "right" }}>
               Add New Conversation
@@ -329,10 +502,27 @@ class BriefShowStudent extends Component{
           </Link>
           {/* Link to go to student page  */}
             {/* Button to save new student  */}
-            <Button className="btn btn-primary mt-3" style={{ float: "right" }} onClick={this.handleUpdateStudent}>
+            <Button className="btn btn-primary mt-3" style={{ float: "right" , margin:20}} onClick={this.handleUpdateStudent}>
               Update Student
             </Button>
-          <ConversationList/>
+            <Link to={`/isms/studentpage`}>
+            <Button className="btn btn-primary mt-3" style={{ float: "Left" }} onClick={this.handleUpdateStudent}>
+              Student
+            </Button>
+            </Link>
+          
+          <Card className="mx-auto " style={{ width: "100%", "margin-top": "80px" }}>
+                {showTable && (
+                    <ReactTable 
+                    data={conversation}
+                    columns={columns}
+                    loading={isLoading}
+                    defaultPageSize={10}
+                    showPageSizeOptions={true}
+                    minRows={0}
+                    />
+                )}
+            </Card>
         </Card.Body>
       </Card>
       

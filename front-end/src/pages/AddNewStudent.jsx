@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import apis from '../api/student';
 import { Form, Button, Card } from "react-bootstrap";
 import {Navbar,FootNav} from "../components"
+import { Link } from "react-router-dom";
 
 class AddStudent extends Component{
     constructor(props){
@@ -516,6 +517,11 @@ class AddStudent extends Component{
           </Form>
             {/* Button to save new student  */}
             <Button className="btn btn-primary mt-3" style={{ float: "right" }} onClick={this.handleInsertStudent}>Save new student</Button>
+            <Link to={`/isms/studentpage`}>
+            <Button className="btn btn-primary mt-3" style={{ float: "Left" }} onClick={this.handleUpdateStudent}>
+              Student
+            </Button>
+            </Link>
         </Card.Body>
       </Card>
       <FootNav/>

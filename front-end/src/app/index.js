@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router,Route, Switch } from 'react-router-dom';
-import {LoginView, RegisterUser,BriefShowStudent,AddNote, StudentPage, UserManagement,AddStudent,ResetPassword} from '../pages';
+import {LoginView, RegisterUser,BriefShowStudent,AddConversation,DetailDialog,StudentPage,UserManagement,AddStudent,ResetPassword} from '../pages';
 import"bootstrap/dist/css/bootstrap.min.css"
+import { ConversationList } from '../components';
 
 class App extends Component{
     render(){
@@ -9,13 +10,17 @@ class App extends Component{
             <Router>
                     <Switch>
                     <Route exact path="/" extract component={LoginView}/>
-                    <Route path={"/isms/briefshow/:id"} extract component={BriefShowStudent}/>
+                   
+                    <Route path="/isms/briefshow/:id" extract component={BriefShowStudent}/>
+                    
                     <Route path="/isms/register" extract component={RegisterUser}/>
                     <Route path="/isms/studentpage" extract component={StudentPage}/>
                     <Route path="/isms/usermanagement" extract component={UserManagement}/>
                     <Route path="/isms/addstudent" extract component={AddStudent}/>
-                    <Route path="/isms/addnote" extract component={AddNote}/>
+                    <Route path="/isms/addnote/:id" extract component={AddConversation}/>
                     <Route path="/isms/resetpassword" extract component={ResetPassword}/>
+                    <Route path="/isms/detaildialog/:id" extract component={DetailDialog}/>
+                    <Route path="/test/:id" extract component={ConversationList}/>
                     </Switch>
             </Router>
         )
