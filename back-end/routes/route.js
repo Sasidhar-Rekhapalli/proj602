@@ -25,10 +25,13 @@
  * @param router  for use Router method in express 
  * @param controller for import routes in controller.js 
  * */
+ const express = require("express");
+ 
+ const controller = require("../controllers/controller");
+ const passport = require("passport");
 
-const express = require("express");
 const router = express.Router();
-const controller = require('../controllers/controller');
+
 
 //#endregion
 
@@ -49,8 +52,10 @@ router.post("/newstudent", controller.createStudent);
 router.post("/addstudent", controller.addStudent);
 router.put("/updatestudent/:id", controller.updateStudent);
 router.delete("/deletestudent/:id", controller.deleteStudent);
-router.get("/getconversation/:id", controller.getConversation);
-
+router.get("/getconversationid/:id", controller.getConversation);
+router.get("/getconversationbyconsid/:id", controller.getConversationByConsID);
+router.post("/newconversation", controller.createConversation);
+router.put("/updateconversation/:id",controller.updateConversation)
 //#endregion
 
 //////////////////////////////////////                USERS               //////////////////////////////////////
@@ -63,15 +68,17 @@ router.get("/getconversation/:id", controller.getConversation);
  * @param  updateUser  update one user and put user's information into student table
  * @param  resetpassword  update a user password */
 
-router.get("/user/getuser", controller.getAllUsers);
+router.get("/getalluser", controller.getAllUsers);
 router.get("/user/getuser/:id", controller.getUserById);
 router.get("/user/getUsersView", controller.getUsersView);
-router.post("/user/register", controller.createUser);
+router.post("/register", controller.createNewUser);
 router.post("/user/adduser", controller.addUser);
-router.post("/user/login", controller.login);
+router.post("/login", controller.login);
 router.put("/user/updateuser/:id", controller.updateUser);
 router.delete("/deleteuser/:id", controller.deleteUser);
 router.put("/resetpassword/:id", controller.resetPassword);
+
+router.post("/updateFile/:id", controller.updateFile);
 
 //#endregion
 

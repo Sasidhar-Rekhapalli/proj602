@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../images/logo.png";
+import Logo from "../images/navlogo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const Container = styled.div.attrs({
@@ -39,6 +39,12 @@ const TextLine = styled.a.attrs({
     float: right;
   `;
 class Navbar extends Component {
+  handleManage=async event=>{
+    let permission=localStorage.getItem('permission')
+    if(permission==="admin"){
+      window.location.href=`/isms/usermanagement`;
+    }
+  }
   render() {
     return (
       <Container>
@@ -47,7 +53,8 @@ class Navbar extends Component {
           <Heading>International Student Management</Heading>
         </Nav>
         <HeaderDown>
-          <TextLine href="/isms/usermanagement">Manage users</TextLine>
+          <TextLine>Username:{localStorage.getItem('user_name')}</TextLine>
+          <TextLine onClick={this.handleManage}>Permission/Manage:{localStorage.getItem('permission')}</TextLine>
           <TextLine href="/">Logout</TextLine>
         </HeaderDown>
       </Container>

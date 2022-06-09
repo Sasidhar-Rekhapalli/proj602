@@ -41,7 +41,10 @@
 //#region for  IMPORT        
 /**  attach the database setting in this file by using require
  *   @notice watch to address, if change path, must modify in the require part*/
-const dbObject = require("../db/connect");
+
+ const dbObject = require("../db/connect");
+ const bcrypt = require("bcrypt");
+ const saltRounds = 10;
 //#endregion
 
 //////////////////////////////////////              STUDENTS               //////////////////////////////////////
@@ -98,8 +101,8 @@ getAllStudents = async (req, res) => {
  */
 getStudentById = async (req, res) => {
   var studentId = req.params.id;
-  console.log(studentId)
-  var sql = "SELECT * FROM student WHERE std_id = ?";
+  // console.log(studentId)
+  var sql = "SELECT * FROM student WHERE student_id = ?";
   dbObject.getConnection((err, connection) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
@@ -152,6 +155,7 @@ createStudent = async (req, res) => {
       req.body.enroll,
     ],
   ];
+  console.log(values);
   dbObject.getConnection((err, connection) => {
     connection.query(sql, [values], (err, rows) => {
       connection.release();
@@ -391,7 +395,7 @@ getUserById = async (req, res) => {
  */
 getUsersView = async (req, res) => {
   dbObject.getConnection((err, connection) => {
-    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, role)", (err, rows) => {
+    connection.query("SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, permission)", (err, rows) => {
       connection.release();
       if (err) {
         return res
@@ -414,16 +418,52 @@ getUsersView = async (req, res) => {
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successfull message to user
  */
-createUser = async (req, res) => {
-  var first_name = req.body.first_name
-  var last_name = req.body.last_name
-  var email = req.body.email
-  var tel = req.body.tel
-  var user_name = req.body.user_name
-  var password = req.body.password
-  var role = req.body.role
-  var sql =
-    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, role) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}' '${role}')`;
+ createNewUser = async (req, res) => {
+  try {
+    // I added not for isAuthenticated
+    const userData = req.body.vals; // grab onto the new user array of values
+    console.log(req.body.vals)
+    bcrypt.hash(userData[5], saltRounds, (err, hash) => {
+      if (err) {
+        console.error(err);
+      }
+      userData[5] = hash; // replace plain text password with hash
+      const vals = [
+        userData[0],
+        userData[1],
+        userData[2],
+        userData[3],
+        userData[4],
+        userData[5],
+        userData[6]
+      ];
+  
+      const queryString = `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, permission) VALUES (?,?,?,?,?,?,?)`;
+      dbObject.execute(queryString, vals, (err, result) => {
+        if (err) throw err;
+        else {
+          return res.status(200).json({ success: true });
+        }
+      });
+    });
+  } catch (err) {
+    return res.status(400).json({ success: false });
+  }
+};
+
+
+//#endregion
+createConversation= async (req, res) => {
+  var student_id = req.body.student_id
+  var note = req.body.note
+  var category = req.body.category
+  var subject= req.body.subject
+  var sharedLink=req.body.sharedLink
+  var permission=req.body.permission
+  var created=req.body.created
+  var comments=req.body.comments
+ var sql=
+    `INSERT INTO conversation (student_id,note,category,subject,sharedLink,permission,createdby,comments) VALUES ('${student_id}','${note}','${category}','${subject}','${sharedLink}','${permission}','${created}','${comments}')`;
 
 
   dbObject.getConnection((err, connection) => {
@@ -440,9 +480,6 @@ createUser = async (req, res) => {
     });
   });
 };
-
-//#endregion
-
 //#region for   ADD A USER
 /**
  * @module    Add a new user , send to user table
@@ -458,9 +495,9 @@ addUser = async (req, res) => {
   var tel = req.body.tel
   var user_name = req.body.user_name
   var password = req.body.password
-  var role = req.body.role
+  var permission = req.body.permission
   var sql =
-    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, role) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}', '${role}')`;
+    `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, permission) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}', '${permission}')`;
 
 
   dbObject.getConnection((err, connection) => {
@@ -576,26 +613,37 @@ resetPassword = async (req, res) => {
     });
   });
 };
-login = async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  dbObject.getConnection((err, connection) => {
-    connection.query("SELECT * FROM user WHERE user_name = ? and password=?", [username, password], (err, rows) => {
+login = async (req, res, done) => {
+  try {
+    dbObject.query(
+      "SELECT * from user where user_name=?",
+      req.body.vals[0],
+      function (error, rows) {
+        if (error) {
+          console.log("user doesn't exist");
+        } else {
+          let user = rows[0];
+          if (
+            user.password.length !== "null" ||
+            user.password.length !== "undefined"
+          ) {
+            let match = bcrypt.compareSync(req.body.vals[1], user.password);
 
-      if (err) {
-
-        return res.status(400).json({ success: false, err: error });
+            if (match) {
+              console.log("password matched");
+              res.status(200).json({ data: user.permission });
+            } else {
+              console.log("Wrong password");
+              return res.status(400).json({ message: "Wrong password" });
+            }
+          }
+        }
       }
-      if (rows.length > 0) {
-        return res.status(200).json({ success: true, data: rows });
+    );
+  } catch (err) { }
+  return res;
+};
 
-      } else {
-        return res.send({ message: "Wrong username/password combination" })
-      }
-    });
-
-  });
-}
 //#endregion
 
 //#region for  Get Conversation
@@ -608,8 +656,8 @@ login = async (req, res) => {
  */
 getConversation = async (req, res) => {
   var studentId = req.params.id;
-  console.log(studentId);
-  var sql = "SELECT category,datecreated,createdby,lastupdatedby FROM conversation JOIN student USING(student_id) WHERE std_id= ?";
+
+  var sql = "SELECT conversation_id,category,datecreated,createdby,lastupdatedby,subject,sharedLink,permission FROM conversation JOIN student USING(student_id) WHERE student_id= ?";
   dbObject.getConnection((err, connection) => {
     connection.query(sql, studentId, (err, rows) => {
       connection.release();
@@ -625,11 +673,82 @@ getConversation = async (req, res) => {
   });
 };
 
+getConversationByConsID = async (req, res) => {
+  var cons_id = req.params.id;
+  var sql = "SELECT student_id,category,datecreated,createdby,lastupdatedby,subject,note,comments,sharedLink,permission FROM conversation JOIN student USING(student_id) WHERE conversation_id= ?";
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, cons_id, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ success: true, data: rows });
+    });
+  });
+};
+updateConversation= async (req, res) => {
+  var conversation_id = req.params.id;
+  var note=req.body.note;
+  var comments=req.body.comments;
+  var sharedLink=req.body.sharedLink;
+  console.log(conversation_id);
+  console.log(req.body.note);
+  console.log(req.body.comments);
+  console.log(req.body.sharedLink)
+  var sql =
+    "UPDATE conversation SET note = ?, comments = ?, sharedLink = ? WHERE conversation_id = " + conversation_id;
+  var values =[note,comments,sharedLink]
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, values, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, error: err });
+      }
+      return res
+        .status(200)
+        .json({ message: "Conversation Updated" });
+    });
+  });
+};
 //#endregion
+//#region for upload file
 
+updateFile = async (req, res) => {
+  let conversation_id = req.params.id;
+  let uploadFile;
+  let uploadFileName;
+  let uploadPath;
+  console.log(req.params.id)
+  if(!req.files || Object.keys(req.files).length ===0){
+      return res.status(400).json({ message: "No files were uploaded" });
+  }
 
+  uploadFile = req.files.file;
+  uploadFileName = `${conversation_id}_` + req.files.file.name;
 
-
+  uploadPath = __dirname + '\\upload\\' +  uploadFileName;
+  
+  uploadFile.mv(uploadPath, function(err){
+      if(err) return res.status(500).json({  success: false, error: err });
+      dbObject.getConnection((err, connection) => {
+          connection.query(`UPDATE conversation SET file_upload = ? WHERE conversation_id = ${conversation_id}`, uploadFileName, (err, rows) =>{
+              connection.release();
+              if(!err){
+                  return res.status(200).json({ message: "Updated File" });
+              }else{
+                  return res.status(500).json({  success: false, error: err });
+              }
+          });
+      });
+  });
+};
+//#endregion
 //////////////////////////////////////              MODULE  EXPORTS               //////////////////////////////////////
 /**
  * in the exports section we export all moudules as created and prepare them to use it in other pages or modules
@@ -643,15 +762,18 @@ module.exports = {
   addStudent,
   updateStudent,
   deleteStudent,
-
   getAllUsers,
   getUserById,
   getUsersView,
-  createUser,
+  createNewUser,
   addUser,
   updateUser,
   deleteUser,
   resetPassword,
   login,
-  getConversation
+  getConversation,
+  getConversationByConsID,
+  createConversation,
+  updateConversation,
+  updateFile
 };

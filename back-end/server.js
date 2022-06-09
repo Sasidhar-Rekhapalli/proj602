@@ -26,6 +26,9 @@ const cors = require('cors')
 const db = require('./db/connect');
 const router = require('./routes/route');
 
+const fileUpload=require('express-fileupload');
+backend.use(fileUpload());
+backend.use(express.static('upload'));
 backend.use(express.json());
 backend.use(cors({
     origin:'http://localhost:3000',

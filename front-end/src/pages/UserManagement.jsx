@@ -13,6 +13,7 @@ const CloseBtn = styled.button`
   margin-bottom: 10px;
   margin-right: 10px;
   float: right;
+  margin-top: 40px;
 `;
 
 //  Styled components for Add user button

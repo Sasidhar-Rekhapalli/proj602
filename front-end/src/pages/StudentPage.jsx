@@ -19,12 +19,6 @@ const AddStudentButton = styled.button`
   float: right;
 `;
 
-const Title = styled.h1.attrs({
-  className: "h1",
-})`
- text-align:center;
- margin:10px 0px;
-`;
 
 const Label = styled.label`
   font-weight: bold;
@@ -50,7 +44,7 @@ const InputText = styled.input.attrs({
 class Details extends Component {
   updateUser = event => {
       event.preventDefault()
-      // console.log(this.props.id)
+      console.log(this.props.id)
       window.location.href=`/isms/briefshow/${this.props.id}`
   }
 
@@ -139,7 +133,7 @@ handleFilter= async event=>{
                 // console.log(rows);
                   return(
                       <span>
-                          <Details id={props.original.std_id} />
+                          <Details id={props.original.student_id} />
                       </span>
                   )
               }

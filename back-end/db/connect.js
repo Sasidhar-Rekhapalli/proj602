@@ -45,19 +45,19 @@ const mysql = require('mysql2');
  * if for any reason must to change machine, username and passord change host, user, password with correct data
  */
 
-const pool = mysql.createPool({
-    host: '192.168.75.129',
-    user: 'student',
-    password: 'letmein',
-    database: 'isms'
-});
-
 // const pool = mysql.createPool({
-//     host: 'localhost',
-//     user: 'root',
+//     host: '192.168.75.129',
+//     user: 'student',
 //     password: 'letmein',
 //     database: 'isms'
 // });
+
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'letmein',
+    database: 'isms'
+});
 
 pool.getConnection((err, connection) => {
     if (err) throw err;
