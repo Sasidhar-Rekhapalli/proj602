@@ -695,36 +695,7 @@ resetPassword = async (req, res) => {
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successful message to user
  */
-login = async (req, res, done) => {
-  try {
-    dbObject.query(
-      "SELECT * from user where user_name=?",
-      req.body.vals[0],
-      function (error, rows) {
-        if (error) {
-          console.log("user doesn't exist");
-        } else {
-          let user = rows[0];
-          if (
-            user.password.length !== "null" ||
-            user.password.length !== "undefined"
-          ) {
-            let match = bcrypt.compareSync(req.body.vals[1], user.password);
 
-            if (match) {
-              console.log("password matched");
-              res.status(200).json({ done: req.body.vals[0] });
-            } else {
-              console.log("Wrong password");
-              return res.status(400).json({ message: "Wrong password" });
-            }
-          }
-        }
-      }
-    );
-  } catch (err) { }
-  return res;
-};
 //#endregion
 
 //////////////////////////////////////           CONVERSATION           //////////////////////////////////////
