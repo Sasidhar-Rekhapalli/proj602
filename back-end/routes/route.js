@@ -31,7 +31,6 @@
  const passport = require("passport");
 
 const router = express.Router();
-const controller = require("../controllers/controller");
 
 //#endregion
 

@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button, Card } from "react-bootstrap";
-<<<<<<< HEAD
 import conv_apis from '../api/conversation';
-=======
-import apis from '../api/student';
->>>>>>> 04ff3233d1f2ba4c06c99f40773bf89ef4e2f6fa
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import styled from 'styled-components';
@@ -15,10 +11,7 @@ class ConversationList extends Component{
     constructor(props){
         super(props);
         this.state = {
-<<<<<<< HEAD
             id:this.props.match.params.id,
-=======
->>>>>>> 04ff3233d1f2ba4c06c99f40773bf89ef4e2f6fa
             conversation:[],
             isLoading:false
         }
@@ -27,14 +20,9 @@ class ConversationList extends Component{
     componentDidMount = async() => {
         // turn on isLoading flag which we load data
         this.setState({isLoading:true})
-<<<<<<< HEAD
         const {id} = this.state;
       
         await conv_apis.getConversationByID(id)
-=======
-      
-        await apis.getConversation()
->>>>>>> 04ff3233d1f2ba4c06c99f40773bf89ef4e2f6fa
                     .then(
                         // this album is the data coming from api call
                         conversation => {
@@ -58,7 +46,6 @@ class ConversationList extends Component{
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
             },
             {
-<<<<<<< HEAD
                 Header: 'Subject',
                 accessor: 'subject',
                 style: {'whiteSpace':'unset'},
@@ -69,12 +56,6 @@ class ConversationList extends Component{
                 accessor: 'datecreated',
                 style: {'whiteSpace':'unset'},
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-=======
-                Header: 'Date Created',
-                accessor: 'datecreated',
-                style: {'whiteSpace':'unset'},
-                Cell: row => <div style={{textAlign: "center"}}>{row.value.substring(0, 10)}</div>
->>>>>>> 04ff3233d1f2ba4c06c99f40773bf89ef4e2f6fa
             },
             {
                 Header: 'Created By',

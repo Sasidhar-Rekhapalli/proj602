@@ -78,7 +78,7 @@ export const updateStudent = (
 }); 
 export const deleteStudent=id=>api.delete(`/deletestudent/${id}`);
 export const getConversation =id=>api.get(`/getconversation/${id}`);
-export const getAllUsers=()=>api.get(`/user/getuser`);
+export const getAllUsers=()=>api.get(`/getalluser`);
  
 const apis={
     createStudent,

@@ -796,12 +796,12 @@ login = async (req, res, done) => {
  * @throws   throws status 200 and return the user information
  * @returns  send successfull message 
  */
-getConversation = async (req, res) => {
+ getConversation = async (req, res) => {
   var studentId = req.params.id;
 
   var sql = "SELECT conversation_id,category,datecreated,createdby,lastupdatedby,subject,sharedLink,permission FROM conversation JOIN student USING(student_id) WHERE student_id= ?";
   dbObject.getConnection((err, connection) => {
-    connection.query(sql, values, (err, rows) => {
+    connection.query(sql, studentId, (err, rows) => {
       connection.release();
       if (err) {
         return res
@@ -810,7 +810,7 @@ getConversation = async (req, res) => {
       }
       return res
         .status(200)
-        .json({ message: "Conversation Updated" });
+        .json({ success: true, data: rows });
     });
   });
 };

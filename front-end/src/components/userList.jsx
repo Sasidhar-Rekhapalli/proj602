@@ -114,8 +114,8 @@ class UserList extends Component{
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
             },
             {
-                Header: 'Role',
-                accessor:'role',
+                Header: 'Permission',
+                accessor:'permission',
                 style: {'whiteSpace':'unset'},
                 // specify a row of data to display
                 Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
