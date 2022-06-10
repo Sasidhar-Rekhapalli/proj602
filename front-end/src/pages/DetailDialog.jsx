@@ -31,6 +31,7 @@ class DetailDialog extends Component{
             comments:'',
             sharedLink:'',
             studentID:'',
+            lastupdatedby:localStorage.getItem("user_name"),
             std_id:'',
             firstName:'',
             lastName:'',
@@ -84,10 +85,15 @@ componentDidMount = async() => {
   handleSharedLink= async event=>{
     this.setState({sharedLink:event.target.value})
   }
+  handleSubject= async event=>{
+    this.setState({subject:event.target.value})
+  }
+  handleCategory= async event=>{
+    this.setState({category:event.target.value})
+  }
   handleUpdate= async event=>{
-    console.log(this.state.note)
-    console.log(this.state.comments)
-    await conv_apis.updateConversation(this.state.conversationID,this.state.note,this.state.comments,this.state.sharedLink).then(res=>{
+    
+    await conv_apis.updateConversation(this.state.conversationID,this.state.note,this.state.comments,this.state.sharedLink,this.state.subject,this.state.category,this.state.lastupdatedby).then(res=>{
       window.alert('Conversation Updated Successfully');
       this.props.history.push(`/isms/briefshow/${this.state.studentID}`);
     })
@@ -131,13 +137,13 @@ componentDidMount = async() => {
                 <Form.Group>
                   <div className="row mb-3">
                     <Form.Label className="col-md-2">Subject : </Form.Label>
-                    <Form.Control type="text" value={this.state.subject}
+                    <Form.Control type="text" value={this.state.subject} onChange={this.handleSubject}
                       className="col"
                     ></Form.Control>
   
                     {/* Label with category and select options  */}
                     <Form.Label className="col-md-2">Category :</Form.Label>
-                    <Form.Control type="text" value={this.state.category}
+                    <Form.Control type="text" value={this.state.category} onChange={this.handleCategory}
                       className="col"
                     ></Form.Control>
                   </div>

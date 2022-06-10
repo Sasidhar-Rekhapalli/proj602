@@ -28,7 +28,7 @@
  const express = require("express");
  
  const controller = require("../controllers/controller");
- const passport = require("passport");
+
 
 const router = express.Router();
 

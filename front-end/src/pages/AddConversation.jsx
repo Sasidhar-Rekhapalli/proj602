@@ -98,7 +98,7 @@ class AddConversation extends Component{
     await conv_apis.createConversation(this.state.student_id,this.state.note,this.state.category,this.state.subject,this.state.sharedLink,this.state.permission,this.state.created,this.state.comments)
     .then(
       //after post into database successfully notice to user by window alert
-    window.alert('User added successfully'))
+    window.alert('New Conversation added successfully'))
       //move back to briefshow page with the student_id(id for orders)
     window.location.href=`/isms/briefshow/${this.state.student_id}` 
     
