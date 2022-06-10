@@ -1,3 +1,16 @@
+//////////////////////////////////////               UserManagement.jsx                //////////////////////////////////////
+/**
+ *
+ * @file AddConversation.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
+
 //Import React, Component and Library use in this page
 import React, { Component } from "react";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -9,7 +22,7 @@ import { Link } from "react-router-dom";
 //call Apis from api/student to route back-end
 import apis from '../api/student';
 import conv_apis from "../api/conversation";
-import  UploadFile  from "../components/uploadFile";
+
 import "../css/loginpage.css";
 //import NavBar and footer from components
 import NavBar from "../components/Navbar";

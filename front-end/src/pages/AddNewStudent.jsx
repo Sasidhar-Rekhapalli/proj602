@@ -1,3 +1,16 @@
+//////////////////////////////////////               UserManagement.jsx                //////////////////////////////////////
+/**
+ *
+ * @file AddNewStudent.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
+
 //#region for IMPORT
 /**
  *   @notice watch to address, if change path, must modify in the require part*/

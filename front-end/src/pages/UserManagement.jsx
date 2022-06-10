@@ -3,7 +3,7 @@
  *
  * @file UserManagement.jsx
  * @copyright ISMS(International Student Management System)
- * @version 3.0.0
+ * @version 1.0.0
  * @author cyberbot team, software developer program
  * @release summer 2022
  * @owner Saskatchewan Polytechnic, Saskatoon Campus
@@ -12,7 +12,7 @@
 //////////////////////////////////////
 import React,{Component} from "react";
 import styled from "styled-components";
-import { Form, Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import download from "../images/download.png";
 import { Link } from "react-router-dom";
 import { Navbar,FootNav,UserList } from "../components";

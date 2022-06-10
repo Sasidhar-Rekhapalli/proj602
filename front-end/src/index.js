@@ -1,3 +1,5 @@
+//Default main file to run application basing on REACT structure
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app';

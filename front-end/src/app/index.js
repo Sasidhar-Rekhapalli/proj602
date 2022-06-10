@@ -1,3 +1,15 @@
+//////////////////////////////////////               UserManagement.jsx                //////////////////////////////////////
+/**
+ *
+ * @file index.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ * Main: Route for each page
+ */
+//////////////////////////////////////
 import React, {Component} from 'react';
 import { BrowserRouter as Router,Route, Switch } from 'react-router-dom';
 import {LoginView, RegisterUser,BriefShowStudent,AddConversation,DetailDialog,StudentPage,UserManagement,AddStudent,ResetPassword} from '../pages';

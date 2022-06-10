@@ -1,3 +1,15 @@
+//////////////////////////////////////               UserManagement.jsx                //////////////////////////////////////
+/**
+ *
+ * @file uploadFile.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
 import React from "react";
 import axios from 'axios';
 
