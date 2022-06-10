@@ -16,6 +16,7 @@ import { Form, Card, Button } from "react-bootstrap";
 import download from "../images/download.png";
 import { Link } from "react-router-dom";
 import { Navbar,FootNav,UserList } from "../components";
+import "../css/loginpage.css";
 
 // Styled components for close button
 const CloseBtn = styled.button`
@@ -30,11 +31,13 @@ const CloseBtn = styled.button`
 
 //  Styled components for Add user button
 const UserButton = styled.button`
-  color: #fff;
-  background-color: #800080;
-  border-color: #f8f6f9;
-  border-radius: 5px;
-  float: right;
+color: #fff;
+background-color: #800080;
+border: none;
+border-radius: 5px;
+float: right;
+width: 12%;
+padding: 5px;
 `;
 
 //UserManagement class to create the view for User management page
@@ -44,7 +47,7 @@ class UserManagement extends Component {
         <>
         {/* Nav bar for the page */}
         <Navbar/>
-          <Card className="mx-auto container " style={{ marginTop: "15px" }}>
+          <Card className="mx-auto container  shadow" style={{ marginTop: "15px" }}>
             <div className="AddUser" style={{ marginTop: "40px" }}>
               {/* Link for add user page with button  */}
               <Link to="/isms/register">

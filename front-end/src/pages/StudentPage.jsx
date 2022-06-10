@@ -8,6 +8,9 @@ import {  Card  } from "react-bootstrap";
 import apis from "../api/student"
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import "../css/loginpage.css";
+
+
 const AddStudentButton = styled.button`
   color: #fff;
   background-color: #800080;
@@ -147,7 +150,7 @@ handleFilter= async event=>{
 		return(
 			<div className="container">
             <Navbar/>
-            <Card>
+            <Card className="shadow mt-2">
 			    <Link to="/isms/addstudent">
 					<AddStudentButton className="AddStudent">
 						<img

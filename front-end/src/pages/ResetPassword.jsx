@@ -1,9 +1,23 @@
+
+//////////////////////////////////////               ResetPassword.jsx                //////////////////////////////////////
+/**
+ *
+ * @file ResetPassword.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 3.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
 import React,{Component} from "react";
 import styled from "styled-components";
 import { Form, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FootNav,Navbar } from "../components";
 import auths from '../api/auth';
+import "../css/loginpage.css";
 
 // Styled component for cancel button
 const Btn = styled.button`
@@ -96,7 +110,7 @@ handleCheck = async event =>{
        {/* navbar for header */}
       <Navbar/>
         {/* Card for form  */}
-        <Card className="container " style={{ marginTop: "10px" }}>
+        <Card className="container shadow " style={{ marginTop: "10px" }}>
           <Card.Body>
             <div className="row mb-3">
               <div className="col-sm-12 col-12 text-center">

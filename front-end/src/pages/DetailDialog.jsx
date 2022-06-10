@@ -1,10 +1,14 @@
 import React,{Component} from 'react'
 import apis from '../api/student'
 import conv_apis from '../api/conversation'
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Card,Form,Button } from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import UploadFile from '../components/uploadFile';
+import "../css/loginpage.css";
+
+
 class DetailDialog extends Component{
     constructor(props) {
         super(props)
@@ -81,7 +85,7 @@ componentDidMount = async() => {
   }
   render(){
       return(
-          <Card>
+          <Card className='container mt-3 shadow'>
                <Card.Header>
             <div className="col-md-12">
               {/* Form  */}
@@ -150,22 +154,22 @@ componentDidMount = async() => {
           <Form.Label className="col-md-2">Note</Form.Label>
       {
         ((localStorage.getItem('user_name')===this.state.create)) ?
-        <Form.Control className="col" type="textarea" value={this.state.note} onChange={this.handleChangeNote}></Form.Control>:
+        <Form.Control className="col" type="textarea" value={this.state.note} style={{"height":"100px"}} onChange={this.handleChangeNote}></Form.Control>:
 
-        <Form.Control className="col" type="textarea" value={this.state.note} readOnly></Form.Control>	
+        <Form.Control className="col" type="textarea" value={this.state.note} style={{"height":"100px"}} readOnly></Form.Control>	
         
       }	
       <Form.Label className="col-md-2">Comment:</Form.Label>
       {((localStorage.getItem('user_name')!==this.state.create)) ?
-                <Form.Control className="col" type="textarea" value={this.state.comments} onChange={this.handleChangeComment}></Form.Control>:
-                <Form.Control className="col" type="textarea" value={this.state.comments} readOnly></Form.Control>
+                <Form.Control className="col" type="textarea" value={this.state.comments} style={{"height":"100px"}} onChange={this.handleChangeComment}></Form.Control>:
+                <Form.Control className="col" type="textarea" value={this.state.comments} style={{"height":"100px"}} readOnly></Form.Control>
       }
             </Form.Group>
             </TabPanel>
             <TabPanel>
                 <Form.Group>
                     <Form.Label className="col-md-2">Shared Link</Form.Label>
-                    <Form.Control className="col" type="textarea" value={this.state.sharedLink} onChange={this.handleSharedLink}></Form.Control>
+                    <Form.Control className="col" type="textarea" value={this.state.sharedLink} style={{"height":"100px"}} onChange={this.handleSharedLink}></Form.Control>
                 </Form.Group>
             </TabPanel>
             <TabPanel>

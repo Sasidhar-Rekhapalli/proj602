@@ -16,6 +16,8 @@ import { Form, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import auths from "../api/auth";
 import { FootNav, Navbar } from "../components";
+import "../css/loginpage.css";
+
 // Styled components with custom style for the cancel button
 const Btn = styled.button`
   float: right;
@@ -127,7 +129,7 @@ class RegisterUser extends Component {
       <>
         <Navbar />
         {/* Main Container of page */}
-        <Card className="container mt-3">
+        <Card className="container mt-3 shadow">
           <Card.Body>
             <div className="row mb-3">
               <div className="col-sm-12 col-12 text-center">
@@ -183,6 +185,7 @@ class RegisterUser extends Component {
                   <Button
                     className="btn btn-primary"
                     onClick={this.handleRegister}
+                    style ={{"width":"100%"}}
                   >
                     Create
                   </Button>

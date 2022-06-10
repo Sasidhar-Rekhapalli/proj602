@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import apis from '../api/student';
 import conv_apis from "../api/conversation";
 import  UploadFile  from "../components/uploadFile";
+import "../css/loginpage.css";
 // Styled component for card title
 const Header = styled.h2`
   margin: 0px 20px;
@@ -111,11 +112,11 @@ class AddConversation extends Component{
         <div className="row mb-3">
           <div className="col-sm-12 col-12">
             {/* Card Title  */}
-            <Header className="text-center">Add Notes</Header>
+            <Header className="text-center mt-2">Add Notes</Header>
           </div>
         </div>
         {/* Card for form  */}
-        <Card className="m-3">
+        <Card className="m-3 shadow" >
           <Card.Header>
             <div className="col-md-12">
               {/* Form  */}
@@ -188,17 +189,17 @@ class AddConversation extends Component{
                 <TabPanel>
                 <Form.Group>
                     <Form.Label className="col-md-2">Note</Form.Label>
-                    <Form.Control className="col" type="textarea" style={{padding:"50px 10px"}} value={this.state.note} onChange={this.handleNote}></Form.Control>
+                    <Form.Control className="col" type="textarea" style={{"height":"100px"}} value={this.state.note} onChange={this.handleNote}></Form.Control>
                     
                     <Form.Label className="col-md-2">
                       Comment:
                     </Form.Label>
-                    <Form.Control className="col" type="textarea" onChange={this.handleComment}></Form.Control>
+                    <Form.Control className="col" type="textarea" style={{"height":"100px"}} onChange={this.handleComment}></Form.Control>
                 </Form.Group>
                 </TabPanel>
                 <TabPanel>
                     <Form.Label className="col-md-2">Shared Link</Form.Label>
-                    <Form.Control className="col" type="textarea" value={this.state.sharedLink}  onChange={this.handleLink}></Form.Control>
+                    <Form.Control className="col" type="textarea" value={this.state.sharedLink}  style={{"height":"100px"}} onChange={this.handleLink}></Form.Control>
                 </TabPanel>
                 <TabPanel>
                   
