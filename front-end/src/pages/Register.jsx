@@ -171,6 +171,7 @@ class RegisterUser extends Component {
                   <InputText type="text" onChange={this.handlePasswordReg} />
                 </Form.Group>
                 {/* Role/Permission */}
+                <Label>Permission</Label>
                 <Form.Select className="mb-3 col-md-auto" onChange={this.handlepermission}>
                   <option>Select permission</option>
                   <option value="RISIA">RISIA</option>
