@@ -16,19 +16,12 @@ class Login extends Component {
   }
 
   handleInputUser = async (event) => {
-    if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
-      this.setState({ isValid: "Username must be size between 8 to 12" });
-    } else {
       this.setState({ isValid: "" });
       this.setState({ loginUsername: event.target.value });
-    }
+ 
   };
   handleInputPassword = async (event) => {
-    if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
-      this.setState({ isValid: "" });
-    } else {
       this.setState({ loginPassword: event.target.value });
-    }
   };
   handleLogin = async (event) => {
     event.preventDefault();
