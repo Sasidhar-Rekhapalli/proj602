@@ -1,8 +1,11 @@
+//Import React, Component and Library use in this page
 import React,{Component} from 'react';
-import apis from '../api/student';
 import { Form, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {Navbar,FootNav} from "../components"
+//call Apis from api/student to connect to back-end
+import apis from '../api/student';
+//call Apis from api/conversation to connect to back-end
 import conv_apis from '../api/conversation';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -10,28 +13,37 @@ import styled from 'styled-components';
 import "../css/loginpage.css";
 
 const Wrapper = styled.div`padding: 0 40px 40px 40px;`
+//Create style for button detail inside conversation table
 const Detail = styled.div`
     color: #0000ff;
     cursor: pointer;
 `
-
+// Details React components containing the above divs as a button
 class Details extends Component {
-  updateDialog = event => {
+  DetailDialog = event => {
       event.preventDefault()
       console.log(this.props.id)
       window.location.href=`/isms/detaildialog/${this.props.id}`
   }
 
   render(){
-      // invike the update view for the current row -> this.props
-      return <Detail onClick={this.updateDialog}>Details</Detail>
+      // invoke the detail views for the current row -> this.props
+      return <Detail onClick={this.DetailDialog}>Details</Detail>
   }
 }
+/**
+ * This class mainly load conversation/note between student selected in student list in Student Page 
+ * This class also can load all information of this student in appropriate box 
+ * This class also alow user can edit information via handle update
+ */
 class BriefShowStudent extends Component{
-    //Create the form loaded student info into apporiate box
+    
     constructor(props) {
         
         super(props)
+        /**
+        *Variable is used in this class created with id is student_id(id for orders of student) get from params
+        */
         this.state = {
             id: this.props.match.params.id,
             conversation:[],
@@ -55,7 +67,7 @@ class BriefShowStudent extends Component{
             prospective:false
         }   
     }
-
+    //These handle below allow user update details of student whenever some thing is wrong. User can clear and write new information details
     handleValidatedStudentID = async event => {
       if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
         this.setState({isValid:"Student ID must be size between 8 to 12"});
@@ -234,9 +246,11 @@ class BriefShowStudent extends Component{
     handleProspectiveStudent = async event => {
       this.setState({prospective:true});
     }
+    //This handle is let user update student whenever some details are wrong by clicking on update student
+    //The class call api updateStudent from api/student and execute update function from backend
     handleUpdateStudent = async event => {
       await apis.updateStudent(
-                                this.state.studentMainID,
+                                this.state.id,
                                 this.state.studentID,
                                 this.state.firstname,
                                 this.state.middlename,
@@ -253,10 +267,14 @@ class BriefShowStudent extends Component{
                                 this.state.graduate,
                                 this.state.enroll,
                                 this.state.prospective
-        ).then(response =>{});
-        window.alert("Student updated successfully");
-        this.props.history.push('/isms/studentpage');  
+        ).then(response =>{
+          window.alert("Student updated successfully");
+          this.props.history.push('/isms/studentpage'); 
+        });
+        
+         
     }
+    // lifecycle method which executes after component renders
     componentDidMount = async () => {
         const {id} = this.state;
         this.setState({isLoading:true})
@@ -286,82 +304,82 @@ class BriefShowStudent extends Component{
                 )
           
         // use api call to retrieve doccument here
-        await conv_apis.getConversationByID(id)
-        .then(
-            // this album is the data coming from api call
-            conversation => {
-                this.setState({
-                    conversation: conversation.data.data,
-                    // need to reference the data using syntax above right
-                    // then turn isLoading off now that we're done
-                    isLoading: false
-                })
-            }
-        )
+        await conv_apis.getConversationByID(id).then(
+          // this is the data coming from api call
+          (conversation) => {
+            // setting the "conversation" in the state with response
+            this.setState({
+              conversation: conversation.data.data,
+              // need to reference the data using syntax above right
+              // then turn isLoading off now that we're done
+              isLoading: false,
+            });
+          }
+        );
     }
     render(){
-      const {conversation, isLoading} = this.state;
-      const columns  = [
-          {
-             Header: 'ID',
-            accessor: 'conversation_id',
-            style: {'whiteSpace':'unset'},
-            Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-          },
-          {
-              Header: 'Category',
-              accessor: 'category',
-              style: {'whiteSpace':'unset'},
-              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-          },
-          {
-              Header: 'Subject',
-              accessor: 'subject',
-              style: {'whiteSpace':'unset'},
-              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-          },
-          {
-              Header: 'Date created',
-              accessor: 'datecreated',
-              style: {'whiteSpace':'unset'},
-              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-          },
-          {
-              Header: 'Created By',
-              accessor: 'createdby',
-              style: {'whiteSpace':'unset'},
-              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-          },
-          {
-              Header: 'Last Updated',
-              accessor: 'lastupdatedby',
-              style: {'whiteSpace':'unset'},
-              Cell: row => <div style={{textAlign: "center"}}>{row.value}</div>
-          },
-          {
-            Header: '',
-            accessor: '',
-            width: 100,
-            Cell: function(props) {
-              //  console.log(props.original.conversation_id);
-              // const rows=props;
-              // console.log(rows);
-                return(
-                    <span>
-                        <Details id={props.original.conversation_id} />
-                    </span>
-                )
-            }
+      /**
+       * This is column of table conversation belong to student selected. All data of conversation is loaded into table based on StudentID (order of student)
+       * When click on 'Detail' student will move into details of conversation basing on studentID(order of student)
+       */
+     // "conversation","isLoading" from the state to variables
+    const { conversation, isLoading } = this.state;
+    // columns array
+    const columns = [
+      {
+        // Header named "Category" with styles and row cell
+        Header: "Category",
+        accessor: "category",
+        style: { whiteSpace: "unset" },
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
+      },
+      {
+        // Header named "Subject" with styles and row cell
+        Header: "Subject",
+        accessor: "subject",
+        style: { whiteSpace: "unset" },
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
+      },
+      {
+        // Header named "Date created" with styles and row cell
+        Header: "Date created",
+        accessor: "datecreated",
+        style: { whiteSpace: "unset" },
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
+      },
+      {
+        // Header named "Created By" with styles and row cell
+        Header: "Created By",
+        accessor: "createdby",
+        style: { whiteSpace: "unset" },
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
+      },
+      {
+        // Header named "Last Updated" with styles and row cell
+        Header: "Last Updated",
+        accessor: "lastupdatedby",
+        style: { whiteSpace: "unset" },
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
+      },
+      {
+        // Empty header with widht 100 and row cell
+        Header: "",
+        accessor: "",
+        width: 100,
+        Cell: (row) => <div style={{ textAlign: "center" }}>Details</div>,
+      },
+    ];
 
-        },    
-      ]
+    // variable "showTable" is set to true to check converstation are loaded
+    let showTable = true;
 
-      let showTable = true;
-      if(!conversation.length){
-          showTable = false;
-      }
+    // Condition if there is no conversation set showTable variable to false
+    if (!conversation.length) {
+      showTable = false;
+    }
     return(
     <>
+    {/*Create the form loaded student info into appropriate box*/}
          <Navbar/>
       {/* Card with title */}
       <Card.Title className="mt-3 mb-3 text-center">Student Conversation</Card.Title>
@@ -508,23 +526,28 @@ class BriefShowStudent extends Component{
               Update Student
             </Button>
             <Link to={`/isms/studentpage`}>
-            <Button className="btn mt-3" style={{ float: "Left",background:"#800080",border:"none" }} onClick={this.handleUpdateStudent}>
+            <Button className="btn mt-3" style={{ float: "Left",background:"#800080",border:"none" }}>
               Student
             </Button>
             </Link>
+          {/*Create the table with all data determine in column*/}
           
-          <Card className="mx-auto " style={{ width: "100%", "margin-top": "80px" }}>
-                {showTable && (
-                    <ReactTable 
-                    data={conversation}
-                    columns={columns}
-                    loading={isLoading}
-                    defaultPageSize={10}
-                    showPageSizeOptions={true}
-                    minRows={0}
-                    />
-                )}
-            </Card>
+      <Card className="mx-auto " style={{ "margin-top": "80px" }}>
+        {/* Bootstrap Wrapper */}
+        
+          {/* if showTable variable true then the data is showed */}
+          {showTable && (
+            //   Table to show conversation
+            <ReactTable
+              data={conversation}
+              columns={columns}
+              loading={isLoading}
+              defaultPageSize={10}
+              showPageSizeOptions={true}
+              minRows={0}
+            />
+          )}
+        </Card>
         </Card.Body>
       </Card>
       

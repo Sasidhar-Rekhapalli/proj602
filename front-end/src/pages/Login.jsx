@@ -10,13 +10,15 @@
  *
  */
 //////////////////////////////////////
-
+//#region for IMPORT
+/**
+ *   @notice watch to address, if change path, must modify in the require part*/
 import auths from "../api/auth";
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../images/saskpolytechlogo.png";
 import "../css/loginpage.css";
-
+//#endregion
 
 // react class component from here to code for login starts
 
@@ -39,19 +41,12 @@ class Login extends Component {
 
   
   handleInputUser = async (event) => {
-    if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
-      this.setState({ isValid: "Username must be size between 8 to 12" });
-    } else {
       this.setState({ isValid: "" });
       this.setState({ loginUsername: event.target.value });
-    }
+ 
   };
   handleInputPassword = async (event) => {
-    if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
-      this.setState({ isValid: "" });
-    } else {
       this.setState({ loginPassword: event.target.value });
-    }
   };
 
   // handler for login if password and username is correct then give access to STUDENTPAGE 

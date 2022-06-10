@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router,Route, Switch } from 'react-router-dom';
 import {LoginView, RegisterUser,BriefShowStudent,AddConversation,DetailDialog,StudentPage,UserManagement,AddStudent,ResetPassword} from '../pages';
 import"bootstrap/dist/css/bootstrap.min.css"
-import { ConversationList } from '../components';
 
 class App extends Component{
     render(){
@@ -20,7 +19,7 @@ class App extends Component{
                     <Route path="/isms/addnote/:id" extract component={AddConversation}/>
                     <Route path="/isms/resetpassword" extract component={ResetPassword}/>
                     <Route path="/isms/detaildialog/:id" extract component={DetailDialog}/>
-                    <Route path="/test/:id" extract component={ConversationList}/>
+                    
                     </Switch>
             </Router>
         )
