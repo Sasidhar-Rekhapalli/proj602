@@ -1,7 +1,8 @@
+//import section for all the packages
 import React,{Component} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled from 'styled-components';
-
+//styling the components
 const Container = styled.div.attrs({
     className:'container'
 })`
@@ -22,11 +23,13 @@ const AText = styled.a`
     text-decoration:none;
     color:white;
 `
+//Main footnav class
 class FootNav extends Component{
 render(){
     return(
         <Container>
             <Footerdiv>
+                {/* footer section */}
                 <TextP>
                     <AText href='https://saskpolytech.ca/disclaimer.aspx'>Disclaimer</AText>|
                     <AText href='https://saskpolytech.ca/privacy.aspx'>PrivacyVision</AText>|
