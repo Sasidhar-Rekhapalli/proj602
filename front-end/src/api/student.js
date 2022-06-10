@@ -56,9 +56,7 @@ export const updateStudent = (
     program,
     degree,
     graduate,
-    enroll,
-    prospective) => api.put(`/updatestudent/${id}`, {
-    "prospective": prospective,
+    enroll,) => api.put(`/updatestudent/${id}`, {
     "std_id": studentID,
     "first_name": firstname,
     "middle_name": middlename,

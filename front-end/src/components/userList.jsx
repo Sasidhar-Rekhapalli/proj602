@@ -37,8 +37,11 @@ class Details extends Component {
       permission: "",
     };
   }
-
-  // Function to handle the close
+  // Function to handle the close of modal
+  handleCloseModal=async (event)=>{
+    this.setState({showModal:false})
+  }
+  // Function to handle the close of modal and call api to update permission of user
   handleClose = async (event) => {
     // set the state of showModal to false
     this.setState({ showModal: false });
@@ -68,9 +71,9 @@ class Details extends Component {
   render() {
     return (
       <>
-        <Modal show={this.state.showModal} onHide={this.handleClose}>
+        <Modal show={this.state.showModal} onHide={this.handleCloseModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Change user's permission</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form.Select
@@ -86,7 +89,7 @@ class Details extends Component {
             </Form.Select>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
+            <Button variant="secondary" onClick={this.handleCloseModal}>
               Close
             </Button>
             <Button variant="primary" onClick={this.handleClose}>
@@ -134,8 +137,15 @@ class UserList extends Component {
     // requires Header and accessor for Column Header text and field the column is displaying
     const columns = [
       {
-        Header: "Name",
+        Header: "First Name",
         accessor: "first_name",
+        style: { whiteSpace: "unset" },
+        // specify a row of data to display
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
+      },
+      {
+        Header: "Last Name",
+        accessor: "last_name",
         style: { whiteSpace: "unset" },
         // specify a row of data to display
         Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
@@ -184,86 +194,6 @@ class UserList extends Component {
           {/* Display the table when showTable is true  */}
           {showTable && (
             // Table with user and columns and default page size with 10 result
-            <ReactTable
-              data={user}
-              columns={columns}
-              loading={isLoading}
-              defaultPageSize={10}
-              showPageSizeOptions={true}
-              minRows={0}
-            />
-          )}
-        </Card>
-      </>
-    );
-  }
-  componentDidMount = async () => {
-    // turn on isLoading flag which we load data
-    this.setState({ isLoading: true });
-    await apis.getAllUsers().then((response) => {
-      this.setState({
-        user: response.data.data,
-        // need to reference the data using syntax above right
-        // then turn isLoading off now that we're done
-        isLoading: false,
-      });
-    });
-    // this user is the data coming from api call
-    console.log(this.state.user);
-  };
-  render() {
-    // get data from state
-    const { user, isLoading } = this.state;
-    // set up columns for the react table
-    // requires Header and accessor for Column Header text and field the column is displaying
-    const columns = [
-      {
-        Header: "Name",
-        accessor: "first_name",
-        style: { whiteSpace: "unset" },
-        // specify a row of data to display
-        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
-      },
-      {
-        Header: "Username",
-        accessor: "user_name",
-        style: { whiteSpace: "unset" },
-        // specify a row of data to display
-        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
-      },
-      {
-        Header: "Permission",
-        accessor: "permission",
-        style: { whiteSpace: "unset" },
-        // specify a row of data to display
-        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
-      },
-      {
-        Header: "",
-        accessor: "",
-        Cell: function (props) {
-          return (
-            <span>
-              <Details
-                id={props.original.user_id}
-                permission={props.original.permission}
-              />
-            </span>
-          );
-        },
-      },
-    ];
-    let showTable = true;
-    // if (!user.length) {
-    //     showTable = false
-    // }
-    return (
-      <>
-        <Card
-          className="mx-auto "
-          style={{ width: "100%", "margin-top": "40px" }}
-        >
-          {showTable && (
             <ReactTable
               data={user}
               columns={columns}

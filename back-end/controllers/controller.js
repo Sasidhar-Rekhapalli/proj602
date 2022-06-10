@@ -237,12 +237,8 @@ addStudent = async (req, res) => {
 updateStudent = async (req, res) => {
   var studentId = req.params.id;
   var sql =
-    "UPDATE student SET prospective = ?, std_id = ?, first_name = ?, middle_name = ?, last_name = ?, gender = ?, birthdate = ?," +
-    "email = ?, country = ?, academic_period = ?, campus = ?, program = ?, degree = ?, year = ?, graudate_ind = ?, enroll = ? " +
-    "WHERE student_id = " +
-    studentId;
+    "UPDATE student SET std_id = ?, first_name = ?, middle_name = ?, last_name = ?, gender = ?, birthdate = ?, email = ?, country = ?, academic_period = ?, campus = ?, program = ?, degree = ?, year = ?, graudate_ind = ?, enroll = ? WHERE student_id = "+studentId;
   var values = [
-    req.body.prospective,
     req.body.std_id,
     req.body.first_name,
     req.body.middle_name,
@@ -259,6 +255,8 @@ updateStudent = async (req, res) => {
     req.body.graudate_ind,
     req.body.enroll,
   ];
+  console.log(values)
+  console.log(studentId)
   dbObject.getConnection((err, connection) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();

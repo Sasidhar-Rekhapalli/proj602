@@ -263,7 +263,6 @@ class BriefShowStudent extends Component{
                                 this.state.degree,
                                 this.state.graduate,
                                 this.state.enroll,
-                                this.state.prospective
         ).then(response =>{
           window.alert("Student updated successfully");
           this.props.history.push('/isms/studentpage'); 
@@ -285,7 +284,7 @@ class BriefShowStudent extends Component{
             firstname: student.data.data[0].first_name,
             middle_name: student.data.data[0].middle_name,
             lastname: student.data.data[0].last_name,
-            dayofbirth: student.data.data[0].birthdate,
+            dayofbirth: student.data.data[0].birthdate.substring(0,10),
             saskemail: student.data.data[0].email,
             gender: student.data.data[0].gender,
             country: student.data.data[0].country,
@@ -363,8 +362,14 @@ class BriefShowStudent extends Component{
         Header: "",
         accessor: "",
         width: 100,
-        Cell: (row) => <div style={{ textAlign: "center" }}>Details</div>,
-      },
+        Cell: function(props) {
+            return(
+                <span>
+                    <Details id={props.original.conversation_id} />
+                </span>
+            )
+      }
+    },
     ];
 
     // variable "showTable" is set to true to check converstation are loaded
@@ -435,7 +440,7 @@ class BriefShowStudent extends Component{
                 <Form.Label className="col-lg-2" style={{ textAlign: "right" }}>
                   Day of Birth:
                 </Form.Label>
-                <Form.Control type="text" className="col pt-0" value={this.state.dayofbirth.substring(0,10)} onChange={this.handleValidatedDayOfBirth}></Form.Control>
+                <Form.Control type="date" className="col pt-0" value={this.state.dayofbirth} onChange={this.handleValidatedDayOfBirth}></Form.Control>
 
               </div>
 
@@ -474,7 +479,7 @@ class BriefShowStudent extends Component{
               {/* Year and Program with label and input  */}
               <div className="row mb-3">
                 <Form.Label className="col-md-2">Year:</Form.Label>
-                <Form.Control type="text" className="col" value={this.state.year} onChange={this.handleValidatedYear}></Form.Control>
+                <Form.Control type="number" className="col" value={this.state.year} onChange={this.handleValidatedYear}></Form.Control>
                 <Form.Label className="col">Program:</Form.Label>
                 <Form.Control type="text" className="col" value={this.state.program} onChange={this.handleValidatedProgram}></Form.Control>
               </div>
