@@ -1,3 +1,15 @@
+//////////////////////////////////////               UserList.jsx                //////////////////////////////////////
+/**
+ *
+ * @file UserList.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 3.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
 import React, { Component } from "react";
 import { Button, Form,Card } from "react-bootstrap";
 import ReactTable from 'react-table';
@@ -10,7 +22,7 @@ const Detail = styled.div`
     color: #0000ff;
     cursor: pointer;
 `
-
+// Details section to call the update role functionality
 class Details extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +31,7 @@ class Details extends Component {
             permission:''
         }
     }
-    
+  //Update role/Permission  
 handleClose= async event=>{
         this.setState({showModal:false})
         await apis.updatePermission(this.props.id,this.state.permission).then(
@@ -49,6 +61,7 @@ handleModal = event => {
       <Modal.Title>Modal heading</Modal.Title>
     </Modal.Header>
     <Modal.Body>
+        {/* Drop box with different permissions */}
     <Form.Select className="mb-3 col-md-auto" onChange={this.handlePermission}>
                   <option>Select permission</option>
                   <option value="RISIA">RISIA</option>
@@ -59,20 +72,24 @@ handleModal = event => {
                 </Form.Select>
     </Modal.Body>
     <Modal.Footer>
+        {/* Close button to close the popup */}
       <Button variant="secondary" onClick={this.handleClose}>
         Close
       </Button>
+      {/* Save button to update the changes */}
       <Button variant="primary" onClick={this.handleClose}>
         Save Changes
       </Button>
     </Modal.Footer>
     </Modal>
+    {/* Details link */}
     <Detail onClick={this.handleModal}>Details</Detail>
     </>
     )
     
 }
 }
+// UserList class to do the functionality of user management
 class UserList extends Component{
     constructor(props) {
         super(props);
@@ -96,7 +113,7 @@ class UserList extends Component{
                                 isLoading: false
                             })
                     })
-                        // this album is the data coming from api call
+                        // this user is the data coming from api call
         console.log(this.state.user)
     }
     render() {
