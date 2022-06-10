@@ -1,13 +1,26 @@
+//Import React, Component and Library use in this page
 import React,{Component} from 'react'
-import apis from '../api/student'
-import conv_apis from '../api/conversation'
 import { Card,Form,Button } from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+//Call apis from api/student to connect to back-end route
+import apis from '../api/student'
+//Call apis from api/conversation to connect to back-end route
+import conv_apis from '../api/conversation'
+//Call apis from api/upload to connect to back-end route
 import UploadFile from '../components/uploadFile';
+
+/**
+ * This class mainly load conversation/note between student selected in student list in Student Page 
+ * This class also can load all information of this student in appropriate box 
+ * This class also alow user can edit information via handle update
+ */
 class DetailDialog extends Component{
     constructor(props) {
         super(props)
+         /**
+        *Variable is used in this class created with id is student_id(id for orders of student) get from params
+        */
         this.state = {
             conversationID: this.props.match.params.id,
             category:'',
@@ -25,10 +38,11 @@ class DetailDialog extends Component{
             tabIndex:'',
         }
 }
+// lifecycle method which executes after component renders
 componentDidMount = async() => {
     // turn on isLoading flag which we load data
     const {conversationID,}=this.state
-
+  //call api to get conversation basing on conversation ID in order to show details information of conversation
     await conv_apis.getConversationByConsID(conversationID)
                 .then(
          
@@ -46,8 +60,7 @@ componentDidMount = async() => {
                         })
                     } 
                 )
-    console.log(this.state.permission)
-    console.log(this.state.create)
+    //call api to get student information by studentID(order of student) to get all information related with current selected student                
     await apis.getStudentById(this.state.studentID)
                     .then(
                         student=>{
@@ -132,7 +145,11 @@ componentDidMount = async() => {
               </Form>
             </div>
           </Card.Header>
-
+            {/* Basing on permission of user which is stored into localStorage during session
+                Some user can have full permission to see all type of conversations, others can:
+                Only if user with permission is same with license requirements can see the note or the note without license requirement can see by everyone
+                user have two type of permission can see any type of note, admin can do it too */}
+              
               <Card.Body>
     {
             ((localStorage.getItem('permission')===this.state.permission) || (this.state.permission==="") 
@@ -148,30 +165,37 @@ componentDidMount = async() => {
             <TabPanel>
             <Form.Group>
           <Form.Label className="col-md-2">Note</Form.Label>
+          {/* Basing on username of user which is stored into localStorage during session
+                Only user who created the note can see and update inside note text box
+                Other user only can give comments
+                Shared Links tab and Upload file tab are open for every user can access*/}
       {
         ((localStorage.getItem('user_name')===this.state.create)) ?
-        <Form.Control className="col" type="textarea" value={this.state.note} onChange={this.handleChangeNote}></Form.Control>:
+        <textarea class="form-control" rows="3"  value={this.state.note}  onChange={this.handleChangeNote}></textarea>:
 
-        <Form.Control className="col" type="textarea" value={this.state.note} readOnly></Form.Control>	
+        <textarea class="form-control" rows="3"  value={this.state.note}  readOnly></textarea>	
         
       }	
       <Form.Label className="col-md-2">Comment:</Form.Label>
       {((localStorage.getItem('user_name')!==this.state.create)) ?
-                <Form.Control className="col" type="textarea" value={this.state.comments} onChange={this.handleChangeComment}></Form.Control>:
-                <Form.Control className="col" type="textarea" value={this.state.comments} readOnly></Form.Control>
+               <textarea class="form-control" rows="3"  value={this.state.comments}  onChange={this.handleChangeComment}></textarea>:
+
+               <textarea class="form-control" rows="3"  value={this.state.comments} readOnly ></textarea>	
+               
       }
             </Form.Group>
             </TabPanel>
             <TabPanel>
                 <Form.Group>
                     <Form.Label className="col-md-2">Shared Link</Form.Label>
-                    <Form.Control className="col" type="textarea" value={this.state.sharedLink} onChange={this.handleSharedLink}></Form.Control>
+                    <textarea class="form-control" rows="3"  value={this.state.sharedLink}  onChange={this.handleSharedLink}></textarea>
                 </Form.Group>
             </TabPanel>
             <TabPanel>
               <UploadFile />
             </TabPanel>
             </Tabs>:
+            /* any user without appropriated permission only see information of student and can not see the note*/
             <Tabs >
             <TabList>
             <Tab>Note</Tab>
@@ -185,7 +209,7 @@ componentDidMount = async() => {
   }
               </Card.Body>
           <div style={{display:"inline-block"}}>
-          
+          {/* Button update to execute edit from user*/}
             <Button
               className="btn m-3 col-md-2"
               style={{ float: "right",background:"#744197",border:"none",cursor:"pointer" }}
@@ -193,7 +217,7 @@ componentDidMount = async() => {
             >
               Update
             </Button>
-        
+        {/* Button cancle to comeback to briefshow/id page*/}
           <Link to={{pathname: `/isms/briefshow/${this.state.studentID}`}}>
             <Button
               className="btn btn-danger m-3 col-md-2"

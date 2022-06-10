@@ -41,7 +41,7 @@ export const createStudent = (
 export const getAllStudents=()=>api.get(`/getallstudent`);
 export const getStudentById=id=>api.get(`/getstudent/${id}`);
 export const updateStudent = (
-    studentMainID,
+    id,
     studentID,
     firstname,
     middlename,
@@ -57,8 +57,7 @@ export const updateStudent = (
     degree,
     graduate,
     enroll,
-    prospective) => api.put(`/updatestudent/${studentMainID}`, {
-    "student_id": 0,
+    prospective) => api.put(`/updatestudent/${id}`, {
     "prospective": prospective,
     "std_id": studentID,
     "first_name": firstname,

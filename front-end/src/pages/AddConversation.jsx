@@ -1,42 +1,41 @@
+//Import React, Component and Library use in this page
 import React, { Component } from "react";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Form, Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled from "styled-components";
-import NavBar from "../components/Navbar";
-import FootNav from "../components/FootNav";
 import { Link } from "react-router-dom";
+//call Apis from api/student to route back-end
 import apis from '../api/student';
 import conv_apis from "../api/conversation";
-import  UploadFile  from "../components/uploadFile";
+//import NavBar and footer from components
+import NavBar from "../components/Navbar";
+import FootNav from "../components/FootNav";
+
 // Styled component for card title
 const Header = styled.h2`
   margin: 0px 20px;
   text-align:center;
   
 `;
-// class Cancel extends Component {
-//   comebackStudent = event => {
-//       event.preventDefault()
-//       // console.log(this.props.id)
-//       window.location.href=`/isms/briefshow/${this.props.id}`
-//   }
-
-//   render(){
-//       // invike the update view for the current row -> this.props
-//       return <Button className="btn btn-danger m-3 col-md-2"
-//       style={{ float: "right",cursor:"pointer" }} onClick={this.comebackStudent}>Cancel</Button>
-//   }
-// }
+/*Create AddConversation component for page
+This class is load all information with studentID into propagated box
+This class allows user to create new conversation with subject,category,license requirement, sharedlink information
+This class first use student_id(order) in student table like parameter to call api getstudentbyID in oreder to take all information of current student
+*/
 class AddConversation extends Component{
+  //Create constructor of class
   constructor(props){
     super(props)
+    //Create class variable: student_id: save order of student in database
     this.state={
+      //student_id is order id can take from parameter address
       student_id:this.props.match.params.id,
+      //std_id: unique student_id from banner
       std_id:'',
-      firstname:'',
-      lastname:'',
+      firstName:'',
+      lastName:'',
       email:'',
       program:'',
       subject:'',
@@ -46,62 +45,66 @@ class AddConversation extends Component{
       sharedLink:'',
       UploadedFile:'',
       permission:'',
+      //created by column data is came from user_name from user table login in session
       created:localStorage.getItem('user_name')
     }
   }
+ // lifecycle method which executes after component renders
   componentDidMount = async() => {
-    // turn on isLoading flag which we load data
     const {student_id}=this.state
-
+    //call Api getstudentbyID to load basic information of student with student_id came from address
     await apis.getStudentById(student_id)
+    //after get data from student table inside database isms, store in variables
+    //back end will response data stored into variable data as array, we need to call out the first item
+    //In this case we need 5 information std_id, firstName,lastName so we stored into state variables
                 .then(
                   student=>{
                     this.setState({
-            student:student.data.data,
             std_id: student.data.data[0].std_id,
-            firstname: student.data.data[0].first_name,
-            lastname: student.data.data[0].last_name,
+            firstName: student.data.data[0].first_name,
+            lastName: student.data.data[0].last_name,
             email: student.data.data[0].email,
             program:student.data.data[0].program,
                     })
                   }
                 )
   }
+  //handle for note text area. store value into variable
   handleNote= async event=>{
     this.setState({note:event.target.value})
   }
+  //handle for comments text area. store value into variable
   handleComment= async event=>{
     this.setState({comments:event.target.value})
   }
+  //handle for category text area. store value into variable
   handleCategory= async event=>{
     this.setState({category:event.target.value})
   }
+  //handle for subject text area. store value into variable
   handleSubject= async event=>{
     this.setState({subject:event.target.value})
   }
+  //handle for permission text area. store value into variable
   handlePermission= async event=>{
     this.setState({permission:event.target.value})
   }
+  //handle for sharedLink text area. store value into variable
   handleLink= async event=>{
     this.setState({sharedLink:event.target.value})
   }
-  handleUpdate= async event=>{
-    var values = [
-        this.state.student_id,
-        this.state.note,
-        this.state.category,
-        this.state.subject,
-        this.state.sharedFile,
-        this.state.permission,
-        this.state.created,
-        this.state.comments
-    ];
-    console.log(values)
+  //handle create new conversation post information into database with parameters.
+  handleCreate= async event=>{
     await conv_apis.createConversation(this.state.student_id,this.state.note,this.state.category,this.state.subject,this.state.sharedLink,this.state.permission,this.state.created,this.state.comments)
-    window.alert('User added successfully')
+    .then(
+      //after post into database successfully notice to user by window alert
+    window.alert('User added successfully'))
+      //move back to briefshow page with the student_id(id for orders)
     window.location.href=`/isms/briefshow/${this.state.student_id}` 
     
+    
 }
+//Create content html of page
   render(){
     
     return (
@@ -110,7 +113,7 @@ class AddConversation extends Component{
         <NavBar/>
         <div className="row mb-3">
           <div className="col-sm-12 col-12">
-            {/* Card Title  */}
+            {/*  Title  */}
             <Header className="text-center">Add Notes</Header>
           </div>
         </div>
@@ -122,28 +125,28 @@ class AddConversation extends Component{
               <Form className="m-3">
                 <Form.Group>
                   <div className="row mb-3">
-                    {/* Label for student Id and input  */}
+                    {/* Label for student Id and input load from database  */}
                     <Form.Label className="col-md-2">Student ID:</Form.Label>
                     <Form.Control className="col" value={this.state.std_id}></Form.Control>
   
-                    {/* Label with student name and input  */}
+                    {/* Label with student name and input load from database  */}
                     <Form.Label className="col-md-2">
                       First Name:
                     </Form.Label>
-                    <Form.Control className="col" value={this.state.firstname}></Form.Control>
+                    <Form.Control className="col" value={this.state.firstName}></Form.Control>
                     <Form.Label className="col-md-2">
                       Last Name:
                     </Form.Label>
-                    <Form.Control className="col" value={this.state.lastname}></Form.Control>
+                    <Form.Control className="col" value={this.state.lastName}></Form.Control>
                   </div>
                 </Form.Group>
                 <Form.Group>
                   <div className="row mb-3">
-                    {/* Label for student Id and input  */}
+                    {/* Label for student Id and input load from database */}
                     <Form.Label className="col-md-2">Email:</Form.Label>
                     <Form.Control className="col" value={this.state.email}></Form.Control>
   
-                    {/* Label with student name and input  */}
+                    {/* Label with student name and input load from database  */}
                     <Form.Label className="col-md-2">
                       Program:
                     </Form.Label>
@@ -151,7 +154,7 @@ class AddConversation extends Component{
                   </div>
                 </Form.Group>
   
-                {/* Label with subject and input  */}
+                {/* Label with subject and input enter from user */}
                 <Form.Group>
                   <div className="row mb-3">
                     <Form.Label className="col-md-2">Subject : </Form.Label>
@@ -159,17 +162,24 @@ class AddConversation extends Component{
                       className="col"
                     ></Form.Control>
   
-                    {/* Label with category and select options  */}
+                    {/* Label with category enter from user */}
                     <Form.Label className="col-md-2">Category :</Form.Label>
                     <Form.Control type="text" onChange={this.handleCategory}
                       className="col"
                     ></Form.Control>
                     </div>
+                    
+                    {/* Label with permission and limit choice base on permission of user who login system in session
+                        RCIC license can choose requirement RCIC or none
+                        RISIA license can choose requirement RISIA or none 
+                        RISIA and RCIC license can choose requirement both RISIA and RCIC or none 
+                        admin license can choose only none license.
+                    */}
                     <Form.Label className="row mb-3">License Requirement :</Form.Label>
                     <Form.Select className="col-md-2" onChange={this.handlePermission}>
                     {<option value={""}>NO SELECTION</option>}
-                    {localStorage.getItem('permission')==="RISIA"&&<option value={"RISIA"}>RISIA</option>}
-                    {localStorage.getItem('permission')==="RCIC"&&<option value={"RCIC"}>RCIC</option>}
+                    {(localStorage.getItem('permission')==="RISIA"||localStorage.getItem('permission')==="RISIA and RCIC")&&<option value={"RISIA"}>RISIA</option>}
+                    {(localStorage.getItem('permission')==="RCIC"||localStorage.getItem('permission')==="RISIA and RCIC")&&<option value={"RCIC"}>RCIC</option>}
                     {localStorage.getItem('permission')==="RISIA and RCIC"&&<option value={"RISIA and RCIC"}>RCIC and RISIA</option>}
                     {<option value={""}>No Certification</option>}
                     </Form.Select>
@@ -179,44 +189,44 @@ class AddConversation extends Component{
             </div>
           </Card.Header>
           <Card.Body>
+            {/* Tabs with two function Note/Comment and Shared Link with category enter from user */}
           <Tabs >
+            {/* List of tabs show in top of tabs component */}
                 <TabList>
                 <Tab>Note</Tab>
                 <Tab>Shared Link</Tab>
-                <Tab>Uploaded File</Tab>
                 </TabList>
+            {/* Table panel contains details of tabs Note/Comment and shared Link respectively */}    
                 <TabPanel>
                 <Form.Group>
                     <Form.Label className="col-md-2">Note</Form.Label>
-                    <Form.Control className="col" type="textarea" style={{padding:"50px 10px"}} value={this.state.note} onChange={this.handleNote}></Form.Control>
+                    <textarea class="form-control" rows="3"  value={this.state.note}  onChange={this.handleNote}></textarea>
                     
                     <Form.Label className="col-md-2">
                       Comment:
                     </Form.Label>
-                    <Form.Control className="col" type="textarea" onChange={this.handleComment}></Form.Control>
+                    <textarea class="form-control" rows="3"  value={this.state.comments}  onChange={this.handleComment}></textarea>
                 </Form.Group>
                 </TabPanel>
                 <TabPanel>
                     <Form.Label className="col-md-2">Shared Link</Form.Label>
-                    <Form.Control className="col" type="textarea" value={this.state.sharedLink}  onChange={this.handleLink}></Form.Control>
-                </TabPanel>
-                <TabPanel>
-                  
+                    <textarea class="form-control" rows="3"  value={this.state.sharedLink}  onChange={this.handleLink}></textarea>
                 </TabPanel>
                     </Tabs>
           </Card.Body>
           
-          {/* Update the notes for specific student  */}
+          {/* Create the notes for specific student when click on Create button handleCreate will be called and execute api */}
           <div style={{display:"inline-block"}}>
           
             <Button
               className="btn m-3 col-md-2"
               style={{ float: "right",background:"#744197",border:"none",cursor:"pointer" }}
-              onClick={this.handleUpdate}
+              onClick={this.handleCreate}
             >
               Create
             </Button>
-        
+          {/* Link with specific pathname to come back to cancel and comback to brief-show page with student_id(id for orders)*/}
+          
           <Link to={{pathname: `/isms/briefshow/${this.state.student_id}`}}>
             <Button
               className="btn btn-danger m-3 col-md-2"
