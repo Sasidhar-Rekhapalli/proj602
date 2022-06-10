@@ -14,8 +14,9 @@ const Btn = styled.button`
 const ResetBtn = styled.button`
   color: #fff;
   border:none;
-  text
-  padding : 5px 100px;
+  width: 100%;
+  padding: 3px;
+  border-radius: 5px;
   background-color: #743c96;
 `;
 
@@ -25,6 +26,7 @@ const Header = styled.h2`
   display: inline-block;
 `;
 
+// REACT_APP_PASSWORD variable use to read secret password from .env file
 const {REACT_APP_PASSWORD} = process.env;
 
 class ResetPassword extends Component{
@@ -37,42 +39,61 @@ class ResetPassword extends Component{
 
     }
   }
+//#region 
+// different handler to get data or value from input attritubes
 
+// handler to get username from input attribute
   handleusername = async event=>{
+    // stored value in username variable
     var username  = event.target.value;
+    // set username value to username
     this.setState({username:username})
 }
 
+// handler to read and set password in password variable from input attribute
 handlepassword = async event=>{
+  // stored value in password variable 
   var password  = event.target.value;
+  // set password value to password
   this.setState({password:password})
 }
 
+// handler to set master password from input attribute
 handlemasterPassword = async event=>{
+  // stored value in to masterpassword variable 
   var masterpassword  = event.target.value;
+  // set masterpassword value to masterpassword
   this.setState({masterpassword:masterpassword})
 }
 
+// main handler to check masterpassword 
 handleCheck = async event =>{
+  // prevent screen from default or from refresh
   event.preventDefault();
+  // read masterpassword into masterpassword variable 
   const masterpassword = this.state.masterpassword;
   
+  // compare masterpassword with secert password from special .env file
   if(REACT_APP_PASSWORD===masterpassword){
     
+    // if condition become true then password reset successfull 
     const {username, password } = this.state;
     await auths.resetPassword({username, password}).then((response)=>{
         window.alert("Password reset successfully");
+        // screen redirect to login screen
         this.props.history.push("/");
       })
   }
+  // else if masterpassword is wrong then it will not reset password
   else{
     console.log("not match--------------")
   }
 }
-
+//#endregion
   render(){
     return (
       <>
+       {/* navbar for header */}
       <Navbar/>
         {/* Card for form  */}
         <Card className="container " style={{ marginTop: "10px" }}>
