@@ -6,7 +6,7 @@
  *
  * @file UserList.jsx
  * @copyright ISMS(International Student Management System)
- * @version 3.0.0
+ * @version 1.0.0
  * @author cyberbot team, software developer program
  * @release summer 2022
  * @owner Saskatchewan Polytechnic, Saskatoon Campus

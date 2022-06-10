@@ -498,16 +498,20 @@ resetPassword = async (req, res) => {
  * @throws   throws error 400 if it could not add information to user
  * @returns  send successful message to user
  */
-login = async (req, res) => {
+ login = async (req, res) => {
   dbObject.getConnection((err, connection) => {
     if (err) {
-      return res.json({ message: "Wrong username" });
+      return res.send({ message: "Wrong username" });
     }
     connection.query(
       "SELECT * from user where user_name=?",
       req.body.vals[0],
       (error, rows) => {
+        
         let user = rows[0];
+        if(error|| user===undefined){
+          return res.send({ message: "Wrong username" });
+        }
         let match = bcrypt.compareSync(req.body.vals[1], user.password);
 
         if (match) {

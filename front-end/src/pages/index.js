@@ -1,3 +1,17 @@
+//////////////////////////////////////               UserManagement.jsx                //////////////////////////////////////
+/**
+ *
+ * @file indext.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ * Main: export file into App/index
+ */
+//////////////////////////////////////
+
+
 import BriefShowStudent from './Brief-show';
 import LoginView from './Login';
 import RegisterUser from './Register';

@@ -1,9 +1,21 @@
+//////////////////////////////////////               UserManagement.jsx                //////////////////////////////////////
+/**
+ *
+ * @file Navbar.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
 //import section for all the packages
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../images/navlogo.png";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+
 //styling components
 const Container = styled.div.attrs({
   className: "container",

@@ -1,3 +1,15 @@
+//////////////////////////////////////               UserManagement.jsx                //////////////////////////////////////
+/**
+ *
+ * @file Brief-show.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 1.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
 //Import React, Component and Library use in this page
 import React,{Component} from 'react';
 import { Form, Card, Button } from "react-bootstrap";
@@ -12,7 +24,7 @@ import 'react-table/react-table.css';
 import styled from 'styled-components';
 import "../css/loginpage.css";
 
-const Wrapper = styled.div`padding: 0 40px 40px 40px;`
+
 //Create style for button detail inside conversation table
 const Detail = styled.div`
     color: #0000ff;
@@ -68,14 +80,7 @@ class BriefShowStudent extends Component{
         }   
     }
     //These handle below allow user update details of student whenever some thing is wrong. User can clear and write new information details
-    handleValidatedStudentID = async event => {
-      if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
-        this.setState({isValid:"Student ID must be size between 8 to 12"});
-      }else{
-        this.setState({isValid:""});
-        this.setState({studentID:event.target.value});
-      }
-    }
+
 
     handleValidatedFirstName = async event => {
       if(!event.target.value.match(/^[a-zA-Z]|\d$/)){
@@ -393,7 +398,7 @@ class BriefShowStudent extends Component{
               <Form.Label className="col-md-2">
                 Student ID:
               </Form.Label>
-              <Form.Control className="col" value={this.state.studentID} onChange={this.handleValidatedStudentID}></Form.Control>
+              <Form.Control className="col" value={this.state.studentID} ></Form.Control>
             </Form.Group>
 
             {/* First and Last name with input and label  */}
