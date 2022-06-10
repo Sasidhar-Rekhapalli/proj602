@@ -35,6 +35,7 @@ class UploadFile extends React.Component{
             console.log(res.data);
             console.log(this.state.filename);
             console.log(formData);
+            window.alert("File is uploaded")
         });
   }
 
@@ -45,6 +46,7 @@ class UploadFile extends React.Component{
         <form encType="multipart/form">
         <input type="file" name="file" id="file" placeholder="Upload Document" onChange={this.fileSelectedHandler}/>
         <button type="submit" onClick={this.fileUploadHandler}>Add File</button>
+        <div>{this.state.filename}</div>
         </form>
       </div>
     );

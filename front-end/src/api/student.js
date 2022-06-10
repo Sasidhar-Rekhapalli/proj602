@@ -56,9 +56,7 @@ export const updateStudent = (
     program,
     degree,
     graduate,
-    enroll,
-    prospective) => api.put(`/updatestudent/${id}`, {
-    "prospective": prospective,
+    enroll,) => api.put(`/updatestudent/${id}`, {
     "std_id": studentID,
     "first_name": firstname,
     "middle_name": middlename,
@@ -76,7 +74,6 @@ export const updateStudent = (
     "enroll": enroll
 }); 
 export const deleteStudent=id=>api.delete(`/deletestudent/${id}`);
-export const getConversation =id=>api.get(`/getconversation/${id}`);
 export const getAllUsers=()=>api.get(`/getalluser`);
 export const updatePermission=(id,permission)=>api.put(`/updatepermission/`,{id:id,permission:permission});
  

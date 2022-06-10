@@ -48,7 +48,6 @@ const router = express.Router();
 router.get("/getallstudent", controller.getAllStudents);
 router.get("/getstudent/:id", controller.getStudentById);
 router.post("/newstudent", controller.createStudent);
-router.post("/addstudent", controller.addStudent);
 router.put("/updatestudent/:id", controller.updateStudent);
 router.delete("/deletestudent/:id", controller.deleteStudent);
 router.get("/getconversationid/:id", controller.getConversation);
@@ -69,15 +68,10 @@ router.put("/updateconversation/:id", controller.updateConversation)
 
 router.get("/getalluser", controller.getAllUsers);
 router.put("/updatepermission", controller.updatePermission);
-router.get("/user/getUsersView", controller.getUsersView);
 router.post("/register", controller.createNewUser);
-router.post("/user/adduser", controller.addUser);
 router.post("/login", controller.login);
-router.put("/user/updateuser/:id", controller.updateUser);
 router.delete("/deleteuser/:id", controller.deleteUser);
 router.put("/resetpassword/:id", controller.resetPassword);
-router.post("/updateFile/:id", controller.updateFile);
-
 router.post("/updateFile/:id", controller.updateFile);
 
 //#endregion
