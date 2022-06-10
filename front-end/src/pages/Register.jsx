@@ -1,3 +1,15 @@
+//////////////////////////////////////               Register.jsx                //////////////////////////////////////
+/**
+ *
+ * @file Register.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 3.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Form, Card, Button } from "react-bootstrap";
@@ -21,7 +33,7 @@ const InputText = styled.input.attrs({
 const Label = styled.label`
   margin: 5px;
 `;
-
+//RegisterUser class to do the functionality of create new user
 class RegisterUser extends Component {
   constructor(props) {
     super(props);
@@ -35,6 +47,7 @@ class RegisterUser extends Component {
       permission: ""
     };
   }
+  //Onchange event of firstname field which handle Regex of firstname
   handleFirstNameReg = async (event) => {
     if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
       this.setState({ isValid: "First Name must be size between 8 to 12" });
@@ -43,6 +56,7 @@ class RegisterUser extends Component {
       this.setState({ firstname: event.target.value });
     }
   };
+  //Onchange event of lastname field which handle Regex of lastname
   handleLastNameReg = async (event) => {
     if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
       this.setState({ isValid: "Last Name must be size between 8 to 12" });
@@ -51,6 +65,7 @@ class RegisterUser extends Component {
       this.setState({ lastname: event.target.value });
     }
   };
+  //Onchange event of email field which handle Regex of email
   handleEmailReg = async (event) => {
     if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
       this.setState({ isValid: "Email must be size between 8 to 12" });
@@ -59,6 +74,7 @@ class RegisterUser extends Component {
       this.setState({ email: event.target.value });
     }
   };
+  //Onchange event of telephone field which handle Regex of telephone
   handleTelReg = async (event) => {
     if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
       this.setState({ isValid: "Telephone must be size between 8 to 12" });
@@ -67,7 +83,7 @@ class RegisterUser extends Component {
       this.setState({ tel: event.target.value });
     }
   };
-
+//Onchange event of username field which handle Regex of username
   handleUserReg = async (event) => {
     if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
       this.setState({ isValid: "Username must be size between 8 to 12" });
@@ -76,6 +92,7 @@ class RegisterUser extends Component {
       this.setState({ username: event.target.value });
     }
   };
+  //Onchange event of password field which handle Regex of password
   handlePasswordReg = async (event) => {
     if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
       this.setState({ isValid: "" });
@@ -85,10 +102,9 @@ class RegisterUser extends Component {
   };
 
   handlepermission = async(event) => {
-
     this.setState({ permission: event.target.value});
   }
-
+//Onchange event for register button
   handleRegister = async (event) => {
     event.preventDefault();
 
@@ -110,10 +126,12 @@ class RegisterUser extends Component {
     return (
       <>
         <Navbar />
+        {/* Main Container of page */}
         <Card className="container mt-3">
           <Card.Body>
             <div className="row mb-3">
               <div className="col-sm-12 col-12 text-center">
+                {/* Header of the page */}
                 <Header className="">Add User</Header>
                 <Link to="/isms/usermanagement">
                   <Btn className="btn btn-danger pull-right">X</Btn>
@@ -122,30 +140,37 @@ class RegisterUser extends Component {
             </div>
             <div className="d-flex justify-content-center">
               <div>
+                {/* First name */}
                 <Form.Group className="mb-3 col-md-auto">
                   <Label>First Name</Label>
                   <InputText type="text" onChange={this.handleFirstNameReg} />
                 </Form.Group>
+                {/* LastName */}
                 <Form.Group className="mb-3 col-md-auto">
                   <Label>Last Name</Label>
                   <InputText type="text" onChange={this.handleLastNameReg} />
                 </Form.Group>
+                {/* Email */}
                 <Form.Group className="mb-3 col-md-auto">
                   <Label>Email</Label>
                   <InputText type="text" onChange={this.handleEmailReg} />
                 </Form.Group>
+                {/* Mobile Number */}
                 <Form.Group className="mb-3 col-md-auto">
                   <Label>Mobile Number</Label>
                   <InputText type="text" onChange={this.handleTelReg} />
                 </Form.Group>
+                {/* UserName */}
                 <Form.Group className="mb-3 col-md-auto">
                   <Label>UserName</Label>
                   <InputText type="text" onChange={this.handleUserReg} />
                 </Form.Group>
+                {/* Password */}
                 <Form.Group className="mb-3 col-md-auto">
                   <Label>Password</Label>
                   <InputText type="text" onChange={this.handlePasswordReg} />
                 </Form.Group>
+                {/* Role/Permission */}
                 <Form.Select className="mb-3 col-md-auto" onChange={this.handlepermission}>
                   <option>Select permission</option>
                   <option value="RISIA">RISIA</option>

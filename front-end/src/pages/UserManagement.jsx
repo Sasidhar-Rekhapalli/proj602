@@ -1,3 +1,15 @@
+//////////////////////////////////////               UserManagement.jsx                //////////////////////////////////////
+/**
+ *
+ * @file UserManagement.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 3.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
 import React,{Component} from "react";
 import styled from "styled-components";
 import { Form, Card, Button } from "react-bootstrap";
@@ -25,11 +37,12 @@ const UserButton = styled.button`
   float: right;
 `;
 
-
+//UserManagement class to create the view for User management page
 class UserManagement extends Component {
   render(){
     return (
         <>
+        {/* Nav bar for the page */}
         <Navbar/>
           <Card className="mx-auto container " style={{ marginTop: "15px" }}>
             <div className="AddUser" style={{ marginTop: "40px" }}>
@@ -46,13 +59,16 @@ class UserManagement extends Component {
                 </UserButton>
               </Link>
             </div>
+            {/* Calling functonality for user management page */}
             <UserList/>
+            {/* Link button to go back to student main Page */}
             <div className="text-right">
               <Link to="/isms/studentpage">
                 <CloseBtn className="btn">Student</CloseBtn>
               </Link>
             </div>
           </Card>
+          {/* Footer part */}
           <FootNav/>
         </>
       );
