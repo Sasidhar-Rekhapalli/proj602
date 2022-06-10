@@ -1,8 +1,10 @@
+//import section for all the packages
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../images/navlogo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+//styling components
 const Container = styled.div.attrs({
   className: "container",
 })`
@@ -38,23 +40,29 @@ const TextLine = styled.a.attrs({
     text-decoration: none;
     float: right;
   `;
+  // main Navbar class 
 class Navbar extends Component {
+  // Permission oriented usermanagement link
   handleManage=async event=>{
     let permission=localStorage.getItem('permission')
     if(permission==="admin"){
       window.location.href=`/isms/usermanagement`;
     }
   }
+  //render the details
   render() {
     return (
       <Container>
         <Nav>
+          {/* logo and header */}
           <img src={Logo} width="200px" height="100px" alt="Logo" />
           <Heading>International Student Management System</Heading>
         </Nav>
         <HeaderDown>
+          {/* display section for username  */}
           <TextLine>Username:{localStorage.getItem('user_name')}</TextLine>
           <TextLine onClick={this.handleManage}>Permission/Manage:{localStorage.getItem('permission')}</TextLine>
+          {/* logout link */}
           <TextLine href="/">Logout</TextLine>
         </HeaderDown>
       </Container>
