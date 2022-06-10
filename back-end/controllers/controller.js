@@ -173,53 +173,6 @@ createStudent = async (req, res) => {
 };
 //#endregion
 
-//#region for   ADD A  STUDENT
-/**
- * @module    Add student's information and put into student table.
- *            in the first part save sql query for insert and save values get from user and save in same order in array variable named values
- * @callback  first anonymous callback function after checking connection invoke query and in second function check query and values saved in array
- *            same as other part response proper output with JSON object and messages:
- *            - if error happend, throws with 400 means unsuccessful result
- *            - if successful, return status 200 and return that student information in JSON object 
- * @params  prospective,std_id,first_name,middle_name,last_name,gender, birthdate,email, country,academic_period, campus,program, degree, year, 
-            graudate_ind, enroll
- * @throws   throws error 400 if it could not add information to user
- * @returns  send successfull message to user
- */
-addStudent = async (req, res) => {
-  var sql =
-    "INSERT INTO student (prospective, std_id, first_name, middle_name, last_name, gender, birthdate, email, country, academic_period, campus, program, degree, year, graudate_ind, enroll) VALUES ?";
-  var values = [
-    [
-      req.body.prospective,
-      req.body.std_id,
-      req.body.first_name,
-      req.body.middle_name,
-      req.body.last_name,
-      req.body.gender,
-      req.body.birthdate,
-      req.body.email,
-      req.body.country,
-      req.body.academic_period,
-      req.body.campus,
-      req.body.program,
-      req.body.degree,
-      req.body.year,
-      req.body.graudate_ind,
-      req.body.enroll,
-    ],
-  ];
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, [values], (err, rows) => {
-      connection.release();
-      if (err) {
-        return res.status(400).json({ success: false, error: err });
-      }
-      return res.status(200).json({ message: "Student Added" });
-    });
-  });
-};
-//#endregion
 
 //#region for   UPDATE STUDENT
 /**
@@ -325,9 +278,9 @@ getAllUsers = async (req, res) => {
 
 //#endregion
 
-//#region for  GET USER BY ID
+//#region for  GET USER Permission BY ID
 /**
- * @module    same as GET ALL USERS, but this module return specific user by user_id. when process is successful and
+ * @module    same as GET ALL USERS permission, but this module return specific user by user_id. when process is successful and
  *            user by specific id is in the database return the user's information and if query does not return anything
  *            throw an error to user
  *            In this module, use Read in CRUD operation also use Get method
@@ -362,35 +315,6 @@ updatePermission = async (req, res) => {
 
 //#endregion
 
-//#region for    GET  USERS VIEW
-/**
- * @module    get  users' name , type and other information and report it in user's page
- *            use Get method
- *            in this route make functionality for front end in user page , show all users' information
- * @callback  anonymous callback function gets the query to return all users filed in the database, the result of the query
- *            if failed first part(error), throws with 400 and JSON object return unsuccessful and error.
- *            if the result of the query is the triumphant return status 200, which means the process is succesful and returns
- *            data store in the json object.
- * @params  first_name, last_name,user_name,risia , rcic ,  no_certification
- * @throws   tthrows error 400 if it could not show students information
- * @throws   throws status 200 and return students information
- * @returns  send successfull message
- */
-getUsersView = async (req, res) => {
-  dbObject.getConnection((err, connection) => {
-    connection.query(
-      "SELECT CONCAT (last_name , ' , ' ,first_name) As name, user_name, role FROM user)",
-      (err, rows) => {
-        connection.release();
-        if (err) {
-          return res.status(400).json({ success: false, error: err });
-        }
-        return res.status(200).json({ success: true, data: rows });
-      }
-    );
-  });
-};
-//#endregion
 
 //#region for   CREATE A NEW USER
 /**
@@ -433,27 +357,6 @@ createNewUser = async (req, res) => {
   }
 };
 
-createConversation = async (req, res) => {
-  var student_id = req.body.student_id;
-  var note = req.body.note;
-  var category = req.body.category;
-  var subject = req.body.subject;
-  var sharedLink = req.body.sharedLink;
-  var permission = req.body.permission;
-  var created = req.body.created;
-  var comments = req.body.comments;
-  var sql = `INSERT INTO conversation (student_id,note,category,subject,sharedLink,permission,createdby,comments) VALUES ('${student_id}','${note}','${category}','${subject}','${sharedLink}','${permission}','${created}','${comments}')`;
-
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, (err, rows) => {
-      connection.release();
-      if (err) {
-        return res.status(400).json({ success: false, error: err });
-      }
-      return res.status(200).json({ message: "User Created" });
-    });
-  });
-};
 
 //#region for   ADD A USER
 /**
@@ -471,16 +374,9 @@ addUser = async (req, res) => {
   var user_name = req.body.user_name;
   var password = req.body.password;
   var permission = req.body.permission;
-  var sql = `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password, permission) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}', '${permission}')`;
-  var first_name = req.body.first_name;
-  var last_name = req.body.last_name;
-  var email = req.body.email;
-  var tel = req.body.tel;
-  var user_name = req.body.user_name;
-  var password = req.body.password;
   var role = req.body.role;
 
-  var sql = `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password,role) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}', '${role}')`;
+  var sql = `INSERT INTO user (first_name,last_name ,email ,tel ,user_name, password,role) VALUES ('${first_name}','${last_name}','${email}','${tel}','${user_name}', '${password}', '${permission}')`;
 
   dbObject.getConnection((err, connection) => {
     connection.query(sql, (err, rows) => {
@@ -630,7 +526,7 @@ login = async (req, res) => {
 
 //////////////////////////////////////           CONVERSATION           //////////////////////////////////////
 
-//#region for  Get CONVERSATION
+//#region for  Get CONVERSATION by student ID and by Conversation ID
 /**
  * @module    get information for each student and get conversation result
  * @params    conversation_id,category,datecreated,createdby,lastupdatedby,subject,sharedLink,permission
@@ -653,33 +549,6 @@ getConversation = async (req, res) => {
     });
   });
 };
-
-//#endregion
-
-//#region for  CREATE CONVERSATION
-/**
- * @module    Create a new conversation
- * @params    note , comments, sharedLink
- * @throws   throws error 400 if it could not show the user information
- * @throws   throws status 200 and return the user information
- * @returns  send successfull message
- */
-getConversation = async (req, res) => {
-  var studentId = req.params.id;
-
-  var sql =
-    "SELECT conversation_id,category,datecreated,createdby,lastupdatedby,subject,sharedLink,permission FROM conversation JOIN student USING(student_id) WHERE student_id= ?";
-  dbObject.getConnection((err, connection) => {
-    connection.query(sql, studentId, (err, rows) => {
-      connection.release();
-      if (err) {
-        return res.status(400).json({ success: false, error: err });
-      }
-      return res.status(200).json({ success: true, data: rows });
-    });
-  });
-};
-
 getConversationByConsID = async (req, res) => {
   var cons_id = req.params.id;
   var sql =
@@ -694,15 +563,51 @@ getConversationByConsID = async (req, res) => {
     });
   });
 };
+//#endregion
+
+//#region for  CREATE CONVERSATION
+/**
+ * @module    Create a new conversation
+ * @params    note , comments, sharedLink
+ * @throws   throws error 400 if it could not show the user information
+ * @throws   throws status 200 and return the user information
+ * @returns  send successfull message
+ */
+ createConversation = async (req, res) => {
+  var student_id = req.body.student_id;
+  var note = req.body.note;
+  var category = req.body.category;
+  var subject = req.body.subject;
+  var sharedLink = req.body.sharedLink;
+  var permission = req.body.permission;
+  var created = req.body.created;
+  var comments = req.body.comments;
+  var sql = `INSERT INTO conversation (student_id,note,category,subject,sharedLink,permission,createdby,comments) VALUES ('${student_id}','${note}','${category}','${subject}','${sharedLink}','${permission}','${created}','${comments}')`;
+
+  dbObject.getConnection((err, connection) => {
+    connection.query(sql, (err, rows) => {
+      connection.release();
+      if (err) {
+        return res.status(400).json({ success: false, error: err });
+      }
+      return res.status(200).json({ message: "User Created" });
+    });
+  });
+};
+//#endregion
+//#region for  Update CONVERSATION by Conversation ID
+/**
+ * @module    put information of conversation and update new information
+ * @params    conversation_id,category,datecreated,createdby,lastupdatedby,subject,sharedLink,permission
+ * @throws    throws error 400 if it could not show the user information
+ * @throws    throws status 200 and return the user information
+ * @returns   send successfull message
+ */
 updateConversation = async (req, res) => {
   var conversation_id = req.params.id;
   var note = req.body.note;
   var comments = req.body.comments;
   var sharedLink = req.body.sharedLink;
-  console.log(conversation_id);
-  console.log(req.body.note);
-  console.log(req.body.comments);
-  console.log(req.body.sharedLink);
   var sql =
     "UPDATE conversation SET note = ?, comments = ?, sharedLink = ? WHERE conversation_id = " +
     conversation_id;
@@ -718,7 +623,14 @@ updateConversation = async (req, res) => {
   });
 };
 //#endregion
-//#region for upload file
+//#region for  File Upload by Conversation ID
+/**
+ * @module    post file upload from local computer into conversation table by conversation id
+ * @params    conversation_id,file upload
+ * @throws    throws error 400 if it could not show the user information
+ * @throws    throws status 200 and return the user information
+ * @returns   send successfull message
+ */
 
 updateFile = async (req, res) => {
   let conversation_id = req.params.id;
@@ -764,15 +676,10 @@ module.exports = {
   getAllStudents,
   getStudentById,
   createStudent,
-  addStudent,
   updateStudent,
   deleteStudent,
   getAllUsers,
-
-  getUsersView,
   createNewUser,
-  addUser,
-  updateUser,
   deleteUser,
   resetPassword,
   login,

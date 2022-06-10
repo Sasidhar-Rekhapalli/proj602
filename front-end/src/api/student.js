@@ -74,7 +74,6 @@ export const updateStudent = (
     "enroll": enroll
 }); 
 export const deleteStudent=id=>api.delete(`/deletestudent/${id}`);
-export const getConversation =id=>api.get(`/getconversation/${id}`);
 export const getAllUsers=()=>api.get(`/getalluser`);
 export const updatePermission=(id,permission)=>api.put(`/updatepermission/`,{id:id,permission:permission});
  
