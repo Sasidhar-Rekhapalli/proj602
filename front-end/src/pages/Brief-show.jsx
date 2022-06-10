@@ -194,12 +194,7 @@ class BriefShowStudent extends Component{
     }
 
     handleValidatedEmail = async event => {
-      if(!event.target.value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/)){
-        this.setState({isValid:"Verify Email"});
-      }else{
-        this.setState({isValid:""});
         this.setState({saskemail:event.target.value});
-      }
     }
 
     handleValidatedCampus = async event => {
@@ -406,7 +401,7 @@ class BriefShowStudent extends Component{
                 <Form.Label className="col-md-2">Middle name:</Form.Label>
                 <Form.Control className="col" value={this.state.middlename} onChange={this.handleValidatedMiddleName}></Form.Control>
                 <Form.Label className="col-md-2" >Last name:</Form.Label>
-                <Form.Control className="col" value={this.state.lastname} onChage={this.handleValidatedLastName}></Form.Control>
+                <Form.Control className="col" value={this.state.lastname} onChange={this.handleValidatedLastName}></Form.Control>
               </div>
 
               {/* Check box for Gender  */}
@@ -450,7 +445,7 @@ class BriefShowStudent extends Component{
                 <Form.Control className="col" value={this.state.country} onChange={this.handleValidatedCountry}></Form.Control>
                 {/* SaskPolytech email with input and label  */}
                 <Form.Label className="col">Saskpolytech E-mail:</Form.Label>
-                <Form.Control type="email" className="col" value={this.state.saskemail} onChange={this.handleValidatedEmail}></Form.Control>
+                <Form.Control type="text" className="col" value={this.state.saskemail} onChange={this.handleValidatedEmail}></Form.Control>
               </div>
 
               {/* Campus Select with options and label  */}
