@@ -6,6 +6,8 @@ import apis from "../api/student";
 import { Form, Button, Card } from "react-bootstrap";
 import { Navbar, FootNav } from "../components";
 import { Link } from "react-router-dom";
+import "../css/loginpage.css";
+
 //#endregion
 
 // Class component named "AddStudent"
@@ -214,7 +216,7 @@ class AddStudent extends Component {
           Add New Student
         </Card.Title>
         {/* Card */}
-        <Card className="mx-auto container">
+        <Card className="mx-auto container shadow">
           <Card.Body style={{ padding: "1rem 2rem" }}>
             {/* Form  */}
             <Form>

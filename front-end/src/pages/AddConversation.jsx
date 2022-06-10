@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 //call Apis from api/student to route back-end
 import apis from '../api/student';
 import conv_apis from "../api/conversation";
+import  UploadFile  from "../components/uploadFile";
+import "../css/loginpage.css";
 //import NavBar and footer from components
 import NavBar from "../components/Navbar";
 import FootNav from "../components/FootNav";
@@ -113,12 +115,12 @@ class AddConversation extends Component{
         <NavBar/>
         <div className="row mb-3">
           <div className="col-sm-12 col-12">
-            {/*  Title  */}
-            <Header className="text-center">Add Notes</Header>
+            {/* Card Title  */}
+            <Header className="text-center mt-2">Add Notes</Header>
           </div>
         </div>
         {/* Card for form  */}
-        <Card className="m-3">
+        <Card className="m-3 shadow" >
           <Card.Header>
             <div className="col-md-12">
               {/* Form  */}
@@ -200,17 +202,20 @@ class AddConversation extends Component{
                 <TabPanel>
                 <Form.Group>
                     <Form.Label className="col-md-2">Note</Form.Label>
-                    <textarea class="form-control" rows="3"  value={this.state.note}  onChange={this.handleNote}></textarea>
+                    <Form.Control className="col" type="textarea" style={{"height":"100px"}} value={this.state.note} onChange={this.handleNote}></Form.Control>
                     
                     <Form.Label className="col-md-2">
                       Comment:
                     </Form.Label>
-                    <textarea class="form-control" rows="3"  value={this.state.comments}  onChange={this.handleComment}></textarea>
+                    <Form.Control className="col" type="textarea" style={{"height":"100px"}} onChange={this.handleComment}></Form.Control>
                 </Form.Group>
                 </TabPanel>
                 <TabPanel>
                     <Form.Label className="col-md-2">Shared Link</Form.Label>
-                    <textarea class="form-control" rows="3"  value={this.state.sharedLink}  onChange={this.handleLink}></textarea>
+                    <Form.Control className="col" type="textarea" value={this.state.sharedLink}  style={{"height":"100px"}} onChange={this.handleLink}></Form.Control>
+                </TabPanel>
+                <TabPanel>
+                  
                 </TabPanel>
                     </Tabs>
           </Card.Body>

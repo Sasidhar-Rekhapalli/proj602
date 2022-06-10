@@ -1,3 +1,19 @@
+//////////////////////////////////////               StudentPage.jsx                //////////////////////////////////////
+/**
+ *
+ * @file StudentPage.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 3.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
+
+//#region for IMPORT
+/**
+ *   @notice watch to address, if change path, must modify in the require part*/
 import {Navbar,FootNav } from "../components";
 import React, {Component} from "react";
 import styled from "styled-components";
@@ -8,6 +24,9 @@ import {  Card  } from "react-bootstrap";
 import apis from "../api/student"
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import "../css/loginpage.css";
+//#endregion
+
 const AddStudentButton = styled.button`
   color: #fff;
   background-color: #800080;
@@ -147,7 +166,7 @@ handleFilter= async event=>{
 		return(
 			<div className="container">
             <Navbar/>
-            <Card>
+            <Card className="shadow mt-2">
 			    <Link to="/isms/addstudent">
 					<AddStudentButton className="AddStudent">
 						<img

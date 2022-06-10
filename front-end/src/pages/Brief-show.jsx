@@ -10,6 +10,9 @@ import conv_apis from '../api/conversation';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import styled from 'styled-components';
+import "../css/loginpage.css";
+
+const Wrapper = styled.div`padding: 0 40px 40px 40px;`
 //Create style for button detail inside conversation table
 const Detail = styled.div`
     color: #0000ff;
@@ -381,7 +384,7 @@ class BriefShowStudent extends Component{
       {/* Card with title */}
       <Card.Title className="mt-3 mb-3 text-center">Student Conversation</Card.Title>
       {/* Card */}
-      <Card className="mx-auto container" >
+      <Card className="mx-auto container shadow" >
         <Card.Body style={{ padding: "1rem 2rem" }}>
           {/* Form  */}
           <Form>

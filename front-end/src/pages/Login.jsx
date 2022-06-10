@@ -1,9 +1,24 @@
+//////////////////////////////////////               Login.jsx                //////////////////////////////////////
+/**
+ *
+ * @file Login.jsx
+ * @copyright ISMS(International Student Management System)
+ * @version 3.0.0
+ * @author cyberbot team, software developer program
+ * @release summer 2022
+ * @owner Saskatchewan Polytechnic, Saskatoon Campus
+ *
+ */
+//////////////////////////////////////
+//#region for IMPORT
+/**
+ *   @notice watch to address, if change path, must modify in the require part*/
 import auths from "../api/auth";
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../images/saskpolytechlogo.png";
 import "../css/loginpage.css";
-
+//#endregion
 
 // react class component from here to code for login starts
 
