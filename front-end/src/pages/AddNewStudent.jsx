@@ -1,4 +1,4 @@
-//#region for  IMPORT
+//#region for IMPORT
 /**
  *   @notice watch to address, if change path, must modify in the require part*/
 import React, { Component } from "react";
