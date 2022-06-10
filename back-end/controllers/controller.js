@@ -52,6 +52,7 @@
 /**  attach the database setting in this file by using require
  *   @notice watch to address, if change path, must modify in the require part*/
 
+const dayjs = require('dayjs');
 const dbObject = require("../db/connect");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -110,7 +111,7 @@ getAllStudents = async (req, res) => {
  */
 getStudentById = async (req, res) => {
   var studentId = req.params.id;
-  // console.log(studentId)
+
   var sql = "SELECT * FROM student WHERE student_id = ?";
   dbObject.getConnection((err, connection) => {
     connection.query(sql, studentId, (err, rows) => {
@@ -160,7 +161,7 @@ createStudent = async (req, res) => {
       req.body.enroll,
     ],
   ];
-  console.log(values);
+
   dbObject.getConnection((err, connection) => {
     connection.query(sql, [values], (err, rows) => {
       connection.release();
@@ -208,8 +209,7 @@ updateStudent = async (req, res) => {
     req.body.graudate_ind,
     req.body.enroll,
   ];
-  console.log(values)
-  console.log(studentId)
+
   dbObject.getConnection((err, connection) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
@@ -299,8 +299,7 @@ getAllUsers = async (req, res) => {
 updatePermission = async (req, res) => {
   var user_id = req.body.id;
   var permission = req.body.permission;
-  console.log(user_id);
-  console.log(permission);
+  
   var sql = "UPDATE user SET permission=?  WHERE user_id = " + user_id;
   dbObject.getConnection((err, connection) => {
     connection.query(sql, permission, (err, rows) => {
@@ -328,7 +327,7 @@ createNewUser = async (req, res) => {
   try {
     // I added not for isAuthenticated
     const userData = req.body.vals; // grab onto the new user array of values
-    console.log(req.body.vals);
+    // console.log(req.body.vals);
     bcrypt.hash(userData[5], saltRounds, (err, hash) => {
       if (err) {
         console.error(err);
@@ -582,7 +581,9 @@ getConversationByConsID = async (req, res) => {
   var permission = req.body.permission;
   var created = req.body.created;
   var comments = req.body.comments;
-  var sql = `INSERT INTO conversation (student_id,note,category,subject,sharedLink,permission,createdby,comments) VALUES ('${student_id}','${note}','${category}','${subject}','${sharedLink}','${permission}','${created}','${comments}')`;
+  var date=dayjs();
+  
+  var sql = `INSERT INTO conversation (student_id,note,category,subject,sharedLink,permission,createdby,comments,datecreated) VALUES ('${student_id}','${note}','${category}','${subject}','${sharedLink}','${permission}','${created}','${comments}','${date.format()}')`;
 
   dbObject.getConnection((err, connection) => {
     connection.query(sql, (err, rows) => {
@@ -608,10 +609,14 @@ updateConversation = async (req, res) => {
   var note = req.body.note;
   var comments = req.body.comments;
   var sharedLink = req.body.sharedLink;
+  var subject=req.body.subject;
+  var category=req.body.category
+  var lastupdatedby=req.body.lastupdatedby
+ 
   var sql =
-    "UPDATE conversation SET note = ?, comments = ?, sharedLink = ? WHERE conversation_id = " +
+    "UPDATE conversation SET note = ?, comments = ?, sharedLink = ?, subject=?, category=?, lastupdatedby=? WHERE conversation_id = " +
     conversation_id;
-  var values = [note, comments, sharedLink];
+  var values = [note, comments, sharedLink,subject,category,lastupdatedby];
   dbObject.getConnection((err, connection) => {
     connection.query(sql, values, (err, rows) => {
       connection.release();
