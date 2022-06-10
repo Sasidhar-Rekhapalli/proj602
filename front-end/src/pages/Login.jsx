@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../images/saskpolytechlogo.png";
 import "../css/loginpage.css";
 
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -12,10 +11,10 @@ class Login extends Component {
       loginUsername: "",
       loginPassword: "",
       loginStatus: "",
-      permission:""
+      permission: "",
     };
   }
-  
+
   handleInputUser = async (event) => {
     if (!event.target.value.match(/^[a-zA-Z]|\d$/)) {
       this.setState({ isValid: "Username must be size between 8 to 12" });
@@ -44,13 +43,11 @@ class Login extends Component {
         } else {
           this.setState({ loginStatus: response.data[0] });
           console.log("Successful");
-          alert("Successful");
-          this.setState({permission:response.data.data})
-          localStorage.setItem('permission',this.state.permission)
-          localStorage.setItem('user_name',this.state.loginUsername)
+          this.setState({ permission: response.data.data });
+          localStorage.setItem("permission", this.state.permission);
+          localStorage.setItem("user_name", this.state.loginUsername);
 
           this.props.history.push("/isms/studentpage");
-
         }
       });
   };
@@ -91,7 +88,9 @@ class Login extends Component {
                     />
                     <p>{this.state.isValid}</p>
                   </div>
-                  <div><p>{this.state.loginStatus}</p></div>
+                  <div>
+                    <p>{this.state.loginStatus}</p>
+                  </div>
                   <div className="form-group form-check floatbtn">
                     <button
                       className="btn btn-primary"
